@@ -1,6 +1,5 @@
-import { motion } from "motion/react";
 import { WhatsappLogo as WhatsappLogoIcon } from "@phosphor-icons/react";
-import { ContactForm } from "./Sections";
+import { ContactForm, WHATSAPP_URL } from "./Sections";
 
 export const ContactPage = () => {
   return (
@@ -18,10 +17,15 @@ export const ContactPage = () => {
               </p>
               
               <div className="flex flex-wrap gap-4 pt-4">
-                <button className="bg-primary-500 text-secondary-300 px-8 py-4 rounded-full font-medium text-lg flex items-center gap-2 hover:scale-105 transition-transform shadow-md">
+                <a
+                  href={WHATSAPP_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-primary-500 text-secondary-300 px-8 py-4 rounded-full font-medium text-lg inline-flex items-center gap-2 hover:scale-105 transition-transform shadow-md cursor-pointer"
+                >
                   Plan een kennismaking
                   <WhatsappLogoIcon size={28} weight="light" />
-                </button>
+                </a>
               </div>
               
               {/* Spacer to match homepage hero height and keep image position identical */}
@@ -30,12 +34,19 @@ export const ContactPage = () => {
             
             <div className="flex-1 w-full lg:pt-2">
               <div className="relative max-w-[540px] lg:ml-auto bg-primary-50/95 rounded-[32px] p-8 shadow-[0px_2px_4px_rgba(27,28,29,0.04)]">
-                <img 
+                {/* TODO: vervang */}
+                <img
                   src="/images/contact-illustration.png"
                   alt="Illustratie Contact"
                   className="w-full h-auto rounded-[24px] object-cover aspect-[4/3]"
                   onError={(e) => {
-                    (e.target as HTMLImageElement).src = "https://picsum.photos/seed/contact-hero/800/600";
+                    const img = e.currentTarget;
+                    if (img.src.includes("loremflickr")) {
+                      img.onerror = null;
+                      img.src = "https://picsum.photos/seed/contact/800/600";
+                    } else {
+                      img.src = "https://loremflickr.com/800/600/conversation,welcome?lock=71";
+                    }
                   }}
                   referrerPolicy="no-referrer"
                 />
@@ -63,14 +74,9 @@ export const ContactPage = () => {
                 
                 <div className="grid grid-cols-[140px_1fr] md:grid-cols-[200px_1fr] gap-4 items-baseline">
                   <span className="text-neutral-600 text-sm font-medium">KvK-nummer</span>
-                  <span className="text-neutral-1000 text-lg">XXXXXXXX</span>
+                  <span className="text-neutral-1000 text-lg">65787676</span>
                 </div>
-                
-                <div className="grid grid-cols-[140px_1fr] md:grid-cols-[200px_1fr] gap-4 items-baseline">
-                  <span className="text-neutral-600 text-sm font-medium">BTW-nummer</span>
-                  <span className="text-neutral-1000 text-lg">NLXXXXXXXXBXX</span>
-                </div>
-                
+
                 <div className="grid grid-cols-[140px_1fr] md:grid-cols-[200px_1fr] gap-4 items-baseline">
                   <span className="text-neutral-600 text-sm font-medium">Vestigingsplaats</span>
                   <span className="text-neutral-1000 text-lg">Rotterdam</span>

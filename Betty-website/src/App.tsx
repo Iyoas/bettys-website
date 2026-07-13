@@ -35,22 +35,22 @@ export default function App() {
       <main>
         {currentPage === "home" ? (
           <>
-            <Hero />
+            <Hero onNavigate={navigateTo} />
             <TrustedBy />
             <Features />
             <Services onNavigate={navigateTo} />
-            <About />
-            <Clients />
+            <About onNavigate={navigateTo} />
+            <Clients onNavigate={navigateTo} />
             <Testimonials />
-            <CTA />
+            <CTA onNavigate={navigateTo} />
             <ContactForm showQuickContact={false} />
           </>
         ) : currentPage === "services" ? (
-          <ServicesPage />
+          <ServicesPage onNavigate={navigateTo} />
         ) : currentPage === "about" ? (
-          <AboutPage />
+          <AboutPage onNavigate={navigateTo} />
         ) : currentPage === "clients" ? (
-          <ClientsPage />
+          <ClientsPage onNavigate={navigateTo} />
         ) : (
           <ContactPage />
         )}

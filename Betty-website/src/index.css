@@ -25,10 +25,15 @@
 }
 
 @layer base {
+  html {
+    /* Houd geankerde secties vrij van de sticky navbar bij smooth-scroll */
+    scroll-padding-top: 7rem;
+  }
+
   body {
     @apply font-sans text-neutral-1000 bg-white;
   }
-  
+
   h1, h2, h3, h4, h5, h6 {
     @apply font-display;
   }
