@@ -4,7 +4,7 @@
  */
 
 import { useState } from "react";
-import { Navbar, Hero, TrustedBy, Features, Services, About, Clients, Testimonials, CTA, Footer, ContactForm } from "./components/Sections";
+import { Navbar, Hero, TrustedBy, Features, Services, About, Clients, Testimonials, Footer, ContactForm } from "./components/Sections";
 import { ServicesPage } from "./components/ServicesPage";
 import { AboutPage } from "./components/AboutPage";
 import { ClientsPage } from "./components/ClientsPage";
@@ -12,15 +12,18 @@ import { ContactPage } from "./components/ContactPage";
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState<"home" | "services" | "about" | "clients" | "contact">("home");
+  // Voorgeselecteerde case op de Opdrachtgevers-pagina, gezet vanuit een "Bekijk case"-knop.
+  const [selectedClient, setSelectedClient] = useState<string | undefined>();
 
   const navigateTo = (page: "home" | "services" | "about" | "clients" | "contact", id?: string) => {
     setCurrentPage(page);
-    if (id) {
+    setSelectedClient(page === "clients" ? id : undefined);
+
+    // Naar een specifieke case op de Opdrachtgevers-pagina: scroll naar het casedetail.
+    const targetId = page === "clients" && id ? "case-detail" : id;
+    if (targetId) {
       setTimeout(() => {
-        const element = document.getElementById(id);
-        if (element) {
-          element.scrollIntoView({ behavior: "smooth" });
-        }
+        document.getElementById(targetId)?.scrollIntoView({ behavior: "smooth" });
       }, 100);
     } else {
       window.scrollTo(0, 0);
@@ -42,7 +45,8 @@ export default function App() {
             <About onNavigate={navigateTo} />
             <Clients onNavigate={navigateTo} />
             <Testimonials />
-            <CTA onNavigate={navigateTo} />
+            {/* Geen CTA-blok hier: het contactformulier hieronder vraagt al om dezelfde actie.
+                De CTA staat wel op de subpagina's, die geen formulier hebben. */}
             <ContactForm showQuickContact={false} />
           </>
         ) : currentPage === "services" ? (
@@ -50,7 +54,7 @@ export default function App() {
         ) : currentPage === "about" ? (
           <AboutPage onNavigate={navigateTo} />
         ) : currentPage === "clients" ? (
-          <ClientsPage onNavigate={navigateTo} />
+          <ClientsPage onNavigate={navigateTo} selectedClient={selectedClient} />
         ) : (
           <ContactPage />
         )}

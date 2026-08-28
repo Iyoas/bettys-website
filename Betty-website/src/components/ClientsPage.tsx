@@ -2,7 +2,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { MessageCircle, CheckCircle2, ArrowRight, Quote } from "lucide-react";
 import { WhatsappLogo as WhatsappLogoIcon } from "@phosphor-icons/react";
 import { CTA, WHATSAPP_URL } from "./Sections";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const cases = [
   {
@@ -77,8 +77,20 @@ const cases = [
   }
 ];
 
-export const ClientsPage = ({ onNavigate }: { onNavigate: (page: "home" | "services" | "about" | "clients" | "contact", id?: string) => void }) => {
-  const [activeClientId, setActiveClientId] = useState(cases[0].id);
+export const ClientsPage = ({ onNavigate, selectedClient }: {
+  onNavigate: (page: "home" | "services" | "about" | "clients" | "contact", id?: string) => void;
+  selectedClient?: string;
+}) => {
+  const [activeClientId, setActiveClientId] = useState(
+    () => cases.find(c => c.shortName === selectedClient)?.id ?? cases[0].id
+  );
+
+  useEffect(() => {
+    const match = cases.find(c => c.shortName === selectedClient);
+    if (match) {
+      setActiveClientId(match.id);
+    }
+  }, [selectedClient]);
 
   const currentCase = cases.find(c => c.id === activeClientId) || cases[0];
 
@@ -213,7 +225,7 @@ export const ClientsPage = ({ onNavigate }: { onNavigate: (page: "home" | "servi
       </section>
 
       {/* SECTION 3 — CASES */}
-      <section className="py-28 bg-white border-t border-neutral-100">
+      <section id="case-detail" className="scroll-mt-28 py-28 bg-white border-t border-neutral-100">
         <div className="container-custom space-y-4 mb-12">
           <h2 className="text-[38px] font-bold text-primary-400">Samenwerkingen in de praktijk</h2>
           <p className="text-lg text-neutral-700 max-w-2xl">

@@ -109,7 +109,7 @@ const WerkwijzeSteps = () => {
                   }`}
                 >
                   <h3 className="text-xl font-bold text-primary-500 mb-2">{item.title}</h3>
-                  <p className="text-neutral-600 leading-relaxed">{item.desc}</p>
+                  <p className="text-neutral-700 leading-relaxed">{item.desc}</p>
                 </div>
               </button>
             );
@@ -150,7 +150,7 @@ const WerkwijzeSteps = () => {
                 }`}
               >
                 <h3 className="text-lg font-bold text-primary-500 mb-1">{item.title}</h3>
-                <p className="text-neutral-600 leading-relaxed break-words">{item.desc}</p>
+                <p className="text-neutral-700 leading-relaxed break-words">{item.desc}</p>
               </div>
             </button>
           );
@@ -166,15 +166,18 @@ export const ServicesPage = ({ onNavigate }: { onNavigate: (page: "home" | "serv
       {/* Hero Section */}
       <section className="bg-white py-20 overflow-hidden">
         <div className="container-custom">
-          <div className="flex flex-col lg:flex-row lg:items-start gap-12 lg:gap-12">
+          <div className="flex flex-col lg:flex-row lg:items-center gap-12 lg:gap-16">
             <div className="flex-1 space-y-6">
+              <p className="font-display text-xs font-bold text-primary-500 uppercase tracking-[0.18em]">
+                Diensten
+              </p>
               <h1 className="text-4xl md:text-5xl lg:text-[46px] font-bold leading-[1.2] lg:leading-[69px] text-primary-500">
-                Mijn diensten
+                Wat ik voor je organisatie doe
               </h1>
               <p className="text-lg text-neutral-700 max-w-[512px] leading-[30px]">
-                Betty Teklemariam ondersteunt organisaties met culturele bemiddeling, begeleiding en training rondom Eritrese gemeenschappen.
+                Vier vormen van ondersteuning rond Eritrese cliënten en gemeenschappen: begeleiding, culturele bemiddeling, culturele vertaling en workshops. Hieronder lees je per dienst wat het inhoudt en voor wie het bedoeld is.
               </p>
-              
+
               <div className="flex flex-wrap gap-4 pt-4">
                 <a
                   href={WHATSAPP_URL}
@@ -185,29 +188,23 @@ export const ServicesPage = ({ onNavigate }: { onNavigate: (page: "home" | "serv
                   Start een gesprek
                   <WhatsappLogoIcon size={28} weight="light" />
                 </a>
+                <button
+                  onClick={() => document.getElementById("begeleiding")?.scrollIntoView({ behavior: "smooth" })}
+                  className="bg-white text-primary-500 px-8 py-4 rounded-full border border-secondary-300 font-display font-medium text-lg inline-flex items-center gap-2 hover:bg-neutral-50 transition-colors cursor-pointer"
+                >
+                  Bekijk de diensten
+                  <ArrowRight className="w-5 h-5" />
+                </button>
               </div>
-              
-              {/* Spacer to match homepage hero height and keep image position identical */}
-              <div className="hidden lg:block h-[145px]" />
             </div>
-            
-            <div className="flex-1 w-full lg:pt-2">
-              <div className="relative max-w-[540px] lg:ml-auto bg-primary-50/95 rounded-[32px] p-8 shadow-[0px_2px_4px_rgba(27,28,29,0.04)]">
-                {/* TODO: vervang */}
+
+            <div className="flex-1 w-full">
+              <div className="relative max-w-[540px] lg:ml-auto bg-primary-50/95 rounded-[32px] p-3 shadow-[0px_2px_4px_rgba(27,28,29,0.04)]">
                 <img
-                  src="/images/illustration-service.png"
-                  alt="Illustratie van diensten"
-                  className="w-full h-auto rounded-[24px] object-cover aspect-[4/3]"
-                  onError={(e) => {
-                    const img = e.currentTarget;
-                    if (img.src.includes("loremflickr")) {
-                      img.onerror = null;
-                      img.src = "https://picsum.photos/seed/service/800/600";
-                    } else {
-                      img.src = "https://loremflickr.com/800/600/training,diverse?lock=31";
-                    }
-                  }}
-                  referrerPolicy="no-referrer"
+                  src="/images/betty-workshop.png"
+                  alt="Betty geeft een workshop aan een groep deelnemers"
+                  className="w-full h-auto rounded-[24px] object-cover aspect-[3/2]"
+                  loading="eager"
                 />
               </div>
             </div>
@@ -216,8 +213,8 @@ export const ServicesPage = ({ onNavigate }: { onNavigate: (page: "home" | "serv
       </section>
 
       {/* Jump-nav — spring direct naar een dienst */}
-      <nav aria-label="Diensten" className="py-12 bg-white border-t border-neutral-100">
-        <div className="container-custom space-y-6">
+      <nav aria-label="Diensten" className="py-8 bg-white border-t border-neutral-100">
+        <div className="container-custom space-y-5">
           <p className="font-display text-sm font-bold text-primary-500 uppercase tracking-widest">Spring naar een dienst</p>
           <div className="flex flex-wrap gap-3">
             {[
@@ -240,11 +237,11 @@ export const ServicesPage = ({ onNavigate }: { onNavigate: (page: "home" | "serv
       </nav>
 
       {/* Dienst 1 — Begeleiding */}
-      <section id="begeleiding" className="scroll-mt-28 py-28 bg-neutral-50">
-        <div className="container-custom space-y-12">
-          <div className="space-y-6">
+      <section id="begeleiding" className="scroll-mt-28 py-16 md:py-20 bg-neutral-50">
+        <div className="container-custom space-y-8">
+          <div className="space-y-4">
             <ServiceEyebrow icon={<HandshakeIcon size={14} strokeWidth={1.5} />} label="Ondersteuning" />
-            <div className="space-y-5">
+            <div className="space-y-4">
               <h2 className="text-[38px] font-bold text-primary-400 leading-tight">Begeleiding</h2>
               <div className="h-1 w-16 bg-secondary-300 rounded-full" />
             </div>
@@ -266,11 +263,11 @@ export const ServicesPage = ({ onNavigate }: { onNavigate: (page: "home" | "serv
             ]}
           />
 
-          <div className="space-y-6">
+          <div className="space-y-4">
             <p className="font-display text-sm font-bold text-primary-500 uppercase tracking-widest">Geschikt voor</p>
             <div className="flex flex-wrap gap-3">
               {["Gemeenten", "Wijkteams", "Sociaal domein", "NGO’s"].map((tag) => (
-                <span key={tag} className="bg-white px-5 py-2 rounded-full text-sm text-neutral-600 border border-neutral-100 font-medium">
+                <span key={tag} className="bg-white px-5 py-2 rounded-full text-sm text-neutral-700 border border-neutral-100 font-medium">
                   {tag}
                 </span>
               ))}
@@ -282,7 +279,7 @@ export const ServicesPage = ({ onNavigate }: { onNavigate: (page: "home" | "serv
               onClick={() => onNavigate("contact")}
               className="bg-white px-8 py-4 rounded-full border border-secondary-300 text-primary-500 font-display font-medium text-lg flex items-center gap-2 hover:bg-neutral-50 transition-colors cursor-pointer"
             >
-              Meer over begeleiding
+              Bespreek begeleiding
               <ArrowRight className="w-5 h-5" />
             </button>
           </div>
@@ -290,11 +287,11 @@ export const ServicesPage = ({ onNavigate }: { onNavigate: (page: "home" | "serv
       </section>
 
       {/* Dienst 2 — Culturele bemiddeling */}
-      <section id="culturele-bemiddeling" className="scroll-mt-28 py-28 bg-white">
-        <div className="container-custom space-y-12">
-          <div className="space-y-6">
+      <section id="culturele-bemiddeling" className="scroll-mt-28 py-16 md:py-20 bg-white">
+        <div className="container-custom space-y-8">
+          <div className="space-y-4">
             <ServiceEyebrow icon={<BridgeIcon size={14} strokeWidth={1.5} />} label="Bemiddeling" />
-            <div className="space-y-5">
+            <div className="space-y-4">
               <h2 className="text-[38px] font-bold text-primary-400 leading-tight">Culturele bemiddeling</h2>
               <div className="h-1 w-16 bg-secondary-300 rounded-full" />
             </div>
@@ -314,11 +311,11 @@ export const ServicesPage = ({ onNavigate }: { onNavigate: (page: "home" | "serv
             ]}
           />
 
-          <div className="space-y-6">
+          <div className="space-y-4">
             <p className="font-display text-sm font-bold text-primary-500 uppercase tracking-widest">Inzetbaar bij</p>
             <div className="flex flex-wrap gap-3">
               {["Hulpverlening", "Zorg", "Integratie", "Casusoverleg"].map((tag) => (
-                <span key={tag} className="bg-neutral-50 px-5 py-2 rounded-full text-sm text-neutral-600 border border-neutral-100 font-medium">
+                <span key={tag} className="bg-neutral-50 px-5 py-2 rounded-full text-sm text-neutral-700 border border-neutral-100 font-medium">
                   {tag}
                 </span>
               ))}
@@ -330,7 +327,7 @@ export const ServicesPage = ({ onNavigate }: { onNavigate: (page: "home" | "serv
               onClick={() => onNavigate("contact")}
               className="bg-white px-8 py-4 rounded-full border border-secondary-300 text-primary-500 font-display font-medium text-lg flex items-center gap-2 hover:bg-neutral-50 transition-colors cursor-pointer"
             >
-              Bespreek een situatie
+              Bespreek culturele bemiddeling
               <ArrowRight className="w-5 h-5" />
             </button>
           </div>
@@ -338,11 +335,11 @@ export const ServicesPage = ({ onNavigate }: { onNavigate: (page: "home" | "serv
       </section>
 
       {/* Dienst 3 — Culturele vertaling */}
-      <section id="culturele-vertaling" className="scroll-mt-28 py-28 bg-neutral-50">
-        <div className="container-custom space-y-12">
-          <div className="space-y-6">
+      <section id="culturele-vertaling" className="scroll-mt-28 py-16 md:py-20 bg-neutral-50">
+        <div className="container-custom space-y-8">
+          <div className="space-y-4">
             <ServiceEyebrow icon={<Lightbulb size={14} strokeWidth={1.5} />} label="Advies" />
-            <div className="space-y-5">
+            <div className="space-y-4">
               <h2 className="text-[38px] font-bold text-primary-400 leading-tight">Culturele vertaling</h2>
               <div className="h-1 w-16 bg-secondary-300 rounded-full" />
             </div>
@@ -362,11 +359,11 @@ export const ServicesPage = ({ onNavigate }: { onNavigate: (page: "home" | "serv
             ]}
           />
 
-          <div className="space-y-6">
+          <div className="space-y-4">
             <p className="font-display text-sm font-bold text-primary-500 uppercase tracking-widest">Ondersteunt bij</p>
             <div className="flex flex-wrap gap-3">
               {["Communicatie", "Beleidsontwikkeling", "Onderzoek", "Advies"].map((tag) => (
-                <span key={tag} className="bg-white px-5 py-2 rounded-full text-sm text-neutral-600 border border-neutral-100 font-medium">
+                <span key={tag} className="bg-white px-5 py-2 rounded-full text-sm text-neutral-700 border border-neutral-100 font-medium">
                   {tag}
                 </span>
               ))}
@@ -378,7 +375,7 @@ export const ServicesPage = ({ onNavigate }: { onNavigate: (page: "home" | "serv
               onClick={() => onNavigate("contact")}
               className="bg-white px-8 py-4 rounded-full border border-secondary-300 text-primary-500 font-display font-medium text-lg flex items-center gap-2 hover:bg-neutral-50 transition-colors cursor-pointer"
             >
-              Vraag advies aan
+              Bespreek culturele vertaling
               <ArrowRight className="w-5 h-5" />
             </button>
           </div>
@@ -386,11 +383,11 @@ export const ServicesPage = ({ onNavigate }: { onNavigate: (page: "home" | "serv
       </section>
 
       {/* Dienst 4 — Workshops & voorlichting */}
-      <section id="workshops-voorlichting" className="scroll-mt-28 py-28 bg-white">
-        <div className="container-custom space-y-12">
-          <div className="space-y-6">
+      <section id="workshops-voorlichting" className="scroll-mt-28 py-16 md:py-20 bg-white">
+        <div className="container-custom space-y-8">
+          <div className="space-y-4">
             <ServiceEyebrow icon={<PresentationIcon size={14} strokeWidth={1.5} />} label="Training" />
-            <div className="space-y-5">
+            <div className="space-y-4">
               <h2 className="text-[38px] font-bold text-primary-400 leading-tight">Workshops & voorlichting</h2>
               <div className="h-1 w-16 bg-secondary-300 rounded-full" />
             </div>
@@ -412,11 +409,11 @@ export const ServicesPage = ({ onNavigate }: { onNavigate: (page: "home" | "serv
             ]}
           />
 
-          <div className="space-y-6">
+          <div className="space-y-4">
             <p className="font-display text-sm font-bold text-primary-500 uppercase tracking-widest">Voor wie</p>
             <div className="flex flex-wrap gap-3">
               {["Gemeenten", "Zorg", "Onderwijs", "Sociaal domein"].map((tag) => (
-                <span key={tag} className="bg-neutral-50 px-5 py-2 rounded-full text-sm text-neutral-600 border border-neutral-100 font-medium">
+                <span key={tag} className="bg-neutral-50 px-5 py-2 rounded-full text-sm text-neutral-700 border border-neutral-100 font-medium">
                   {tag}
                 </span>
               ))}
@@ -428,7 +425,7 @@ export const ServicesPage = ({ onNavigate }: { onNavigate: (page: "home" | "serv
               onClick={() => onNavigate("contact")}
               className="bg-white px-8 py-4 rounded-full border border-secondary-300 text-primary-500 font-display font-medium text-lg flex items-center gap-2 hover:bg-neutral-50 transition-colors cursor-pointer"
             >
-              Vraag een workshop aan
+              Bespreek een workshop
               <ArrowRight className="w-5 h-5" />
             </button>
           </div>
@@ -436,7 +433,7 @@ export const ServicesPage = ({ onNavigate }: { onNavigate: (page: "home" | "serv
       </section>
 
       {/* Samenwerking op maat */}
-      <section className="py-28 bg-neutral-50">
+      <section className="py-16 md:py-20 bg-neutral-50">
         <div className="container-custom">
           <div className="bg-primary-500 rounded-[32px] p-8 md:p-12 lg:py-16 lg:px-28 shadow-[0px_2px_4px_rgba(27,28,29,0.04)] text-center relative overflow-hidden flex flex-col items-center justify-center">
             <div className="absolute -top-24 -left-24 w-64 h-64 bg-secondary-300/10 rounded-full blur-3xl" />
@@ -457,7 +454,7 @@ export const ServicesPage = ({ onNavigate }: { onNavigate: (page: "home" | "serv
                   href={WHATSAPP_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-full sm:w-auto bg-secondary-300 text-primary-500 px-8 py-4 rounded-[40px] font-semibold text-lg inline-flex items-center justify-center gap-2 hover:scale-105 transition-transform shadow-md cursor-pointer"
+                  className="w-full sm:w-auto whitespace-nowrap bg-secondary-300 text-primary-500 px-8 py-4 rounded-[40px] font-semibold text-lg inline-flex items-center justify-center gap-2 hover:scale-105 transition-transform shadow-md cursor-pointer"
                 >
                   Bespreek jouw vraag
                   <WhatsappLogoIcon size={28} weight="light" />
@@ -475,10 +472,10 @@ export const ServicesPage = ({ onNavigate }: { onNavigate: (page: "home" | "serv
       </section>
 
       {/* Werkwijze */}
-      <section id="werkwijze" className="scroll-mt-28 py-28 bg-white">
-        <div className="container-custom text-center space-y-6 mb-20">
-          <h2 className="text-[38px] font-bold text-primary-500">Werkwijze</h2>
-          <p className="text-xl text-neutral-700 max-w-2xl mx-auto leading-relaxed">
+      <section id="werkwijze" className="scroll-mt-28 py-16 md:py-20 bg-white">
+        <div className="container-custom space-y-4 mb-16">
+          <h2 className="text-[38px] font-bold text-primary-400 leading-tight">Werkwijze</h2>
+          <p className="text-lg text-neutral-700 max-w-2xl leading-relaxed">
             Een gestructureerde aanpak voor een optimaal resultaat en duurzame verbinding.
           </p>
         </div>

@@ -1,5 +1,5 @@
 import { motion } from "motion/react";
-import { ArrowRight, Heart, Mail, Phone, Calendar, CheckCircle2, Linkedin, Globe, Languages, ShieldCheck, Menu, X, Quote, Handshake as HandshakeIcon, Waypoints as BridgeIcon, Presentation as PresentationIcon } from "lucide-react";
+import { ArrowRight, Heart, Mail, Phone, Calendar, CheckCircle2, Linkedin, Globe, Languages, ShieldCheck, Menu, X, Quote, HeartHandshake, Lightbulb, Handshake as HandshakeIcon, Waypoints as BridgeIcon, Presentation as PresentationIcon } from "lucide-react";
 import { WhatsappLogo as WhatsappLogoIcon } from "@phosphor-icons/react";
 import { useState, useEffect } from "react";
 
@@ -144,6 +144,9 @@ export const Hero = ({ onNavigate }: { onNavigate: (page: "home" | "services" | 
       <div className="container-custom">
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
           <div className="flex-1 space-y-6">
+            <p className="font-display text-xs font-bold text-primary-500 uppercase tracking-[0.18em]">
+              Intercultureel adviseur en mediator
+            </p>
             <h1 className="text-4xl md:text-5xl lg:text-[46px] font-bold leading-[1.2] lg:leading-[69px] text-primary-500">
               Bruggen bouwen<br />tussen <span className="text-secondary-400">culturen</span> en gemeenschappen.
             </h1>
@@ -171,22 +174,12 @@ export const Hero = ({ onNavigate }: { onNavigate: (page: "home" | "services" | 
           </div>
           
           <div className="flex-1 w-full lg:pt-2">
-            <div className="relative max-w-[540px] lg:ml-auto bg-primary-50 rounded-[32px] p-8 shadow-[0px_2px_4px_rgba(27,28,29,0.04)]">
-              {/* TODO: vervang */}
+            <div className="relative max-w-[540px] lg:ml-auto bg-primary-50 rounded-[32px] p-4 shadow-[0px_2px_4px_rgba(27,28,29,0.04)]">
               <img
-                src="/images/betty-werk.png"
-                alt="Betty aan het werk"
+                src="/images/betty-portret.jpg"
+                alt="Betty Teklemariam"
                 className="w-full h-auto rounded-[24px] object-cover aspect-[4/3]"
-                onError={(e) => {
-                  const img = e.currentTarget;
-                  if (img.src.includes("loremflickr")) {
-                    img.onerror = null;
-                    img.src = "https://picsum.photos/seed/hero/800/600";
-                  } else {
-                    img.src = "https://loremflickr.com/800/600/mentor,conversation?lock=17";
-                  }
-                }}
-                referrerPolicy="no-referrer"
+                loading="eager"
               />
             </div>
           </div>
@@ -197,9 +190,14 @@ export const Hero = ({ onNavigate }: { onNavigate: (page: "home" | "services" | 
 };
 
 export const TrustedBy = () => {
-  const logos = Array(12).fill("/logos/logo-client.png");
-  // Duplicate for seamless loop
-  const duplicatedLogos = [...logos, ...logos];
+  const partners = [
+    { name: "COA", src: "/logos/coa.svg", hClass: "h-9 sm:h-10" },
+    { name: "Nidos", src: "/logos/nidos.png", hClass: "h-6 sm:h-7" },
+    { name: "Sociaal en Cultureel Planbureau", src: "/logos/scp.svg", hClass: "h-9 sm:h-11" },
+    { name: "ARQ Nationaal Psychotrauma Centrum", src: "/logos/arq.svg", hClass: "h-10 sm:h-12" },
+    { name: "VluchtelingenWerk Nederland", src: "/logos/vluchtelingenwerk.svg", hClass: "h-10 sm:h-12" },
+    { name: "Verwey-Jonker Instituut", src: "/logos/verwey-jonker.svg", hClass: "h-5 sm:h-6" },
+  ];
 
   return (
     <section className="bg-white py-12 overflow-hidden">
@@ -211,37 +209,29 @@ export const TrustedBy = () => {
           </p>
           <div className="flex-1 h-[1px] bg-gradient-to-l from-transparent to-primary-500/25" />
         </div>
-        
-        <div className="relative w-full">
-          {/* Gradient masks for smooth fade in/out */}
-          <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-white to-transparent z-10" />
-          <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-white to-transparent z-10" />
-          
-          <div className="flex overflow-hidden">
-            <motion.div 
-              className="flex gap-16 items-center whitespace-nowrap"
-              animate={{ x: ["0%", "-50%"] }}
-              transition={{ 
-                duration: 30, 
-                ease: "linear", 
-                repeat: Infinity 
-              }}
-            >
-              {/* TODO: vervang */}
-              {duplicatedLogos.map((logo, i) => (
+
+        <div className="relative w-full overflow-hidden">
+          <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-white to-transparent z-10" />
+          <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-white to-transparent z-10" />
+
+          <motion.div
+            className="flex w-max items-center gap-x-9 sm:gap-x-24"
+            animate={{ x: ["0%", "-50%"] }}
+            transition={{ duration: 32, ease: "linear", repeat: Infinity }}
+          >
+            {[...partners, ...partners].map((partner, i) => (
+              <div
+                key={`${partner.name}-${i}`}
+                className="flex shrink-0 items-center justify-center opacity-80 grayscale transition-opacity duration-200 hover:opacity-100"
+              >
                 <img
-                  key={i}
-                  src={logo}
-                  alt="Client Logo"
-                  className="h-8 md:h-9 w-auto object-contain opacity-60 grayscale hover:opacity-100 hover:scale-105 transition-all duration-200 cursor-default"
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).src = `https://picsum.photos/seed/logo${i % 12}/120/40?grayscale`;
-                  }}
-                  referrerPolicy="no-referrer"
+                  src={partner.src}
+                  alt={partner.name}
+                  className={`${partner.hClass} w-auto object-contain`}
                 />
-              ))}
-            </motion.div>
-          </div>
+              </div>
+            ))}
+          </motion.div>
         </div>
       </div>
     </section>
@@ -353,95 +343,113 @@ export const Services = ({ onNavigate }: { onNavigate: (page: "home" | "services
 };
 
 export const About = ({ onNavigate }: { onNavigate: (page: "home" | "services" | "about" | "clients" | "contact", id?: string) => void }) => {
+  const qualities = [
+    {
+      title: "Mensgericht",
+      desc: "Rust brengen in gesprekken waarin vertrouwen en context zwaar wegen.",
+      icon: <Heart size={24} className="text-secondary-300" />,
+    },
+    {
+      title: "Praktisch",
+      desc: "Meedenken met professionals over wat direct helpt in de praktijk.",
+      icon: <Lightbulb size={24} className="text-secondary-300" />,
+    },
+    {
+      title: "Cultuursensitief",
+      desc: "Taal, familieverhoudingen en achtergrond meewegen in elk advies.",
+      icon: <Globe size={24} className="text-secondary-300" />,
+    },
+  ];
+
   return (
     <section id="over-mij" className="py-28 bg-white">
-      <div className="container-custom text-center space-y-2 mb-16">
+      <div className="container-custom space-y-4 mb-16">
         <h2 className="text-[38px] font-bold text-primary-400">Over mij</h2>
-        <p className="text-lg text-neutral-700">Bruggen bouwen tussen culturen en gemeenschappen.</p>
+        <p className="text-lg text-neutral-700 max-w-2xl">
+          Bet-El Teklemariam — intercultureel adviseur, mediator, trainer en sociaal pedagoog.
+        </p>
       </div>
-      
-      <div className="container-custom">
-        <div className="bg-neutral-50 rounded-[32px] p-8 lg:p-12 flex flex-col lg:flex-row items-center gap-10 lg:gap-16 shadow-[0px_0px_4px_rgba(27,28,29,0.04)]">
-          <div className="w-full lg:w-[45%] lg:shrink-0">
-            {/* TODO: vervang */}
-            <img
-              src="https://loremflickr.com/800/600/colleagues,listening?lock=23"
-              alt="Betty in gesprek met collega's"
-              className="w-full h-auto rounded-[24px] aspect-[512/384] object-cover"
-              onError={(e) => {
-                e.currentTarget.src = "https://picsum.photos/seed/about/512/384";
-              }}
-              referrerPolicy="no-referrer"
-            />
-          </div>
 
-          <div className="flex-1 space-y-8">
-            <div className="space-y-2">
-              <h3 className="text-[26px] font-bold text-primary-500">Betty Teklemariam</h3>
-              <p className="font-display text-sm font-bold text-primary-400 uppercase tracking-widest">
-                Cultureel adviseur &amp; bemiddelaar
-              </p>
-            </div>
-
-            <p className="text-neutral-800 leading-[32px]">
-              Op jonge leeftijd vluchtte ik uit Eritrea. Ik weet uit ervaring hoeveel het scheelt als iemand je begrijpt in een omgeving die nieuw voor je is. Die ervaring gebruik ik nu om organisaties en nieuwkomers dichter bij elkaar te brengen: mensgericht, cultuursensitief en gericht op wat er in de praktijk verandert.
-            </p>
-
-            <div className="flex flex-wrap gap-3">
-              <div className="bg-primary-500 text-secondary-300 px-6 py-2 rounded-full text-sm font-semibold tracking-wide">
-                25+ JAAR ERVARING
-              </div>
-              <div className="bg-primary-500 text-secondary-300 px-6 py-2 rounded-full text-sm font-semibold tracking-wide">
-                GECERTIFICEERD MEDIATOR
-              </div>
-            </div>
-
-            <button
-              onClick={() => onNavigate("about")}
-              className="w-fit bg-white text-primary-500 px-8 py-4 rounded-full border border-secondary-300 font-display font-medium text-lg inline-flex items-center gap-2 hover:bg-neutral-50 transition-colors cursor-pointer"
-            >
-              Lees meer over Betty
-              <ArrowRight className="w-4 h-4" />
-            </button>
+      <div className="container-custom grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div className="relative">
+          <img
+            src="/images/betty-portret.jpg"
+            alt="Bet-El Teklemariam"
+            className="w-full h-auto rounded-[32px] object-cover aspect-[4/3]"
+            loading="lazy"
+          />
+          <div className="absolute right-6 bottom-6 bg-primary-500 text-secondary-300 rounded-[24px] px-6 py-4 shadow-lg">
+            <p className="text-3xl font-bold leading-none">26+</p>
+            <p className="text-xs font-medium uppercase tracking-wide mt-1">jaar ervaring</p>
           </div>
         </div>
+
+        <div className="space-y-8">
+          <p className="text-lg text-neutral-800 leading-[32px]">
+            Op jonge leeftijd vluchtte ik uit Eritrea. Ik weet uit ervaring hoeveel het scheelt als iemand je begrijpt in een omgeving die nieuw voor je is. Die ervaring combineer ik met ruim 26 jaar werk in begeleiding, jeugdzorg, psychiatrie en het sociaal domein.
+          </p>
+
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-neutral-100 pt-6">
+            <p className="font-display text-xs font-bold text-primary-500 uppercase tracking-[0.18em]">Spreekt</p>
+            <div className="flex flex-wrap gap-2">
+              {["Nederlands", "Tigrinya", "Duits", "Engels"].map((taal) => (
+                <span key={taal} className="rounded-full bg-primary-50 px-4 py-1.5 text-sm font-medium text-primary-500">
+                  {taal}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <button
+            onClick={() => onNavigate("about")}
+            className="w-fit bg-white text-primary-500 px-8 py-4 rounded-full border border-secondary-300 font-display font-medium text-lg inline-flex items-center gap-2 hover:bg-neutral-50 transition-colors cursor-pointer"
+          >
+            Lees meer over Betty
+            <ArrowRight className="w-4 h-4" />
+          </button>
+        </div>
+      </div>
+
+      <div className="container-custom grid md:grid-cols-3 gap-8 mt-16">
+        {qualities.map((q) => (
+          <div
+            key={q.title}
+            className="bg-neutral-50 p-8 rounded-[32px] shadow-[0px_2px_4px_rgba(27,28,29,0.04)] space-y-6 transition duration-200 hover:-translate-y-1"
+          >
+            <div className="w-12 h-12 bg-primary-500 rounded-full flex items-center justify-center">
+              {q.icon}
+            </div>
+            <div className="space-y-4">
+              <h3 className="text-2xl font-semibold text-primary-500">{q.title}</h3>
+              <p className="text-neutral-700 leading-[32px]">{q.desc}</p>
+            </div>
+          </div>
+        ))}
       </div>
     </section>
   );
 };
 
 export const Clients = ({ onNavigate }: { onNavigate: (page: "home" | "services" | "about" | "clients" | "contact", id?: string) => void }) => {
-  // Geverifieerde opdrachtgevers uit docs/betty-profiel.md
+  // Geverifieerde opdrachtgevers uit docs/betty-profiel.md — de overige staan op de Opdrachtgevers-pagina.
   const clients = [
     {
       name: "Sociaal en Cultureel Planbureau",
+      caseId: "SCP",
       tag: "Onderzoek",
       desc: "Culturele duiding binnen onderzoek naar integratie en participatie van Eritrese gemeenschappen."
     },
     {
-      name: "Nidos",
-      tag: "Training",
-      desc: "Trainingen interculturele communicatie voor begeleiders van Eritrese jongeren."
-    },
-    {
       name: "COA",
+      caseId: "COA",
       tag: "Begeleiding",
       desc: "Bemiddeling en advies rond communicatie tussen bewoners en medewerkers op opvanglocaties."
     },
     {
-      name: "Verwey-Jonker Instituut",
-      tag: "Onderzoek",
-      desc: "Ondersteuning bij onderzoek naar maatschappelijke vraagstukken binnen diverse gemeenschappen."
-    },
-    {
       name: "ARQ Centrum '45",
+      caseId: "ARQ",
       tag: "Advies",
       desc: "Advies en training over cultuursensitief werken in begeleiding en behandeling."
-    },
-    {
-      name: "VluchtelingenWerk Nederland",
-      tag: "Samenwerking",
-      desc: "Samenwerking rond begeleiding en participatie van nieuwkomers en statushouders."
     }
   ];
 
@@ -453,31 +461,43 @@ export const Clients = ({ onNavigate }: { onNavigate: (page: "home" | "services"
           Organisaties waarmee ik heb samengewerkt aan betere communicatie en samenwerking met Eritrese gemeenschappen.
         </p>
       </div>
-      
-      <div className="container-custom grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {clients.map((c, i) => (
+
+      <div className="container-custom grid md:grid-cols-3 gap-6">
+        {clients.map((c) => (
           <div
-            key={i}
-            className="relative bg-white p-6 pb-24 rounded-[32px] shadow-[0px_0px_4px_rgba(27,28,29,0.04)] md:h-[360px] lg:h-[420px]"
+            key={c.caseId}
+            className="flex flex-col bg-white p-6 rounded-[32px] shadow-[0px_2px_4px_rgba(27,28,29,0.04)] transition duration-200 hover:-translate-y-1"
           >
-            <div className="flex flex-col items-end gap-6">
+            <div className="flex justify-end">
               <span className="bg-primary-500 text-secondary-300 px-6 py-2 rounded-full text-sm font-medium">
                 {c.tag}
               </span>
-              <div className="w-full space-y-4">
-                <h3 className="text-[26px] font-bold text-primary-500">{c.name}</h3>
-                <p className="text-neutral-800 leading-[32px]">{c.desc}</p>
-              </div>
             </div>
-            <button
-              onClick={() => onNavigate("clients")}
-              className="absolute bottom-6 left-6 px-8 py-4 rounded-full border border-secondary-300 text-primary-500 font-display font-medium text-lg flex items-center gap-2 hover:bg-neutral-50 transition-colors cursor-pointer"
-            >
-              Bekijk case
-              <ArrowRight className="w-4 h-4" />
-            </button>
+            <div className="mt-6 space-y-4">
+              <h3 className="text-[26px] font-bold text-primary-500">{c.name}</h3>
+              <p className="text-neutral-800 leading-[32px]">{c.desc}</p>
+            </div>
+            <div className="mt-auto pt-8">
+              <button
+                onClick={() => onNavigate("clients", c.caseId)}
+                className="px-8 py-4 rounded-full border border-secondary-300 text-primary-500 font-display font-medium text-lg inline-flex items-center gap-2 hover:bg-neutral-50 transition-colors cursor-pointer"
+              >
+                Bekijk case
+                <ArrowRight className="w-4 h-4" />
+              </button>
+            </div>
           </div>
         ))}
+      </div>
+
+      <div className="container-custom mt-12">
+        <button
+          onClick={() => onNavigate("clients")}
+          className="w-fit bg-white text-primary-500 px-8 py-4 rounded-full border border-secondary-300 font-display font-medium text-lg inline-flex items-center gap-2 hover:bg-neutral-50 transition-colors cursor-pointer"
+        >
+          Bekijk alle opdrachtgevers
+          <ArrowRight className="w-4 h-4" />
+        </button>
       </div>
     </section>
   );
@@ -577,6 +597,7 @@ export const CTA = ({ onNavigate }: { onNavigate?: (page: "home" | "services" | 
 };
 
 export const ContactForm = ({ showQuickContact = true }: { showQuickContact?: boolean }) => {
+  const [sent, setSent] = useState(false);
   return (
     <>
       {/* 1. Quick Contact Options */}
@@ -666,13 +687,13 @@ export const ContactForm = ({ showQuickContact = true }: { showQuickContact?: bo
       )}
 
       {/* 2. Main Contact Section */}
-      <section className="py-20 bg-white">
+      <section id="contact" className="scroll-mt-28 py-20 bg-white">
         <div className="container-custom">
           <div className="flex flex-col lg:flex-row gap-16 lg:gap-24">
             {/* Left Column: Contact Form */}
             <div className="flex-1">
               <div className="bg-neutral-50 p-8 md:p-12 rounded-[40px] shadow-[0px_4px_20px_rgba(0,0,0,0.03)] border border-neutral-100">
-                <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+                <form className="space-y-6" onSubmit={(e) => { e.preventDefault(); setSent(true); }}>
                   <div className="space-y-2">
                     <label htmlFor="name" className="block text-sm font-medium text-neutral-700 ml-1">Naam</label>
                     <input
@@ -719,9 +740,15 @@ export const ContactForm = ({ showQuickContact = true }: { showQuickContact?: bo
                       placeholder="Waarmee kan Betty je helpen?"
                     ></textarea>
                   </div>
-                  <button type="submit" className="w-full bg-primary-500 text-secondary-300 py-5 rounded-full font-semibold text-lg hover:bg-opacity-90 transition-all shadow-md cursor-pointer">
+                  <button type="submit" className="w-full bg-primary-500 text-secondary-300 py-5 rounded-full font-semibold text-lg hover:bg-opacity-90 transition-all shadow-md cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary-500">
                     Verstuur bericht
                   </button>
+                  {/* TODO: koppel aan een echte verzendactie (e-mailservice of endpoint). Nu bevestigt het formulier alleen visueel; er wordt niets verstuurd. */}
+                  {sent && (
+                    <p role="status" className="rounded-2xl bg-primary-50 px-6 py-4 text-primary-500">
+                      Bedankt voor je bericht. Je hoort binnen 1–2 werkdagen van me.
+                    </p>
+                  )}
                 </form>
               </div>
             </div>
@@ -729,9 +756,9 @@ export const ContactForm = ({ showQuickContact = true }: { showQuickContact?: bo
             {/* Right Column: Context and Support Info */}
             <div className="flex-1 space-y-10 lg:pt-8">
               <div className="space-y-6">
-                <h2 className="text-[38px] font-bold text-primary-400 leading-tight">Waarmee kunnen we helpen?</h2>
+                <h2 className="text-[38px] font-bold text-primary-400 leading-tight">Waarmee kan ik je helpen?</h2>
                 <p className="text-lg text-neutral-700 leading-relaxed max-w-2xl">
-                  Beschrijf kort je vraag of situatie. Betty denkt graag mee over passende ondersteuning voor jouw organisatie of project.
+                  Beschrijf kort je vraag of situatie. Ik denk graag mee over passende ondersteuning voor jouw organisatie of project — ook als je nog niet precies weet wat je nodig hebt.
                 </p>
               </div>
 
@@ -755,20 +782,24 @@ export const ContactForm = ({ showQuickContact = true }: { showQuickContact?: bo
 
               <div className="space-y-8 pt-4 border-t border-neutral-100">
                 <div className="space-y-4">
-                  <h4 className="font-display font-bold text-primary-500 uppercase tracking-widest text-sm">Socials</h4>
+                  <h3 className="font-display font-bold text-primary-500 uppercase tracking-widest text-sm">Liever direct contact</h3>
                   <div className="space-y-4">
-                    <a href="https://wa.me/31639244184" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-neutral-700 hover:text-primary-500 transition-colors text-lg">
-                      <WhatsappLogoIcon size={24} weight="light" className="text-primary-400" />
-                      WhatsApp
+                    <a href="mailto:info@bettyteklemariam.nl" className="flex items-center gap-3 text-neutral-700 hover:text-primary-500 transition-colors text-lg rounded-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary-500">
+                      <Mail className="w-5 h-5 text-primary-400 shrink-0" />
+                      E-mail
                     </a>
-                    <a href="https://www.linkedin.com/in/bet-el-teklemariam-b1896b165/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-neutral-700 hover:text-primary-500 transition-colors text-lg">
-                      <Linkedin className="w-5 h-5 text-primary-400" />
+                    <a href="https://www.linkedin.com/in/bet-el-teklemariam-b1896b165/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-neutral-700 hover:text-primary-500 transition-colors text-lg rounded-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary-500">
+                      <Linkedin className="w-5 h-5 text-primary-400 shrink-0" />
                       LinkedIn
+                    </a>
+                    <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-neutral-700 hover:text-primary-500 transition-colors text-lg rounded-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary-500">
+                      <WhatsappLogoIcon size={24} weight="light" className="text-primary-400 shrink-0" />
+                      WhatsApp
                     </a>
                   </div>
                 </div>
 
-                <p className="text-neutral-500 text-sm italic">
+                <p className="text-neutral-700 text-sm">
                   Je ontvangt binnen 1–2 werkdagen een reactie.
                 </p>
               </div>
