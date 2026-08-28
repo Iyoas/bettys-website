@@ -1,7 +1,7 @@
 import { motion } from "motion/react";
-import { ArrowRight, Heart, Mail, Phone, Calendar, CheckCircle2, Linkedin, Globe, Languages, ShieldCheck, Menu, X, Quote, HeartHandshake, Lightbulb, Handshake as HandshakeIcon, Waypoints as BridgeIcon, Presentation as PresentationIcon } from "lucide-react";
+import { ArrowRight, Heart, Mail, Phone, Linkedin, Globe, Languages, ShieldCheck, Menu, X, Quote, Lightbulb, Handshake as HandshakeIcon, Waypoints as BridgeIcon, Presentation as PresentationIcon } from "lucide-react";
 import { WhatsappLogo as WhatsappLogoIcon } from "@phosphor-icons/react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, type FormEvent } from "react";
 
 // Betty's WhatsApp (gebruikt voor alle "Start een gesprek"-knoppen)
 export const WHATSAPP_URL = "https://wa.me/31639244184";
@@ -594,104 +594,52 @@ export const CTA = ({ onNavigate, secondary = "services" }: { onNavigate?: (page
   );
 };
 
-export const ContactForm = ({ showQuickContact = true }: { showQuickContact?: boolean }) => {
+export const ContactForm = () => {
   const [sent, setSent] = useState(false);
+  const statusRef = useRef<HTMLParagraphElement>(null);
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    // Honeypot: bots vullen dit verborgen veld in, mensen zien het niet. We lezen de
+    // waarde rechtstreeks uit het formulier, zodat het ook werkt als een bot de
+    // DOM-waarde zet zonder een change-event te vuren.
+    const honeypot = new FormData(e.currentTarget).get("company_website");
+    if (honeypot) return; // vermoedelijke bot: stil negeren
+    setSent(true);
+    // De melding staat boven het formulier; scroll 'm in beeld zodat hij op mobiel
+    // niet buiten beeld valt.
+    requestAnimationFrame(() => {
+      statusRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+  };
+
   return (
     <>
-      {/* 1. Quick Contact Options */}
-      {showQuickContact && (
-        <section className="py-12 bg-neutral-50">
-          <div className="container-custom">
-            <div className="grid md:grid-cols-3 gap-8">
-              {/* Card 1: E-mail */}
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="bg-white p-8 rounded-[32px] shadow-[0px_2px_4px_rgba(27,28,29,0.04)] space-y-6 flex flex-col"
-              >
-                <div className="w-12 h-12 bg-primary-500 rounded-full flex items-center justify-center">
-                  <Mail className="w-6 h-6 text-secondary-300" />
-                </div>
-                <div className="space-y-4 flex-1">
-                  <h3 className="text-2xl font-semibold text-primary-500">E-mail</h3>
-                  <p className="text-neutral-700 leading-relaxed">
-                    Stuur direct een bericht voor vragen of samenwerking.
-                  </p>
-                  <a 
-                    href="mailto:info@bettyteklemariam.nl" 
-                    className="block text-primary-500 font-medium hover:underline"
-                  >
-                    info@bettyteklemariam.nl
-                  </a>
-                </div>
-              </motion.div>
-
-              {/* Card 2: Telefoon */}
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.1 }}
-                className="bg-white p-8 rounded-[32px] shadow-[0px_2px_4px_rgba(27,28,29,0.04)] space-y-6 flex flex-col"
-              >
-                <div className="w-12 h-12 bg-primary-500 rounded-full flex items-center justify-center">
-                  <Phone className="w-6 h-6 text-secondary-300" />
-                </div>
-                <div className="space-y-4 flex-1">
-                  <h3 className="text-2xl font-semibold text-primary-500">Telefoon</h3>
-                  <p className="text-neutral-700 leading-relaxed">
-                    Bel voor direct contact of een korte afstemming.
-                  </p>
-                  <a
-                    href="tel:+31639244184"
-                    className="block text-primary-500 font-medium hover:underline"
-                  >
-                    +31 6 39 24 41 84
-                  </a>
-                </div>
-              </motion.div>
-
-              {/* Card 3: Kennismaking */}
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.2 }}
-                className="bg-white p-8 rounded-[32px] shadow-[0px_2px_4px_rgba(27,28,29,0.04)] space-y-6 flex flex-col"
-              >
-                <div className="w-12 h-12 bg-primary-500 rounded-full flex items-center justify-center">
-                  <Calendar className="w-6 h-6 text-secondary-300" />
-                </div>
-                <div className="space-y-4 flex-1">
-                  <h3 className="text-2xl font-semibold text-primary-500">Kennismaking</h3>
-                  <p className="text-neutral-700 leading-relaxed">
-                    Plan een eerste gesprek om je vraag te bespreken.
-                  </p>
-                  <a
-                    href={WHATSAPP_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bg-white text-primary-500 px-6 py-3 rounded-full font-medium border-2 border-secondary-300 hover:bg-neutral-50 transition-colors inline-flex items-center gap-2 w-fit cursor-pointer"
-                  >
-                    Plan een kennismaking
-                    <ArrowRight className="w-4 h-4" />
-                  </a>
-                </div>
-              </motion.div>
-            </div>
-          </div>
-        </section>
-      )}
-
       {/* 2. Main Contact Section */}
-      <section id="contact" className="scroll-mt-28 py-20 bg-white">
+      <section id="contact" className="scroll-mt-28 py-16 lg:py-20 bg-neutral-50">
         <div className="container-custom">
           <div className="flex flex-col lg:flex-row gap-16 lg:gap-24">
             {/* Left Column: Contact Form */}
             <div className="flex-1">
-              <div className="bg-neutral-50 p-8 md:p-12 rounded-[40px] shadow-[0px_4px_20px_rgba(0,0,0,0.03)] border border-neutral-100">
-                <form className="space-y-6" onSubmit={(e) => { e.preventDefault(); setSent(true); }}>
+              <div className="bg-white p-8 md:p-12 rounded-[40px] shadow-[0px_4px_20px_rgba(0,0,0,0.03)] border border-neutral-100">
+                <form className="space-y-6" onSubmit={handleSubmit}>
+                  {/* TODO: koppel aan een echte verzendactie (e-mailservice of endpoint).
+                      Nu bevestigt het formulier alleen visueel; er wordt niets verstuurd. */}
+                  {sent && (
+                    <p ref={statusRef} id="form-status" role="status" className="rounded-2xl bg-primary-50 px-6 py-4 text-primary-500">
+                      Bedankt voor je bericht. Je hoort binnen 1–2 werkdagen van me.
+                    </p>
+                  )}
+                  {/* Honeypot — verborgen voor mensen, zichtbaar voor bots. */}
+                  <input
+                    type="text"
+                    name="company_website"
+                    className="hidden"
+                    tabIndex={-1}
+                    autoComplete="off"
+                    aria-hidden="true"
+                    defaultValue=""
+                  />
                   <div className="space-y-2">
                     <label htmlFor="name" className="block text-sm font-medium text-neutral-700 ml-1">Naam</label>
                     <input
@@ -700,7 +648,7 @@ export const ContactForm = ({ showQuickContact = true }: { showQuickContact?: bo
                       name="name"
                       required
                       autoComplete="name"
-                      className="w-full bg-white px-6 py-4 rounded-2xl border-none focus:ring-2 focus:ring-primary-100 transition-all outline-none text-neutral-1000"
+                      className="w-full bg-neutral-50 px-6 py-4 rounded-2xl border-none focus:ring-2 focus:ring-primary-100 transition-all outline-none text-neutral-1000"
                       placeholder="Je naam"
                     />
                   </div>
@@ -711,7 +659,7 @@ export const ContactForm = ({ showQuickContact = true }: { showQuickContact?: bo
                       id="org"
                       name="organization"
                       autoComplete="organization"
-                      className="w-full bg-white px-6 py-4 rounded-2xl border-none focus:ring-2 focus:ring-primary-100 transition-all outline-none text-neutral-1000"
+                      className="w-full bg-neutral-50 px-6 py-4 rounded-2xl border-none focus:ring-2 focus:ring-primary-100 transition-all outline-none text-neutral-1000"
                       placeholder="Naam van je organisatie"
                     />
                   </div>
@@ -723,7 +671,7 @@ export const ContactForm = ({ showQuickContact = true }: { showQuickContact?: bo
                       name="email"
                       required
                       autoComplete="email"
-                      className="w-full bg-white px-6 py-4 rounded-2xl border-none focus:ring-2 focus:ring-primary-100 transition-all outline-none text-neutral-1000"
+                      className="w-full bg-neutral-50 px-6 py-4 rounded-2xl border-none focus:ring-2 focus:ring-primary-100 transition-all outline-none text-neutral-1000"
                       placeholder="je@email.nl"
                     />
                   </div>
@@ -734,19 +682,17 @@ export const ContactForm = ({ showQuickContact = true }: { showQuickContact?: bo
                       name="message"
                       required
                       rows={5}
-                      className="w-full bg-white px-6 py-4 rounded-2xl border-none focus:ring-2 focus:ring-primary-100 transition-all outline-none text-neutral-1000 resize-none"
+                      className="w-full bg-neutral-50 px-6 py-4 rounded-2xl border-none focus:ring-2 focus:ring-primary-100 transition-all outline-none text-neutral-1000 resize-none"
                       placeholder="Waarmee kan Betty je helpen?"
                     ></textarea>
                   </div>
-                  <button type="submit" className="w-full bg-primary-500 text-secondary-300 py-5 rounded-full font-semibold text-lg hover:bg-opacity-90 transition-all shadow-md cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary-500">
+                  <button
+                    type="submit"
+                    aria-describedby={sent ? "form-status" : undefined}
+                    className="w-full bg-primary-500 text-secondary-300 py-5 rounded-full font-semibold text-lg hover:brightness-95 transition-all shadow-md cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary-500"
+                  >
                     Verstuur bericht
                   </button>
-                  {/* TODO: koppel aan een echte verzendactie (e-mailservice of endpoint). Nu bevestigt het formulier alleen visueel; er wordt niets verstuurd. */}
-                  {sent && (
-                    <p role="status" className="rounded-2xl bg-primary-50 px-6 py-4 text-primary-500">
-                      Bedankt voor je bericht. Je hoort binnen 1–2 werkdagen van me.
-                    </p>
-                  )}
                 </form>
               </div>
             </div>
@@ -754,28 +700,10 @@ export const ContactForm = ({ showQuickContact = true }: { showQuickContact?: bo
             {/* Right Column: Context and Support Info */}
             <div className="flex-1 space-y-10 lg:pt-8">
               <div className="space-y-6">
-                <h2 className="text-[38px] font-bold text-primary-400 leading-tight">Waarmee kan ik je helpen?</h2>
+                <h2 className="text-[38px] font-bold text-primary-400 leading-tight">Vertel kort wat er speelt</h2>
                 <p className="text-lg text-neutral-700 leading-relaxed max-w-2xl">
-                  Beschrijf kort je vraag of situatie. Ik denk graag mee over passende ondersteuning voor jouw organisatie of project — ook als je nog niet precies weet wat je nodig hebt.
+                  Voor begeleiding, culturele bemiddeling, culturele vertaling of een workshop — of gewoon om je vraag te verkennen.
                 </p>
-              </div>
-
-              <div className="space-y-6">
-                <ul className="space-y-4">
-                  {[
-                    "Samenwerking met organisaties",
-                    "Culturele bemiddeling",
-                    "Training en workshops",
-                    "Tolken en vertaling"
-                  ].map((item) => (
-                    <li key={item} className="flex items-center gap-4 text-neutral-700">
-                      <div className="bg-secondary-300 rounded-full p-1 shrink-0">
-                        <CheckCircle2 className="w-4 h-4 text-primary-500" />
-                      </div>
-                      <span className="text-lg">{item}</span>
-                    </li>
-                  ))}
-                </ul>
               </div>
 
               <div className="space-y-8 pt-4 border-t border-neutral-100">
@@ -785,6 +713,10 @@ export const ContactForm = ({ showQuickContact = true }: { showQuickContact?: bo
                     <a href="mailto:info@bettyteklemariam.nl" className="flex items-center gap-3 text-neutral-700 hover:text-primary-500 transition-colors text-lg rounded-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary-500">
                       <Mail className="w-5 h-5 text-primary-400 shrink-0" />
                       E-mail
+                    </a>
+                    <a href="tel:+31639244184" className="flex items-center gap-3 text-neutral-700 hover:text-primary-500 transition-colors text-lg rounded-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary-500">
+                      <Phone className="w-5 h-5 text-primary-400 shrink-0" />
+                      +31 6 39 24 41 84
                     </a>
                     <a href="https://www.linkedin.com/in/bet-el-teklemariam-b1896b165/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-neutral-700 hover:text-primary-500 transition-colors text-lg rounded-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary-500">
                       <Linkedin className="w-5 h-5 text-primary-400 shrink-0" />
@@ -796,10 +728,6 @@ export const ContactForm = ({ showQuickContact = true }: { showQuickContact?: bo
                     </a>
                   </div>
                 </div>
-
-                <p className="text-neutral-700 text-sm">
-                  Je ontvangt binnen 1–2 werkdagen een reactie.
-                </p>
               </div>
             </div>
           </div>
@@ -879,23 +807,14 @@ export const Footer = ({ onNavigate, variant = "white" }: { onNavigate: (page: "
 
             <div className="space-y-6 min-w-[140px]">
               <h4 className="font-display font-semibold text-lg">Bedrijfsgegevens</h4>
-              <ul className="space-y-2">
-                <li>
-                  <button 
-                    onClick={() => onNavigate("contact", "bedrijfsgegevens")}
-                    className="text-neutral-800 hover:text-primary-500 transition-colors leading-[32px] cursor-pointer text-left"
-                  >
-                    Bedrijfsnaam
-                  </button>
-                </li>
-                <li>
-                  <button
-                    onClick={() => onNavigate("contact", "bedrijfsgegevens")}
-                    className="text-neutral-800 hover:text-primary-500 transition-colors leading-[32px] cursor-pointer text-left"
-                  >
-                    KvK-nummer
-                  </button>
-                </li>
+              {/* TODO: bedrijfsnaam verifiëren tegen de KvK-inschrijving —
+                  "Teklemariam" (profiel §1) of "Betty Teklemariam" als handelsnaam.
+                  TODO: BTW-nummer toevoegen als Betty het wil tonen; niet verplicht. */}
+              <ul className="space-y-2 text-neutral-800 leading-[32px]">
+                <li>Teklemariam</li>
+                <li>KvK 65787676</li>
+                <li>Rotterdam</li>
+                <li>Werkgebied: heel Nederland</li>
               </ul>
             </div>
           </div>

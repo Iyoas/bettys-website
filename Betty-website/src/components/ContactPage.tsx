@@ -1,21 +1,58 @@
 import { WhatsappLogo as WhatsappLogoIcon } from "@phosphor-icons/react";
+import { ArrowDown } from "lucide-react";
 import { ContactForm, WHATSAPP_URL } from "./Sections";
+import { JsonLd, PROVIDER } from "./JsonLd";
+import { usePageMeta } from "../usePageMeta";
+
+const LINKEDIN_URL = "https://www.linkedin.com/in/bet-el-teklemariam-b1896b165/";
+
+const CONTACT_SCHEMA = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      ...PROVIDER,
+      sameAs: [LINKEDIN_URL],
+      founder: { ...PROVIDER.founder, sameAs: [LINKEDIN_URL] },
+      contactPoint: {
+        "@type": "ContactPoint",
+        contactType: "customer service",
+        email: "info@bettyteklemariam.nl",
+        telephone: "+31639244184",
+        areaServed: "NL",
+        availableLanguage: ["nl", "ti", "de", "en"]
+      }
+    },
+    {
+      "@type": "ContactPage",
+      "@id": "https://bettyteklemariam.nl/contact#pagina",
+      name: "Contact",
+      about: { "@id": PROVIDER["@id"] }
+    }
+  ]
+};
 
 export const ContactPage = () => {
+  usePageMeta(
+    "Contact — Betty Teklemariam, intercultureel adviseur",
+    "Plan een kennismakingsgesprek met Betty Teklemariam, intercultureel adviseur en bemiddelaar. Gevestigd in Rotterdam, werkzaam door heel Nederland."
+  );
+
   return (
     <div className="bg-white">
+      <JsonLd data={CONTACT_SCHEMA} />
+
       {/* Hero Section */}
-      <section className="bg-white py-20 overflow-hidden">
+      <section className="bg-white py-12 lg:py-20 overflow-hidden">
         <div className="container-custom">
-          <div className="flex flex-col lg:flex-row lg:items-start gap-12 lg:gap-12">
+          <div className="flex flex-col lg:flex-row lg:items-center gap-12 lg:gap-16">
             <div className="flex-1 space-y-6">
               <h1 className="text-4xl md:text-5xl lg:text-[46px] font-bold leading-[1.2] lg:leading-[69px] text-primary-500">
                 Neem contact op
               </h1>
               <p className="text-lg text-neutral-700 max-w-[512px] leading-[30px]">
-                Wil je samenwerken of meer weten over wat Betty voor jouw organisatie kan betekenen? Neem gerust contact op en plan een kennismakingsgesprek.
+                Loopt een traject vast, of wil je je team beter toerusten? Bel of app me, dan plannen we een kennismakingsgesprek. Ook als je vraag nog niet scherp is.
               </p>
-              
+
               <div className="flex flex-wrap gap-4 pt-4">
                 <a
                   href={WHATSAPP_URL}
@@ -26,19 +63,24 @@ export const ContactPage = () => {
                   Plan een kennismaking
                   <WhatsappLogoIcon size={28} weight="light" />
                 </a>
+                <button
+                  onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
+                  className="bg-white text-primary-500 px-8 py-4 rounded-full border-2 border-secondary-300 font-medium text-lg inline-flex items-center gap-2 hover:bg-neutral-50 transition-colors cursor-pointer"
+                >
+                  Naar het formulier
+                  <ArrowDown className="w-5 h-5" />
+                </button>
               </div>
-              
-              {/* Spacer to match homepage hero height and keep image position identical */}
-              <div className="hidden lg:block h-[145px]" />
             </div>
-            
-            <div className="flex-1 w-full lg:pt-2">
-              <div className="relative max-w-[540px] lg:ml-auto bg-primary-50/95 rounded-[32px] p-8 shadow-[0px_2px_4px_rgba(27,28,29,0.04)]">
-                {/* TODO: vervang */}
+
+            <div className="flex-1 w-full">
+              <div className="relative max-w-[460px] lg:ml-auto bg-primary-50/95 rounded-[32px] p-3 shadow-[0px_2px_4px_rgba(27,28,29,0.04)]">
+                {/* Zelfde staande portretfoto als op de Over mij-pagina.
+                    Fallback-logica bewust ongewijzigd. */}
                 <img
-                  src="/images/contact-illustration.png"
-                  alt="Illustratie Contact"
-                  className="w-full h-auto rounded-[24px] object-cover aspect-[4/3]"
+                  src="/images/betty-portret.jpg"
+                  alt="Portretfoto van Betty Teklemariam"
+                  className="w-full h-auto rounded-[24px] object-cover object-top aspect-[3/4]"
                   onError={(e) => {
                     const img = e.currentTarget;
                     if (img.src.includes("loremflickr")) {
@@ -56,43 +98,7 @@ export const ContactPage = () => {
         </div>
       </section>
 
-      <ContactForm showQuickContact={true} />
-      
-      {/* 3. Bedrijfsgegevens Section */}
-      <section id="bedrijfsgegevens" className="py-24 bg-neutral-50 border-t border-neutral-100">
-        <div className="container-custom">
-          <div className="flex flex-col lg:flex-row gap-16 lg:gap-24">
-            {/* Align with the left column (contact form) above */}
-            <div className="flex-1 space-y-12">
-              <h2 className="text-[38px] font-bold text-primary-500 leading-tight">Bedrijfsgegevens</h2>
-              
-              <div className="space-y-5">
-                <div className="grid grid-cols-[140px_1fr] md:grid-cols-[200px_1fr] gap-4 items-baseline">
-                  <span className="text-neutral-600 text-sm font-medium">Bedrijfsnaam</span>
-                  <span className="text-neutral-1000 text-lg font-semibold">Betty Teklemariam</span>
-                </div>
-                
-                <div className="grid grid-cols-[140px_1fr] md:grid-cols-[200px_1fr] gap-4 items-baseline">
-                  <span className="text-neutral-600 text-sm font-medium">KvK-nummer</span>
-                  <span className="text-neutral-1000 text-lg">65787676</span>
-                </div>
-
-                <div className="grid grid-cols-[140px_1fr] md:grid-cols-[200px_1fr] gap-4 items-baseline">
-                  <span className="text-neutral-600 text-sm font-medium">Vestigingsplaats</span>
-                  <span className="text-neutral-1000 text-lg">Rotterdam</span>
-                </div>
-                
-                <div className="grid grid-cols-[140px_1fr] md:grid-cols-[200px_1fr] gap-4 items-baseline pt-4">
-                  <span className="text-neutral-600 text-sm font-medium">Werkgebied</span>
-                  <span className="text-neutral-1000 text-lg leading-relaxed">Gevestigd in Rotterdam, werkzaam door heel Nederland</span>
-                </div>
-              </div>
-            </div>
-            {/* Empty right column to maintain perfect alignment with the two-column layout above */}
-            <div className="flex-1 hidden lg:block" />
-          </div>
-        </div>
-      </section>
+      <ContactForm />
     </div>
   );
 };

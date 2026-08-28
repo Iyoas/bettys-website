@@ -43,7 +43,7 @@ export default function App() {
             <Testimonials />
             {/* Geen CTA-blok hier: het contactformulier hieronder vraagt al om dezelfde actie.
                 De CTA staat wel op de subpagina's, die geen formulier hebben. */}
-            <ContactForm showQuickContact={false} />
+            <ContactForm />
           </>
         ) : currentPage === "services" ? (
           <ServicesPage onNavigate={navigateTo} />
