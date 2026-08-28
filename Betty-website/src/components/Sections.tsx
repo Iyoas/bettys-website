@@ -1,135 +1,188 @@
 import { motion } from "motion/react";
-import { ArrowRight, Heart, Mail, Phone, Calendar, CheckCircle2, Linkedin, Globe, Languages, ShieldCheck, Menu, X, Quote, Handshake as HandshakeIcon, Waypoints as BridgeIcon, Presentation as PresentationIcon } from "lucide-react";
-import { WhatsappLogo as WhatsappLogoIcon } from "@phosphor-icons/react";
-import { useState, useEffect } from "react";
+import { ArrowRight, Menu, X } from "lucide-react";
+import { useEffect, useState, type MouseEvent, type ReactNode } from "react";
+import {
+  BridgeIcon,
+  ContextIcon,
+  EmailIcon,
+  GuidanceIcon,
+  LanguageIcon,
+  LinkedInIcon,
+  ResearchIcon,
+  TrainingIcon,
+  TrustIcon,
+  WhatsAppIcon,
+} from "./icons/BettyIcons";
 
-// Betty's WhatsApp (gebruikt voor alle "Start een gesprek"-knoppen)
+export type Page = "home" | "services" | "about" | "clients" | "contact";
+export type Navigate = (page: Page, id?: string) => void;
+export const PAGE_PATHS: Record<Page, string> = {
+  home: "/",
+  services: "/diensten",
+  about: "/over-betty",
+  clients: "/opdrachtgevers",
+  contact: "/contact",
+};
+export const BETTY_EMAIL = "info@bettyteklemariam.nl";
 export const WHATSAPP_URL = "https://wa.me/31639244184";
+export const LINKEDIN_URL =
+  "https://www.linkedin.com/in/bet-el-teklemariam-b1896b165/";
+const emailHref = `mailto:${BETTY_EMAIL}`;
 
-export const Navbar = ({ onNavigate, currentPage }: { onNavigate: (page: "home" | "services" | "about" | "clients" | "contact", id?: string) => void, currentPage: string }) => {
-  const [logoError, setLogoError] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [menuOpen, setMenuOpen] = useState(false);
+export const MailButton = ({
+  children = "Plan een kennismaking per e mail",
+  dark = false,
+  className = "",
+}: {
+  children?: ReactNode;
+  dark?: boolean;
+  className?: string;
+}) => (
+  <a
+    href={emailHref}
+    className={[
+      dark
+        ? "bg-secondary-300 text-primary-500 focus-visible:outline-white"
+        : "bg-primary-500 text-secondary-300 shadow-md focus-visible:outline-primary-500",
+      "min-h-11 px-6 py-3 rounded-full font-medium inline-flex items-center justify-center gap-2",
+      "transition duration-200 motion-reduce:transition-none hover:-translate-y-0.5 hover:shadow-md",
+      "focus-visible:outline-2 focus-visible:outline-offset-4",
+      className,
+    ].join(" ")}
+  >
+    <EmailIcon size={21} />
+    {children}
+  </a>
+);
+export const WhatsAppLink = ({
+  compact = false,
+  dark = false,
+}: {
+  compact?: boolean;
+  dark?: boolean;
+}) => (
+  <a
+    href={WHATSAPP_URL}
+    target="_blank"
+    rel="noopener noreferrer"
+    className={[
+      dark
+        ? "border-secondary-300 text-secondary-300 focus-visible:outline-secondary-300"
+        : "border-secondary-300 text-primary-500 bg-white focus-visible:outline-primary-500",
+      "min-h-11",
+      compact ? "px-4" : "px-6",
+      "py-3 rounded-full border inline-flex items-center justify-center gap-2 font-medium",
+      "transition duration-200 motion-reduce:transition-none hover:-translate-y-0.5",
+      "focus-visible:outline-2 focus-visible:outline-offset-4",
+    ].join(" ")}
+  >
+    <WhatsAppIcon size={20} />
+    WhatsApp
+  </a>
+);
 
+const navItems: { label: string; page: Page }[] = [
+  { label: "Home", page: "home" },
+  { label: "Diensten", page: "services" },
+  { label: "Over Betty", page: "about" },
+  { label: "Opdrachtgevers", page: "clients" },
+  { label: "Contact", page: "contact" },
+];
+const isPlainInternalClick = (event: MouseEvent<HTMLAnchorElement>) =>
+  event.button === 0 &&
+  !event.defaultPrevented &&
+  !event.metaKey &&
+  !event.altKey &&
+  !event.ctrlKey &&
+  !event.shiftKey &&
+  (!event.currentTarget.target || event.currentTarget.target === "_self");
+export const Navbar = ({
+  onNavigate,
+  currentPage,
+}: {
+  onNavigate: Navigate;
+  currentPage: Page;
+}) => {
+  const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 16);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  const isHome = currentPage === "home";
-  const navBg = isHome ? "bg-neutral-50" : "bg-white";
-  const barBg = isHome ? "bg-white" : "bg-neutral-50";
-
-  const navItems: { label: string; page: "home" | "services" | "about" | "clients" | "contact" }[] = [
-    { label: "Home", page: "home" },
-    { label: "Diensten", page: "services" },
-    { label: "Over mij", page: "about" },
-    { label: "Opdrachtgevers", page: "clients" },
-    { label: "Contact", page: "contact" }
-  ];
-
-  const go = (page: "home" | "services" | "about" | "clients" | "contact") => {
+  const go = (event: MouseEvent<HTMLAnchorElement>, page: Page) => {
+    if (!isPlainInternalClick(event)) return;
+    event.preventDefault();
     onNavigate(page);
-    setMenuOpen(false);
+    setOpen(false);
   };
-
   return (
-    <nav className={`sticky top-0 z-50 pt-8 pb-4 ${isScrolled ? "bg-transparent" : navBg} transition-colors duration-300`}>
+    <nav
+      aria-label="Hoofdnavigatie"
+      className={`sticky top-0 z-50 pt-3 md:pt-6 pb-3 ${scrolled ? "bg-white/90" : "bg-transparent"}`}
+    >
       <div className="container-custom">
-        <div className={`${barBg} rounded-[32px] px-6 md:px-8 py-4 shadow-[0px_0px_4px_rgba(27,28,29,0.04)] transition-colors duration-300`}>
-          <div className="flex items-center justify-between">
-            <button
-              onClick={() => go("home")}
-              className="flex items-center gap-2 cursor-pointer"
+        <div className="rounded-[32px] bg-white px-4 md:px-7 py-3 shadow-[0px_0px_4px_rgba(27,28,29,0.04)]">
+          <div className="flex items-center justify-between gap-3">
+            <a
+              href={PAGE_PATHS.home}
+              onClick={(event) => go(event, "home")}
+              className="min-h-11 flex items-center gap-3 rounded-full px-2 text-left focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500"
             >
-              {!logoError ? (
-                <img
-                  src="/images/logo-betty.svg"
-                  alt=""
-                  className="w-9 h-9 object-contain"
-                  onError={() => setLogoError(true)}
-                />
-              ) : (
-                <div className="w-9 h-9 bg-primary-50 rounded-full flex items-center justify-center">
-                  <Heart className="w-5 h-5 text-primary-500 fill-secondary-300" />
-                </div>
-              )}
-              <span className="font-display font-semibold text-lg text-primary-500">Betty</span>
-            </button>
-
-            <div className="hidden md:flex items-center gap-8">
-              {navItems.map((item) => {
-                const isActive = currentPage === item.page;
-                return (
-                  <button
-                    key={item.page}
-                    onClick={() => go(item.page)}
-                    className={`relative text-neutral-1000 hover:text-primary-500 transition-colors cursor-pointer ${
-                      isActive ? "text-primary-500 font-semibold" : ""
-                    }`}
-                  >
-                    {item.label}
-                    {isActive && (
-                      <motion.div
-                        layoutId="nav-underline"
-                        className="absolute -bottom-1 left-0 right-0 h-0.5 bg-secondary-300 rounded-full"
-                      />
-                    )}
-                  </button>
-                );
-              })}
+              <img src="/images/logo-betty.svg" alt="" className="h-9 w-9" />
+              <span className="font-display font-bold text-primary-500">
+                Betty Teklemariam
+              </span>
+            </a>
+            <div className="hidden lg:flex items-center gap-6">
+              {navItems.map((item) => (
+                <a
+                  key={item.page}
+                  href={PAGE_PATHS[item.page]}
+                  onClick={(event) => go(event, item.page)}
+                  aria-current={currentPage === item.page ? "page" : undefined}
+                  className={`min-h-11 relative px-1 text-sm ${currentPage === item.page ? "font-semibold text-primary-500" : "text-neutral-800 hover:text-primary-500"} focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500`}
+                >
+                  {item.label}
+                  {currentPage === item.page && (
+                    <motion.span
+                      layoutId="active-nav"
+                      className="absolute bottom-0 left-1 right-1 h-0.5 rounded-full bg-secondary-300"
+                    />
+                  )}
+                </a>
+              ))}
             </div>
-
+            <div className="hidden lg:block">
+              <MailButton className="text-sm px-5" children="E mail Betty" />
+            </div>
             <button
-              onClick={() => go("contact")}
-              className="hidden md:block bg-primary-500 text-secondary-300 px-6 py-2.5 rounded-full font-semibold hover:bg-opacity-90 transition-all cursor-pointer"
+              onClick={() => setOpen(!open)}
+              aria-expanded={open}
+              aria-label={open ? "Menu sluiten" : "Menu openen"}
+              className="lg:hidden w-11 h-11 rounded-full text-primary-500 hover:bg-neutral-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500"
             >
-              Samenwerken
-            </button>
-
-            {/* Hamburger — alleen mobiel */}
-            <button
-              onClick={() => setMenuOpen((o) => !o)}
-              className="md:hidden w-11 h-11 -mr-1 flex items-center justify-center rounded-full text-primary-500 hover:bg-neutral-100 transition-colors cursor-pointer"
-              aria-label={menuOpen ? "Menu sluiten" : "Menu openen"}
-              aria-expanded={menuOpen}
-            >
-              {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {open ? <X /> : <Menu />}
             </button>
           </div>
-
-          {/* Mobiel uitklapmenu */}
-          {menuOpen && (
+          {open && (
             <motion.div
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
-              className="md:hidden overflow-hidden mt-3 pt-3 border-t border-neutral-100 flex flex-col gap-1"
+              className="lg:hidden mt-3 border-t border-primary-100 pt-3 grid gap-1"
             >
-              {navItems.map((item) => {
-                const isActive = currentPage === item.page;
-                return (
-                  <button
-                    key={item.page}
-                    onClick={() => go(item.page)}
-                    className={`text-left px-3 py-3 rounded-2xl transition-colors cursor-pointer ${
-                      isActive
-                        ? "bg-neutral-100 text-primary-500 font-semibold"
-                        : "text-neutral-1000 hover:bg-neutral-50"
-                    }`}
-                  >
-                    {item.label}
-                  </button>
-                );
-              })}
-              <button
-                onClick={() => go("contact")}
-                className="mt-2 bg-primary-500 text-secondary-300 px-6 py-3 rounded-full font-semibold hover:bg-opacity-90 transition-all cursor-pointer"
-              >
-                Samenwerken
-              </button>
+              {navItems.map((item) => (
+                <a
+                  key={item.page}
+                  href={PAGE_PATHS[item.page]}
+                  onClick={(event) => go(event, item.page)}
+                  aria-current={currentPage === item.page ? "page" : undefined}
+                  className={`min-h-11 text-left rounded-2xl px-4 py-3 ${currentPage === item.page ? "bg-primary-50 font-semibold text-primary-500" : "text-neutral-800 hover:bg-neutral-50"}`}
+                >
+                  {item.label}
+                </a>
+              ))}
+              <MailButton className="mt-2" />
             </motion.div>
           )}
         </div>
@@ -138,744 +191,417 @@ export const Navbar = ({ onNavigate, currentPage }: { onNavigate: (page: "home" 
   );
 };
 
-export const Hero = ({ onNavigate }: { onNavigate: (page: "home" | "services" | "about" | "clients" | "contact", id?: string) => void }) => {
-  return (
-    <section className="bg-neutral-50 py-20 overflow-hidden">
-      <div className="container-custom">
-        <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
-          <div className="flex-1 space-y-6">
-            <h1 className="text-4xl md:text-5xl lg:text-[46px] font-bold leading-[1.2] lg:leading-[69px] text-primary-500">
-              Bruggen bouwen<br />tussen <span className="text-secondary-400">culturen</span> en gemeenschappen.
-            </h1>
-            <p className="text-lg text-neutral-700 max-w-[512px] leading-[30px]">
-              Ik help gemeenten, onderzoekers en maatschappelijke organisaties beter samen te werken met Eritrese gemeenschappen.
-            </p>
-            
-            <div className="flex flex-wrap gap-4 pt-4">
-              <a
-                href={WHATSAPP_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-primary-500 text-secondary-300 px-8 py-4 rounded-full font-medium text-lg inline-flex items-center gap-2 hover:scale-105 transition-transform shadow-md cursor-pointer"
-              >
-                Start een gesprek
-                <WhatsappLogoIcon size={28} weight="light" />
-              </a>
-              <button
-                onClick={() => onNavigate("services")}
-                className="bg-white text-primary-500 px-8 py-4 rounded-full font-medium text-lg border-2 border-secondary-300 hover:bg-neutral-50 transition-colors cursor-pointer"
-              >
-                Bekijk diensten
-              </button>
-            </div>
-          </div>
-          
-          <div className="flex-1 w-full lg:pt-2">
-            <div className="relative max-w-[540px] lg:ml-auto bg-primary-50 rounded-[32px] p-8 shadow-[0px_2px_4px_rgba(27,28,29,0.04)]">
-              {/* TODO: vervang */}
-              <img
-                src="/images/betty-werk.png"
-                alt="Betty aan het werk"
-                className="w-full h-auto rounded-[24px] object-cover aspect-[4/3]"
-                onError={(e) => {
-                  const img = e.currentTarget;
-                  if (img.src.includes("loremflickr")) {
-                    img.onerror = null;
-                    img.src = "https://picsum.photos/seed/hero/800/600";
-                  } else {
-                    img.src = "https://loremflickr.com/800/600/mentor,conversation?lock=17";
-                  }
-                }}
-                referrerPolicy="no-referrer"
-              />
-            </div>
-          </div>
-        </div>
+export const Eyebrow = ({
+  children,
+  tone = "default",
+}: {
+  children: ReactNode;
+  tone?: "default" | "light";
+}) => (
+  <p
+    className={`font-display text-xs font-bold uppercase tracking-[0.18em] ${tone === "light" ? "text-secondary-300" : "text-primary-500"}`}
+  >
+    {children}
+  </p>
+);
+export const SectionTitle = ({
+  title,
+  intro,
+  center = false,
+}: {
+  title: string;
+  intro?: string;
+  center?: boolean;
+}) => (
+  <div className={`${center ? "text-center mx-auto" : ""} max-w-3xl space-y-4`}>
+    <Eyebrow>{title}</Eyebrow>
+    <h2 className="text-3xl md:text-[38px] font-bold leading-tight text-primary-400">
+      {intro}
+    </h2>
+    <div
+      className={`${center ? "mx-auto" : ""} h-1 w-16 rounded-full bg-secondary-300`}
+    />
+  </div>
+);
+const clientNames = [
+  "COA",
+  "Nidos",
+  "Sociaal en Cultureel Planbureau",
+  "ARQ Centrum '45",
+  "VluchtelingenWerk Nederland",
+  "Verwey Jonker Instituut",
+];
+export const ClientWordmarks = ({ compact = false }: { compact?: boolean }) => (
+  <div
+    className={`grid ${compact ? "grid-cols-2 md:grid-cols-3" : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"} gap-3`}
+  >
+    {clientNames.map((name) => (
+      <div
+        key={name}
+        className="min-h-20 rounded-2xl border border-neutral-100 bg-white px-4 py-4 flex items-center justify-center text-center"
+      >
+        <span className="font-display font-semibold text-primary-500 leading-snug">
+          {name}
+        </span>
       </div>
-    </section>
-  );
-};
+    ))}
+  </div>
+);
 
-export const TrustedBy = () => {
-  const logos = Array(12).fill("/logos/logo-client.png");
-  // Duplicate for seamless loop
-  const duplicatedLogos = [...logos, ...logos];
-
-  return (
-    <section className="bg-white py-12 overflow-hidden">
-      <div className="container-custom flex flex-col items-center gap-8">
-        <div className="w-full flex items-center gap-6">
-          <div className="flex-1 h-[1px] bg-gradient-to-r from-transparent to-primary-500/25" />
-          <p className="text-xs font-bold text-primary-500 font-display uppercase tracking-[0.2em] whitespace-nowrap">
-            Samenwerkingen met
-          </p>
-          <div className="flex-1 h-[1px] bg-gradient-to-l from-transparent to-primary-500/25" />
-        </div>
-        
-        <div className="relative w-full">
-          {/* Gradient masks for smooth fade in/out */}
-          <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-white to-transparent z-10" />
-          <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-white to-transparent z-10" />
-          
-          <div className="flex overflow-hidden">
-            <motion.div 
-              className="flex gap-16 items-center whitespace-nowrap"
-              animate={{ x: ["0%", "-50%"] }}
-              transition={{ 
-                duration: 30, 
-                ease: "linear", 
-                repeat: Infinity 
-              }}
-            >
-              {/* TODO: vervang */}
-              {duplicatedLogos.map((logo, i) => (
-                <img
-                  key={i}
-                  src={logo}
-                  alt="Client Logo"
-                  className="h-8 md:h-9 w-auto object-contain opacity-60 grayscale hover:opacity-100 hover:scale-105 transition-all duration-200 cursor-default"
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).src = `https://picsum.photos/seed/logo${i % 12}/120/40?grayscale`;
-                  }}
-                  referrerPolicy="no-referrer"
-                />
-              ))}
-            </motion.div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-};
-
-export const Features = () => {
-  const features = [
-    {
-      title: "Culturele verschillen",
-      desc: "Begrip van diepgewortelde normen en waarden die interacties beïnvloeden.",
-      icon: <Globe size={28} className="text-secondary-300" />
-    },
-    {
-      title: "Taalbarrières",
-      desc: "Het overbruggen van taalverschillen om miscommunicatie te voorkomen.",
-      icon: <Languages size={28} className="text-secondary-300" />
-    },
-    {
-      title: "Wantrouwen",
-      desc: "Het opbouwen van een veilige basis voor open communicatie en vertrouwen.",
-      icon: <ShieldCheck size={28} className="text-secondary-300" />
-    }
-  ];
-
-  return (
-    <section className="py-28 bg-white">
-      <div className="container-custom text-center space-y-4 mb-16">
-        <h2 className="text-[38px] font-bold text-primary-400">Waarom Culturele Bemiddeling?</h2>
-        <p className="text-lg text-neutral-700 max-w-2xl mx-auto">
-          Er bestaat vaak een onzichtbare kloof tussen instanties en nieuwkomers. Ik help deze te overbruggen.
+export const Hero = ({ onNavigate }: { onNavigate: Navigate }) => (
+  <section className="bg-neutral-50 py-16 md:py-20">
+    <div className="container-custom grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+      <div className="space-y-7">
+        <Eyebrow>Intercultureel adviseur en mediator</Eyebrow>
+        <h1 className="text-4xl md:text-5xl lg:text-[46px] font-bold leading-[1.18] lg:leading-[1.22] text-primary-500">
+          Samenwerken met Eritrese gemeenschappen vraagt om kennis, vertrouwen
+          en aandacht.
+        </h1>
+        <p className="max-w-xl text-lg leading-[30px] text-neutral-700">
+          Ik help gemeenten, zorg, onderwijs, jeugdzorg, maatschappelijke
+          organisaties en onderzoekers om gesprekken, begeleiding en
+          samenwerking beter te laten aansluiten.
         </p>
-      </div>
-      
-      <div className="container-custom grid md:grid-cols-3 gap-8">
-        {features.map((f, i) => (
-          <div key={i} className="bg-neutral-50 p-8 rounded-[32px] shadow-[0px_2px_4px_rgba(27,28,29,0.04)] space-y-6">
-            <div className="w-12 h-12 bg-primary-500 rounded-full flex items-center justify-center">
-              {f.icon}
-            </div>
-            <div className="space-y-4">
-              <h3 className="text-2xl font-semibold text-primary-500">{f.title}</h3>
-              <p className="text-neutral-700 leading-[32px]">{f.desc}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-    </section>
-  );
-};
-
-export const Services = ({ onNavigate }: { onNavigate: (page: "home" | "services" | "about" | "clients" | "contact", id?: string) => void }) => {
-  const services = [
-    {
-      title: "Begeleiding",
-      desc: "Persoonlijke ondersteuning bij het navigeren door complexe culturele landschappen en maatschappelijke integratie.",
-      icon: <HandshakeIcon size={32} className="text-secondary-300" />
-    },
-    {
-      title: "Culturele Bemiddeling",
-      desc: "Het overbruggen van verschillen in communicatie en verwachtingen tussen diverse groepen en instanties.",
-      icon: <BridgeIcon size={32} className="text-secondary-300" />
-    },
-    {
-      title: "Tolken & Vertalen",
-      desc: "Ondersteuning bij gesprekken en communicatie, zowel mondeling als schriftelijk, met oog voor taal én culturele context.",
-      icon: <Languages size={32} className="text-secondary-300" />
-    },
-    {
-      title: "Workshops & Voorlichting",
-      desc: "Interactieve sessies gericht op bewustwording, inclusie en het effectief omgaan met culturele diversiteit.",
-      icon: <PresentationIcon size={32} className="text-secondary-300" />
-    }
-  ];
-
-  return (
-    <section id="diensten" className="py-28 bg-neutral-50">
-      <div className="container-custom space-y-4 mb-16">
-        <h2 className="text-[38px] font-bold text-primary-400">Mijn Diensten</h2>
-        <p className="text-lg text-neutral-700 max-w-2xl">
-          Praktische ondersteuning voor organisaties die effectief willen samenwerken met Eritrese gemeenschappen.
-        </p>
-      </div>
-      
-      <div className="container-custom grid md:grid-cols-2 gap-8">
-        {services.map((s, i) => (
-          <div key={i} className="bg-white p-8 rounded-[32px] shadow-[0px_0px_4px_rgba(27,28,29,0.04)] flex flex-col justify-between gap-8">
-            <div className="space-y-8">
-              <div className="w-16 h-16 bg-primary-500 rounded-full flex items-center justify-center">
-                {s.icon}
-              </div>
-              <div className="space-y-4">
-                <h3 className="text-[26px] font-bold text-primary-500">{s.title}</h3>
-                <p className="text-lg text-neutral-800 leading-[32px] max-w-sm">{s.desc}</p>
-              </div>
-            </div>
-            <button 
-              onClick={() => onNavigate("services")}
-              className="self-start px-8 py-4 rounded-full border border-secondary-300 text-primary-500 font-display font-medium text-lg flex items-center gap-2 hover:bg-neutral-50 transition-colors cursor-pointer"
-            >
-              Bekijk dienst
-              <ArrowRight className="w-4 h-4" />
-            </button>
-          </div>
-        ))}
-      </div>
-    </section>
-  );
-};
-
-export const About = ({ onNavigate }: { onNavigate: (page: "home" | "services" | "about" | "clients" | "contact", id?: string) => void }) => {
-  return (
-    <section id="over-mij" className="py-28 bg-white">
-      <div className="container-custom text-center space-y-2 mb-16">
-        <h2 className="text-[38px] font-bold text-primary-400">Over mij</h2>
-        <p className="text-lg text-neutral-700">Bruggen bouwen tussen culturen en gemeenschappen.</p>
-      </div>
-      
-      <div className="container-custom">
-        <div className="bg-neutral-50 rounded-[32px] p-8 lg:p-12 flex flex-col lg:flex-row items-center gap-10 lg:gap-16 shadow-[0px_0px_4px_rgba(27,28,29,0.04)]">
-          <div className="w-full lg:w-[45%] lg:shrink-0">
-            {/* TODO: vervang */}
-            <img
-              src="https://loremflickr.com/800/600/colleagues,listening?lock=23"
-              alt="Betty in gesprek met collega's"
-              className="w-full h-auto rounded-[24px] aspect-[512/384] object-cover"
-              onError={(e) => {
-                e.currentTarget.src = "https://picsum.photos/seed/about/512/384";
-              }}
-              referrerPolicy="no-referrer"
-            />
-          </div>
-
-          <div className="flex-1 space-y-8">
-            <div className="space-y-2">
-              <h3 className="text-[26px] font-bold text-primary-500">Betty Teklemariam</h3>
-              <p className="font-display text-sm font-bold text-primary-400 uppercase tracking-widest">
-                Cultureel adviseur &amp; bemiddelaar
-              </p>
-            </div>
-
-            <p className="text-neutral-800 leading-[32px]">
-              Op jonge leeftijd vluchtte ik uit Eritrea. Ik weet uit ervaring hoeveel het scheelt als iemand je begrijpt in een omgeving die nieuw voor je is. Die ervaring gebruik ik nu om organisaties en nieuwkomers dichter bij elkaar te brengen: mensgericht, cultuursensitief en gericht op wat er in de praktijk verandert.
-            </p>
-
-            <div className="flex flex-wrap gap-3">
-              <div className="bg-primary-500 text-secondary-300 px-6 py-2 rounded-full text-sm font-semibold tracking-wide">
-                25+ JAAR ERVARING
-              </div>
-              <div className="bg-primary-500 text-secondary-300 px-6 py-2 rounded-full text-sm font-semibold tracking-wide">
-                GECERTIFICEERD MEDIATOR
-              </div>
-            </div>
-
-            <button
-              onClick={() => onNavigate("about")}
-              className="w-fit bg-white text-primary-500 px-8 py-4 rounded-full border border-secondary-300 font-display font-medium text-lg inline-flex items-center gap-2 hover:bg-neutral-50 transition-colors cursor-pointer"
-            >
-              Lees meer over Betty
-              <ArrowRight className="w-4 h-4" />
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-};
-
-export const Clients = ({ onNavigate }: { onNavigate: (page: "home" | "services" | "about" | "clients" | "contact", id?: string) => void }) => {
-  // Geverifieerde opdrachtgevers uit docs/betty-profiel.md
-  const clients = [
-    {
-      name: "Sociaal en Cultureel Planbureau",
-      tag: "Onderzoek",
-      desc: "Culturele duiding binnen onderzoek naar integratie en participatie van Eritrese gemeenschappen."
-    },
-    {
-      name: "Nidos",
-      tag: "Training",
-      desc: "Trainingen interculturele communicatie voor begeleiders van Eritrese jongeren."
-    },
-    {
-      name: "COA",
-      tag: "Begeleiding",
-      desc: "Bemiddeling en advies rond communicatie tussen bewoners en medewerkers op opvanglocaties."
-    },
-    {
-      name: "Verwey-Jonker Instituut",
-      tag: "Onderzoek",
-      desc: "Ondersteuning bij onderzoek naar maatschappelijke vraagstukken binnen diverse gemeenschappen."
-    },
-    {
-      name: "ARQ Centrum '45",
-      tag: "Advies",
-      desc: "Advies en training over cultuursensitief werken in begeleiding en behandeling."
-    },
-    {
-      name: "VluchtelingenWerk Nederland",
-      tag: "Samenwerking",
-      desc: "Samenwerking rond begeleiding en participatie van nieuwkomers en statushouders."
-    }
-  ];
-
-  return (
-    <section id="opdrachtgevers" className="py-28 bg-neutral-50">
-      <div className="container-custom space-y-4 mb-16">
-        <h2 className="text-[38px] font-bold text-primary-400">Recente opdrachtgevers</h2>
-        <p className="text-lg text-neutral-700 max-w-2xl">
-          Organisaties waarmee ik heb samengewerkt aan betere communicatie en samenwerking met Eritrese gemeenschappen.
-        </p>
-      </div>
-      
-      <div className="container-custom grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {clients.map((c, i) => (
-          <div
-            key={i}
-            className="relative bg-white p-6 pb-24 rounded-[32px] shadow-[0px_0px_4px_rgba(27,28,29,0.04)] md:h-[360px] lg:h-[420px]"
+        <div className="flex flex-wrap gap-3">
+          <MailButton />
+          <button
+            onClick={() => onNavigate("services")}
+            className="min-h-11 px-6 py-3 rounded-full border border-secondary-300 bg-white text-primary-500 font-medium hover:bg-primary-50 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary-500"
           >
-            <div className="flex flex-col items-end gap-6">
-              <span className="bg-primary-500 text-secondary-300 px-6 py-2 rounded-full text-sm font-medium">
-                {c.tag}
-              </span>
-              <div className="w-full space-y-4">
-                <h3 className="text-[26px] font-bold text-primary-500">{c.name}</h3>
-                <p className="text-neutral-800 leading-[32px]">{c.desc}</p>
-              </div>
+            Bekijk mijn diensten
+          </button>
+        </div>
+      </div>
+      <div className="rounded-[32px] bg-primary-50 p-4 md:p-7 shadow-[0px_2px_4px_rgba(27,28,29,0.04)]">
+        <img
+          src="/images/betty-presentatie.png"
+          alt="Betty Teklemariam geeft een presentatie"
+          width={568}
+          height={478}
+          className="aspect-[4/3] w-full rounded-[24px] object-cover"
+          fetchPriority="high"
+        />
+      </div>
+    </div>
+  </section>
+);
+export const TrustedBy = () => (
+  <section className="bg-white py-12">
+    <div className="container-custom space-y-6">
+      <div className="flex items-center gap-4">
+        <span className="h-px flex-1 bg-primary-100" />
+        <Eyebrow>Ervaring met onder meer</Eyebrow>
+        <span className="h-px flex-1 bg-primary-100" />
+      </div>
+      <ClientWordmarks compact />
+    </div>
+  </section>
+);
+
+const problems = [
+  [
+    "Verschillende verwachtingen",
+    "Professionals en gezinnen kunnen hetzelfde gesprek anders duiden. Betty helpt verwachtingen bespreekbaar maken.",
+    <ContextIcon />,
+  ],
+  [
+    "Taal met context",
+    "Taal vraagt aandacht voor betekenis, familieverhoudingen en wat in een gesprek wel of niet wordt uitgesproken.",
+    <LanguageIcon />,
+  ],
+  [
+    "Vertrouwen en veiligheid",
+    "Bij gevoelige situaties ondersteunt Betty professionals en gezinnen om zorgvuldig met elkaar in gesprek te blijven.",
+    <TrustIcon />,
+  ],
+];
+export const Features = () => (
+  <section className="bg-white py-20 md:py-28">
+    <div className="container-custom">
+      <SectionTitle
+        title="Als samenwerking vastloopt"
+        intro="Culturele context kan verschil maken in contact, verwachtingen en vertrouwen."
+        center
+      />
+      <div className="mt-12 grid md:grid-cols-3 gap-5">
+        {problems.map(([title, text, icon]) => (
+          <article
+            key={title as string}
+            className="rounded-[32px] bg-neutral-50 p-7 space-y-5 shadow-[0px_2px_4px_rgba(27,28,29,0.04)] transition duration-200 motion-reduce:transition-none hover:-translate-y-1"
+          >
+            <div className="w-12 h-12 rounded-full bg-primary-500 text-secondary-300 flex items-center justify-center">
+              {icon as ReactNode}
             </div>
-            <button
-              onClick={() => onNavigate("clients")}
-              className="absolute bottom-6 left-6 px-8 py-4 rounded-full border border-secondary-300 text-primary-500 font-display font-medium text-lg flex items-center gap-2 hover:bg-neutral-50 transition-colors cursor-pointer"
-            >
-              Bekijk case
-              <ArrowRight className="w-4 h-4" />
-            </button>
-          </div>
+            <h3 className="text-xl font-bold text-primary-500">{title}</h3>
+            <p className="leading-7 text-neutral-700">{text}</p>
+          </article>
         ))}
       </div>
-    </section>
-  );
-};
-
-export const Testimonials = () => {
-  // Geverifieerde testimonials uit docs/betty-profiel.md (§9)
-  const testimonials = [
-    {
-      text: "Bet-El is een integere en zeer betrouwbare professional die een belangrijke rol vervult als cultureel verbinder. Ze komt afspraken consequent na, is flexibel en levert vaak meer dan verwacht.",
-      name: "Monique Haveman",
-      sub: "Mix Support, Adviseur Zorg en Kwaliteit"
-    },
-    {
-      text: "Betty is ongelooflijk betrouwbaar. Je voelt dat ze haar werk met liefde en toewijding doet. Als geen ander heeft ze oog voor de obstakels die vluchtelingen tegenkomen.",
-      name: "Lost in Europe",
-      sub: "Onderzoeksjournalist"
-    },
-    {
-      text: "Een natuurlijke en transparante samenwerking, zonder dat dit afbreuk doet aan de professionaliteit.",
-      name: "Nidos",
-      sub: "Jeugdbeschermer"
-    }
-  ];
-
-  return (
-    <section className="py-28 bg-white">
-      <div className="container-custom text-center space-y-2 mb-16">
-        <h2 className="text-[38px] font-bold text-primary-400">Wat opdrachtgevers zeggen</h2>
-        <p className="text-lg text-neutral-700">Ervaringen van organisaties die met Betty hebben samengewerkt</p>
-      </div>
-
-      <div className="container-custom">
-        <div className="grid md:grid-cols-3 gap-8">
-          {testimonials.map((t, i) => (
-            <div key={i} className="bg-neutral-50 p-8 rounded-[32px] shadow-[0px_2px_4px_rgba(27,28,29,0.04)] flex flex-col justify-between gap-8 text-center">
-              <div className="space-y-4">
-                <Quote className="w-7 h-7 text-neutral-400 mx-auto" aria-hidden="true" />
-                <p className="text-lg text-neutral-700 italic leading-[36px]">
-                  “{t.text}”
-                </p>
-              </div>
-
-              <div className="space-y-1">
-                <p className="text-lg font-bold text-primary-500">{t.name}</p>
-                {t.sub && <p className="text-neutral-500 text-sm">{t.sub}</p>}
-              </div>
+    </div>
+  </section>
+);
+const homeServices = [
+  [
+    "Begeleiding en praktijkondersteuning",
+    "Ondersteuning bij vragen rond gezin, opvoeding, veiligheid en samenwerking.",
+    <GuidanceIcon />,
+  ],
+  [
+    "Culturele bemiddeling",
+    "Duiding en verbinding in gesprekken tussen organisaties, professionals en gezinnen.",
+    <BridgeIcon />,
+  ],
+  [
+    "Culturele vertaling en advies",
+    "Taal en culturele context samenbrengen bij casuïstiek, beleid en onderzoek.",
+    <ResearchIcon />,
+  ],
+  [
+    "Workshops en voorlichting",
+    "Kennisdeling voor teams die werken met Eritrese gemeenschappen.",
+    <TrainingIcon />,
+  ],
+];
+export const Services = ({ onNavigate }: { onNavigate: Navigate }) => (
+  <section className="bg-neutral-50 py-20 md:py-28">
+    <div className="container-custom">
+      <SectionTitle
+        title="Diensten"
+        intro="Praktische inzet die past bij de vraag van jouw organisatie."
+      />
+      <div className="mt-12 grid md:grid-cols-2 gap-5">
+        {homeServices.map(([title, text, icon]) => (
+          <article
+            key={title as string}
+            className="rounded-[32px] bg-white p-7 flex flex-col gap-5 shadow-[0px_0px_4px_rgba(27,28,29,0.04)] transition duration-200 motion-reduce:transition-none hover:-translate-y-1"
+          >
+            <div className="w-12 h-12 rounded-full bg-primary-500 text-secondary-300 flex items-center justify-center">
+              {icon as ReactNode}
             </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-};
-
-export const CTA = ({ onNavigate }: { onNavigate?: (page: "home" | "services" | "about" | "clients" | "contact", id?: string) => void }) => {
-  return (
-    <section id="contact" className="py-28 bg-white">
-      <div className="container-custom">
-        <div className="bg-primary-500 rounded-[32px] p-8 md:p-12 lg:py-16 lg:px-28 shadow-[0px_2px_4px_rgba(27,28,29,0.04)] text-center relative overflow-hidden flex flex-col items-center justify-center">
-          {/* Background Accents */}
-          <div className="absolute -top-24 -left-24 w-64 h-64 bg-secondary-300/10 rounded-full blur-3xl" />
-          <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-secondary-300/10 rounded-full blur-3xl" />
-          
-          <div className="relative z-10 flex flex-col items-center gap-6 max-w-3xl">
-            <div className="space-y-4">
-              <h2 className="text-3xl md:text-4xl lg:text-[40px] font-bold text-secondary-300 leading-tight">
-                Laten we samenwerken
-              </h2>
-              <p className="text-lg text-white/90 max-w-2xl mx-auto leading-relaxed">
-                Klaar om bruggen te slaan en impact te maken? Neem contact op voor een vrijblijvend kennismakingsgesprek.
-              </p>
+            <div className="space-y-3">
+              <h3 className="text-xl font-bold text-primary-500">{title}</h3>
+              <p className="leading-7 text-neutral-700">{text}</p>
             </div>
-            
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4 w-full sm:w-auto">
-              <a
-                href={WHATSAPP_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full sm:w-auto bg-secondary-300 text-primary-500 px-8 py-4 rounded-[40px] font-semibold text-lg inline-flex items-center justify-center gap-2 hover:scale-105 transition-transform shadow-md cursor-pointer"
-              >
-                Start een gesprek
-                <WhatsappLogoIcon size={28} weight="light" />
-              </a>
-              <button
-                onClick={() => onNavigate?.("services")}
-                className="w-full sm:w-auto px-8 py-4 rounded-full border-2 border-secondary-300 text-secondary-300 font-medium text-lg hover:bg-white/5 transition-colors cursor-pointer"
-              >
-                Bekijk diensten
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-};
-
-export const ContactForm = ({ showQuickContact = true }: { showQuickContact?: boolean }) => {
-  return (
-    <>
-      {/* 1. Quick Contact Options */}
-      {showQuickContact && (
-        <section className="py-12 bg-neutral-50">
-          <div className="container-custom">
-            <div className="grid md:grid-cols-3 gap-8">
-              {/* Card 1: E-mail */}
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="bg-white p-8 rounded-[32px] shadow-[0px_2px_4px_rgba(27,28,29,0.04)] space-y-6 flex flex-col"
-              >
-                <div className="w-12 h-12 bg-primary-500 rounded-full flex items-center justify-center">
-                  <Mail className="w-6 h-6 text-secondary-300" />
-                </div>
-                <div className="space-y-4 flex-1">
-                  <h3 className="text-2xl font-semibold text-primary-500">E-mail</h3>
-                  <p className="text-neutral-700 leading-relaxed">
-                    Stuur direct een bericht voor vragen of samenwerking.
-                  </p>
-                  <a 
-                    href="mailto:info@bettyteklemariam.nl" 
-                    className="block text-primary-500 font-medium hover:underline"
-                  >
-                    info@bettyteklemariam.nl
-                  </a>
-                </div>
-              </motion.div>
-
-              {/* Card 2: Telefoon */}
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.1 }}
-                className="bg-white p-8 rounded-[32px] shadow-[0px_2px_4px_rgba(27,28,29,0.04)] space-y-6 flex flex-col"
-              >
-                <div className="w-12 h-12 bg-primary-500 rounded-full flex items-center justify-center">
-                  <Phone className="w-6 h-6 text-secondary-300" />
-                </div>
-                <div className="space-y-4 flex-1">
-                  <h3 className="text-2xl font-semibold text-primary-500">Telefoon</h3>
-                  <p className="text-neutral-700 leading-relaxed">
-                    Bel voor direct contact of een korte afstemming.
-                  </p>
-                  <a
-                    href="tel:+31639244184"
-                    className="block text-primary-500 font-medium hover:underline"
-                  >
-                    +31 6 39 24 41 84
-                  </a>
-                </div>
-              </motion.div>
-
-              {/* Card 3: Kennismaking */}
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.2 }}
-                className="bg-white p-8 rounded-[32px] shadow-[0px_2px_4px_rgba(27,28,29,0.04)] space-y-6 flex flex-col"
-              >
-                <div className="w-12 h-12 bg-primary-500 rounded-full flex items-center justify-center">
-                  <Calendar className="w-6 h-6 text-secondary-300" />
-                </div>
-                <div className="space-y-4 flex-1">
-                  <h3 className="text-2xl font-semibold text-primary-500">Kennismaking</h3>
-                  <p className="text-neutral-700 leading-relaxed">
-                    Plan een eerste gesprek om je vraag te bespreken.
-                  </p>
-                  <a
-                    href={WHATSAPP_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bg-white text-primary-500 px-6 py-3 rounded-full font-medium border-2 border-secondary-300 hover:bg-neutral-50 transition-colors inline-flex items-center gap-2 w-fit cursor-pointer"
-                  >
-                    Plan een kennismaking
-                    <ArrowRight className="w-4 h-4" />
-                  </a>
-                </div>
-              </motion.div>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* 2. Main Contact Section */}
-      <section className="py-20 bg-white">
-        <div className="container-custom">
-          <div className="flex flex-col lg:flex-row gap-16 lg:gap-24">
-            {/* Left Column: Contact Form */}
-            <div className="flex-1">
-              <div className="bg-neutral-50 p-8 md:p-12 rounded-[40px] shadow-[0px_4px_20px_rgba(0,0,0,0.03)] border border-neutral-100">
-                <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
-                  <div className="space-y-2">
-                    <label htmlFor="name" className="block text-sm font-medium text-neutral-700 ml-1">Naam</label>
-                    <input
-                      type="text"
-                      id="name"
-                      name="name"
-                      required
-                      autoComplete="name"
-                      className="w-full bg-white px-6 py-4 rounded-2xl border-none focus:ring-2 focus:ring-primary-100 transition-all outline-none text-neutral-1000"
-                      placeholder="Je naam"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <label htmlFor="org" className="block text-sm font-medium text-neutral-700 ml-1">Organisatie</label>
-                    <input
-                      type="text"
-                      id="org"
-                      name="organization"
-                      autoComplete="organization"
-                      className="w-full bg-white px-6 py-4 rounded-2xl border-none focus:ring-2 focus:ring-primary-100 transition-all outline-none text-neutral-1000"
-                      placeholder="Naam van je organisatie"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <label htmlFor="email" className="block text-sm font-medium text-neutral-700 ml-1">E-mail</label>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      required
-                      autoComplete="email"
-                      className="w-full bg-white px-6 py-4 rounded-2xl border-none focus:ring-2 focus:ring-primary-100 transition-all outline-none text-neutral-1000"
-                      placeholder="je@email.nl"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <label htmlFor="message" className="block text-sm font-medium text-neutral-700 ml-1">Bericht</label>
-                    <textarea
-                      id="message"
-                      name="message"
-                      required
-                      rows={5}
-                      className="w-full bg-white px-6 py-4 rounded-2xl border-none focus:ring-2 focus:ring-primary-100 transition-all outline-none text-neutral-1000 resize-none"
-                      placeholder="Waarmee kan Betty je helpen?"
-                    ></textarea>
-                  </div>
-                  <button type="submit" className="w-full bg-primary-500 text-secondary-300 py-5 rounded-full font-semibold text-lg hover:bg-opacity-90 transition-all shadow-md cursor-pointer">
-                    Verstuur bericht
-                  </button>
-                </form>
-              </div>
-            </div>
-
-            {/* Right Column: Context and Support Info */}
-            <div className="flex-1 space-y-10 lg:pt-8">
-              <div className="space-y-6">
-                <h2 className="text-[38px] font-bold text-primary-400 leading-tight">Waarmee kunnen we helpen?</h2>
-                <p className="text-lg text-neutral-700 leading-relaxed max-w-2xl">
-                  Beschrijf kort je vraag of situatie. Betty denkt graag mee over passende ondersteuning voor jouw organisatie of project.
-                </p>
-              </div>
-
-              <div className="space-y-6">
-                <ul className="space-y-4">
-                  {[
-                    "Samenwerking met organisaties",
-                    "Culturele bemiddeling",
-                    "Training en workshops",
-                    "Tolken en vertaling"
-                  ].map((item) => (
-                    <li key={item} className="flex items-center gap-4 text-neutral-700">
-                      <div className="bg-secondary-300 rounded-full p-1 shrink-0">
-                        <CheckCircle2 className="w-4 h-4 text-primary-500" />
-                      </div>
-                      <span className="text-lg">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="space-y-8 pt-4 border-t border-neutral-100">
-                <div className="space-y-4">
-                  <h4 className="font-display font-bold text-primary-500 uppercase tracking-widest text-sm">Socials</h4>
-                  <div className="space-y-4">
-                    <a href="https://wa.me/31639244184" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-neutral-700 hover:text-primary-500 transition-colors text-lg">
-                      <WhatsappLogoIcon size={24} weight="light" className="text-primary-400" />
-                      WhatsApp
-                    </a>
-                    <a href="https://www.linkedin.com/in/bet-el-teklemariam-b1896b165/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-neutral-700 hover:text-primary-500 transition-colors text-lg">
-                      <Linkedin className="w-5 h-5 text-primary-400" />
-                      LinkedIn
-                    </a>
-                  </div>
-                </div>
-
-                <p className="text-neutral-500 text-sm italic">
-                  Je ontvangt binnen 1–2 werkdagen een reactie.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </>
-  );
-};
-
-export const Footer = ({ onNavigate, variant = "white" }: { onNavigate: (page: "home" | "services" | "about" | "clients" | "contact", id?: string) => void, variant?: "white" | "grey" }) => {
-  const [logoError, setLogoError] = useState(false);
-
-  return (
-    <footer className={`${variant === "grey" ? "bg-neutral-50" : "bg-white"} pt-20 pb-10 transition-colors duration-300`}>
-      <div className="container-custom space-y-16">
-        <div className="flex flex-col lg:flex-row justify-between gap-12 lg:gap-12">
-          <div className="max-w-[320px] space-y-6">
-            <button 
-              onClick={() => onNavigate("home")}
-              className="flex items-center gap-2 cursor-pointer"
+            <button
+              onClick={() => onNavigate("services")}
+              className="mt-auto self-start min-h-11 text-primary-500 font-display font-semibold inline-flex items-center gap-2 hover:text-primary-400 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary-500"
             >
-              {!logoError ? (
-                <img 
-                  src="/images/logo-betty.svg" 
-                  alt="" 
-                  className="w-10 h-10 object-contain"
-                  onError={() => setLogoError(true)}
-                />
-              ) : (
-                <div className="w-10 h-10 bg-primary-50 rounded-full flex items-center justify-center">
-                  <Heart className="w-6 h-6 text-primary-500 fill-secondary-300" />
-                </div>
-              )}
-              <span className="font-display font-semibold text-lg text-primary-500">Betty</span>
+              Meer over deze dienst <ArrowRight size={17} />
             </button>
-            <p className="text-neutral-800 leading-[32px]">
-              Expert in maatschappelijke inclusie en culturele bemiddeling. Samen bouwen we aan een samenleving waarin iedereen telt.
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-12 lg:gap-12">
-            <div className="space-y-6 min-w-[140px]">
-              <h4 className="font-display font-semibold text-lg">Navigatie</h4>
-              <ul className="space-y-2">
-                {["Home", "Diensten", "Over mij", "Contact"].map((item) => (
-                  <li key={item}>
-                    <button 
-                      onClick={() => {
-                        if (item === "Diensten") onNavigate("services");
-                        else if (item === "Over mij") onNavigate("about");
-                        else if (item === "Contact") onNavigate("contact");
-                        else onNavigate("home");
-                      }}
-                      className="text-neutral-800 hover:text-primary-500 transition-colors leading-[32px] cursor-pointer"
-                    >
-                      {item}
-                    </button>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            
-            <div className="space-y-6 min-w-[140px]">
-              <h4 className="font-display font-semibold text-lg">Contact</h4>
-              <ul className="space-y-2">
-                {[
-                  { label: "Whatsapp", href: "https://wa.me/31639244184" },
-                  { label: "Email", href: "mailto:info@bettyteklemariam.nl" },
-                  { label: "Linkedin", href: "https://www.linkedin.com/in/bet-el-teklemariam-b1896b165/" }
-                ].map((item) => (
-                  <li key={item.label}>
-                    <a href={item.href} target="_blank" rel="noopener noreferrer" className="text-neutral-800 hover:text-primary-500 transition-colors leading-[32px]">{item.label}</a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="space-y-6 min-w-[140px]">
-              <h4 className="font-display font-semibold text-lg">Bedrijfsgegevens</h4>
-              <ul className="space-y-2">
-                <li>
-                  <button 
-                    onClick={() => onNavigate("contact", "bedrijfsgegevens")}
-                    className="text-neutral-800 hover:text-primary-500 transition-colors leading-[32px] cursor-pointer text-left"
-                  >
-                    Bedrijfsnaam
-                  </button>
-                </li>
-                <li>
-                  <button
-                    onClick={() => onNavigate("contact", "bedrijfsgegevens")}
-                    className="text-neutral-800 hover:text-primary-500 transition-colors leading-[32px] cursor-pointer text-left"
-                  >
-                    KvK-nummer
-                  </button>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        
-        <div className="border-t border-neutral-100 pt-10 text-center">
-          <p className="text-neutral-500 text-sm">© 2026 Betty Teklemariam. Alle rechten voorbehouden.</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+);
+export const CasesPreview = ({ onNavigate }: { onNavigate: Navigate }) => (
+  <section className="bg-white py-20 md:py-28">
+    <div className="container-custom grid lg:grid-cols-[.85fr_1.15fr] gap-10 items-start">
+      <div className="space-y-6">
+        <SectionTitle
+          title="Werk in de praktijk"
+          intro="Onderzoek en opvang vragen om een aanpak die mensen en context serieus neemt."
+        />
+        <button
+          onClick={() => onNavigate("clients")}
+          className="min-h-11 inline-flex gap-2 items-center text-primary-500 font-display font-semibold hover:text-primary-400 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary-500"
+        >
+          Bekijk de opdrachtgevers <ArrowRight size={17} />
+        </button>
+      </div>
+      <div className="grid gap-4">
+        <article className="rounded-[32px] bg-primary-50 p-7">
+          <Eyebrow>Sociaal en Cultureel Planbureau</Eyebrow>
+          <h3 className="mt-3 text-2xl font-bold text-primary-500">
+            Meer ruimte voor perspectieven uit de Eritrese gemeenschap
+          </h3>
+          <p className="mt-4 leading-7 text-neutral-700">
+            Betty hielp onderzoekers met culturele duiding, passende
+            onderzoeksvragen en communicatie met de doelgroep. Dat leverde meer
+            contextgevoelige inzichten op.
+          </p>
+        </article>
+        <article className="rounded-[32px] bg-neutral-50 p-7">
+          <Eyebrow>VOZ</Eyebrow>
+          <h3 className="mt-3 text-2xl font-bold text-primary-500">
+            Toegankelijke ondersteuning in de opvang
+          </h3>
+          <p className="mt-4 leading-7 text-neutral-700">
+            Vanaf 2015 hielp Betty als tolk, zelfstandig hulpverlener en tijdens
+            spreekuren, huisbezoeken en telefonisch contact.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+);
+export const About = ({ onNavigate }: { onNavigate: Navigate }) => (
+  <section className="bg-neutral-50 py-20 md:py-28">
+    <div className="container-custom grid lg:grid-cols-2 gap-10 items-center">
+      <div className="rounded-[32px] bg-primary-50 p-4 md:p-7">
+        <img
+          loading="lazy"
+          src="/images/betty-portret.jpg"
+          alt="Portret van Betty Teklemariam"
+          width={1200}
+          height={900}
+          className="aspect-[4/3] w-full object-cover rounded-[24px]"
+        />
+      </div>
+      <div className="space-y-6">
+        <SectionTitle
+          title="Over Betty"
+          intro="Ervaring die begint bij luisteren en ruimte maken voor elkaars perspectief."
+        />
+        <p className="text-lg text-neutral-700 leading-[30px]">
+          Bet El Teklemariam is intercultureel adviseur, mediator, trainer en
+          sociaal pedagoog. Zij combineert haar persoonlijke migratie ervaring
+          met ruim 25 jaar werk in begeleiding, jeugdzorg, psychiatrie en het
+          sociaal domein.
+        </p>
+        <button
+          onClick={() => onNavigate("about")}
+          className="min-h-11 text-primary-500 font-display font-semibold inline-flex items-center gap-2 hover:text-primary-400 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary-500"
+        >
+          Lees het verhaal van Betty <ArrowRight size={17} />
+        </button>
+      </div>
+    </div>
+  </section>
+);
+const testimonials = [
+  [
+    "Bet El is een integere en zeer betrouwbare professional die een belangrijke rol vervult als cultureel verbinder. Ze komt afspraken consequent na, is flexibel en levert vaak meer dan verwacht.",
+    "Monique Haveman",
+  ],
+  [
+    "Betty is ongelooflijk betrouwbaar. Je voelt dat ze haar werk met liefde en toewijding doet. Als geen ander heeft ze oog voor de obstakels die vluchtelingen tegenkomen.",
+    "Lost in Europe",
+  ],
+  [
+    "Een natuurlijke en transparante samenwerking, zonder dat dit afbreuk doet aan de professionaliteit.",
+    "Jeugdbeschermer, Nidos",
+  ],
+];
+export const Testimonials = () => (
+  <section className="bg-white py-20 md:py-28">
+    <div className="container-custom">
+      <SectionTitle
+        title="Ervaringen"
+        intro="Opdrachtgevers over de samenwerking met Betty."
+      />
+      <div className="mt-12 grid md:grid-cols-3 gap-5">
+        {testimonials.map(([quote, name]) => (
+          <figure
+            key={name}
+            className="rounded-[32px] bg-neutral-50 p-7 flex flex-col gap-6 shadow-[0px_2px_4px_rgba(27,28,29,0.04)]"
+          >
+            <div className="h-2 w-2 bg-secondary-300 rounded-sm" />
+            <blockquote className="text-lg leading-8 text-neutral-800">
+              “{quote}”
+            </blockquote>
+            <figcaption className="mt-auto font-display font-bold text-primary-500">
+              {name}
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+);
+export const CTA = () => (
+  <section className="bg-neutral-50 py-20">
+    <div className="container-custom">
+      <div className="rounded-[40px] bg-primary-500 px-7 py-12 md:p-14 text-center">
+        <Eyebrow tone="light">Neem contact op</Eyebrow>
+        <h2 className="mx-auto mt-4 max-w-2xl text-3xl md:text-[38px] font-bold leading-tight text-secondary-300">
+          Bespreek jouw vraag per e mail.
+        </h2>
+        <p className="mx-auto mt-5 max-w-xl text-lg leading-8 text-white">
+          Vertel kort waar jouw organisatie tegenaan loopt. Betty neemt de tijd
+          om te kijken welke inzet past.
+        </p>
+        <div className="mt-8 flex flex-wrap justify-center gap-3">
+          <MailButton dark />
+          <WhatsAppLink dark />
         </div>
       </div>
-    </footer>
-  );
-};
+    </div>
+  </section>
+);
+export const Footer = ({
+  onNavigate,
+  variant = "grey",
+}: {
+  onNavigate: Navigate;
+  variant?: "grey" | "white";
+}) => (
+  <footer
+    className={`${variant === "grey" ? "bg-neutral-50" : "bg-white"} border-t border-primary-100 py-12`}
+  >
+    <div className="container-custom grid md:grid-cols-[1.4fr_1fr_1fr] gap-10">
+      <div className="space-y-3">
+        <div className="flex items-center gap-3">
+          <img src="/images/logo-betty.svg" alt="" className="h-9 w-9" />
+          <p className="font-display font-bold text-primary-500">
+            Betty Teklemariam
+          </p>
+        </div>
+        <p className="max-w-sm text-neutral-700 leading-7">
+          Intercultureel adviseur, mediator, trainer en sociaal pedagoog voor
+          organisaties die werken met Eritrese gemeenschappen.
+        </p>
+      </div>
+      <div>
+        <p className="font-display font-bold text-primary-500">Navigatie</p>
+        <ul className="mt-3 grid gap-2">
+          {navItems.map((item) => (
+            <li key={item.page}>
+              <a
+                href={PAGE_PATHS[item.page]}
+                onClick={(event) => {
+                  if (!isPlainInternalClick(event)) return;
+                  event.preventDefault();
+                  onNavigate(item.page);
+                }}
+                className="min-h-11 text-neutral-700 hover:text-primary-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500"
+              >
+                {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <p className="font-display font-bold text-primary-500">Contact</p>
+        <a
+          href={emailHref}
+          className="mt-3 inline-flex min-h-11 items-center text-neutral-700 hover:text-primary-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500"
+        >
+          {BETTY_EMAIL}
+        </a>
+        <p className="mt-2 text-neutral-700">Inzetbaar in Nederland</p>
+        <a
+          href={WHATSAPP_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-2 inline-flex min-h-11 items-center text-primary-500 hover:text-primary-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500"
+        >
+          WhatsApp
+        </a>
+        <a
+          href={LINKEDIN_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-2 inline-flex min-h-11 items-center gap-2 text-primary-500 hover:text-primary-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500"
+        >
+          <LinkedInIcon size={19} />
+          LinkedIn
+        </a>
+      </div>
+    </div>
+    <div className="container-custom mt-10 pt-6 border-t border-primary-100 text-sm text-neutral-600">
+      © {new Date().getFullYear()} Betty Teklemariam
+    </div>
+  </footer>
+);

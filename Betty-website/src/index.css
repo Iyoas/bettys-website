@@ -18,8 +18,8 @@
   --color-neutral-50: #F7F7F7;
   --color-neutral-400: #BBBBBB;
   --color-neutral-500: #A4A4A4;
-  --color-neutral-600: #8E8E8E;
-  --color-neutral-700: #777777;
+  --color-neutral-600: #6F6F6F;
+  --color-neutral-700: #717171;
   --color-neutral-800: #606060;
   --color-neutral-1000: #333333;
 }
@@ -34,8 +34,21 @@
     @apply font-sans text-neutral-1000 bg-white;
   }
 
+  button, a {
+    -webkit-tap-highlight-color: transparent;
+  }
+
   h1, h2, h3, h4, h5, h6 {
     @apply font-display;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
 

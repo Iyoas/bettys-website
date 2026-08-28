@@ -1,98 +1,127 @@
-import { WhatsappLogo as WhatsappLogoIcon } from "@phosphor-icons/react";
-import { ContactForm, WHATSAPP_URL } from "./Sections";
+import {
+  BETTY_EMAIL,
+  LINKEDIN_URL,
+  MailButton,
+  WhatsAppLink,
+} from "./Sections";
+import {
+  EmailIcon,
+  GuidanceIcon,
+  LinkedInIcon,
+  WhatsAppIcon,
+} from "./icons/BettyIcons";
+import type React from "react";
 
-export const ContactPage = () => {
-  return (
-    <div className="bg-white">
-      {/* Hero Section */}
-      <section className="bg-white py-20 overflow-hidden">
-        <div className="container-custom">
-          <div className="flex flex-col lg:flex-row lg:items-start gap-12 lg:gap-12">
-            <div className="flex-1 space-y-6">
-              <h1 className="text-4xl md:text-5xl lg:text-[46px] font-bold leading-[1.2] lg:leading-[69px] text-primary-500">
-                Neem contact op
-              </h1>
-              <p className="text-lg text-neutral-700 max-w-[512px] leading-[30px]">
-                Wil je samenwerken of meer weten over wat Betty voor jouw organisatie kan betekenen? Neem gerust contact op en plan een kennismakingsgesprek.
-              </p>
-              
-              <div className="flex flex-wrap gap-4 pt-4">
+export const ContactPage = () => (
+  <div className="bg-white">
+    <section className="bg-neutral-50 py-16 md:py-20">
+      <div className="container-custom grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+        <div className="space-y-6">
+          <p className="font-display text-xs font-bold uppercase tracking-[0.18em] text-primary-500">
+            Contact
+          </p>
+          <h1 className="text-4xl md:text-5xl lg:text-[46px] font-bold leading-tight text-primary-500">
+            Bespreek jouw vraag rechtstreeks met Betty.
+          </h1>
+          <p className="max-w-xl text-lg leading-[30px] text-neutral-700">
+            E mail is de beste manier om een vraag, doelgroep en gewenste inzet
+            te delen. Betty neemt daarna contact met je op. WhatsApp kan voor
+            een kort bericht.
+          </p>
+          <div className="flex flex-wrap gap-3">
+            <MailButton />
+            <WhatsAppLink />
+          </div>
+        </div>
+        <div className="rounded-[32px] bg-primary-50 p-4 md:p-7">
+          <img
+            src="/images/betty-gesprek.png"
+            alt="Betty Teklemariam in gesprek"
+            width={282}
+            height={188}
+            className="aspect-[4/3] w-full rounded-[24px] object-cover"
+          />
+        </div>
+      </div>
+    </section>
+    <section className="bg-white py-20 md:py-28">
+      <div className="container-custom max-w-4xl">
+        <div className="rounded-[40px] bg-primary-50 p-7 md:p-12 text-center">
+          <div className="mx-auto w-14 h-14 rounded-full bg-primary-500 text-secondary-300 flex items-center justify-center">
+            <EmailIcon size={28} />
+          </div>
+          <h2 className="mt-6 text-3xl font-bold text-primary-500">
+            Stuur een e mail
+          </h2>
+          <p className="mx-auto mt-4 max-w-xl text-lg leading-[30px] text-neutral-700">
+            Beschrijf in een paar zinnen waar jouw organisatie ondersteuning bij
+            zoekt. Vermeld ook wie betrokken zijn en welke vorm van contact
+            prettig is.
+          </p>
+          <a
+            href={`mailto:${BETTY_EMAIL}`}
+            className="mt-7 inline-flex min-h-11 items-center justify-center rounded-full bg-primary-500 px-7 py-3 text-lg font-medium text-secondary-300 shadow-md hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary-500"
+          >
+            {BETTY_EMAIL}
+          </a>
+        </div>
+      </div>
+    </section>
+    <section className="bg-neutral-50 py-20">
+      <div className="container-custom grid md:grid-cols-3 gap-5">
+        {[
+          [
+            <EmailIcon />,
+            "E mail",
+            "Voor een vraag, kennismaking of voorstel.",
+            BETTY_EMAIL,
+          ],
+          [
+            <WhatsAppIcon />,
+            "WhatsApp",
+            "Voor een kort eerste bericht.",
+            "Open WhatsApp",
+          ],
+          [<GuidanceIcon />, "Werkgebied", "Inzetbaar in Nederland.", ""],
+          [
+            <LinkedInIcon />,
+            "LinkedIn",
+            "Bekijk Betty's professionele profiel.",
+            "Open LinkedIn",
+          ],
+        ].map(([icon, title, text, action]) => (
+          <article
+            key={title as string}
+            className="rounded-[32px] bg-white p-7"
+          >
+            <div className="w-12 h-12 rounded-full bg-primary-500 text-secondary-300 flex items-center justify-center">
+              {icon as React.ReactNode}
+            </div>
+            <h2 className="mt-5 text-xl font-bold text-primary-500">{title}</h2>
+            <p className="mt-3 leading-7 text-neutral-700">{text}</p>
+            {action &&
+              (title === "E mail" ? (
                 <a
-                  href={WHATSAPP_URL}
+                  className="mt-5 inline-flex min-h-11 items-center text-primary-500 font-display font-semibold hover:text-primary-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500"
+                  href={`mailto:${BETTY_EMAIL}`}
+                >
+                  {action}
+                </a>
+              ) : title === "LinkedIn" ? (
+                <a
+                  href={LINKEDIN_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-primary-500 text-secondary-300 px-8 py-4 rounded-full font-medium text-lg inline-flex items-center gap-2 hover:scale-105 transition-transform shadow-md cursor-pointer"
+                  className="mt-5 inline-flex min-h-11 items-center text-primary-500 font-display font-semibold hover:text-primary-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-500"
                 >
-                  Plan een kennismaking
-                  <WhatsappLogoIcon size={28} weight="light" />
+                  {action}
                 </a>
-              </div>
-              
-              {/* Spacer to match homepage hero height and keep image position identical */}
-              <div className="hidden lg:block h-[145px]" />
-            </div>
-            
-            <div className="flex-1 w-full lg:pt-2">
-              <div className="relative max-w-[540px] lg:ml-auto bg-primary-50/95 rounded-[32px] p-8 shadow-[0px_2px_4px_rgba(27,28,29,0.04)]">
-                {/* TODO: vervang */}
-                <img
-                  src="/images/contact-illustration.png"
-                  alt="Illustratie Contact"
-                  className="w-full h-auto rounded-[24px] object-cover aspect-[4/3]"
-                  onError={(e) => {
-                    const img = e.currentTarget;
-                    if (img.src.includes("loremflickr")) {
-                      img.onerror = null;
-                      img.src = "https://picsum.photos/seed/contact/800/600";
-                    } else {
-                      img.src = "https://loremflickr.com/800/600/conversation,welcome?lock=71";
-                    }
-                  }}
-                  referrerPolicy="no-referrer"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <ContactForm showQuickContact={true} />
-      
-      {/* 3. Bedrijfsgegevens Section */}
-      <section id="bedrijfsgegevens" className="py-24 bg-neutral-50 border-t border-neutral-100">
-        <div className="container-custom">
-          <div className="flex flex-col lg:flex-row gap-16 lg:gap-24">
-            {/* Align with the left column (contact form) above */}
-            <div className="flex-1 space-y-12">
-              <h2 className="text-[38px] font-bold text-primary-500 leading-tight">Bedrijfsgegevens</h2>
-              
-              <div className="space-y-5">
-                <div className="grid grid-cols-[140px_1fr] md:grid-cols-[200px_1fr] gap-4 items-baseline">
-                  <span className="text-neutral-600 text-sm font-medium">Bedrijfsnaam</span>
-                  <span className="text-neutral-1000 text-lg font-semibold">Betty Teklemariam</span>
-                </div>
-                
-                <div className="grid grid-cols-[140px_1fr] md:grid-cols-[200px_1fr] gap-4 items-baseline">
-                  <span className="text-neutral-600 text-sm font-medium">KvK-nummer</span>
-                  <span className="text-neutral-1000 text-lg">65787676</span>
-                </div>
-
-                <div className="grid grid-cols-[140px_1fr] md:grid-cols-[200px_1fr] gap-4 items-baseline">
-                  <span className="text-neutral-600 text-sm font-medium">Vestigingsplaats</span>
-                  <span className="text-neutral-1000 text-lg">Rotterdam</span>
-                </div>
-                
-                <div className="grid grid-cols-[140px_1fr] md:grid-cols-[200px_1fr] gap-4 items-baseline pt-4">
-                  <span className="text-neutral-600 text-sm font-medium">Werkgebied</span>
-                  <span className="text-neutral-1000 text-lg leading-relaxed">Gevestigd in Rotterdam, werkzaam door heel Nederland</span>
-                </div>
-              </div>
-            </div>
-            {/* Empty right column to maintain perfect alignment with the two-column layout above */}
-            <div className="flex-1 hidden lg:block" />
-          </div>
-        </div>
-      </section>
-    </div>
-  );
-};
+              ) : (
+                <WhatsAppLink compact />
+              ))}
+          </article>
+        ))}
+      </div>
+    </section>
+  </div>
+);
