@@ -553,7 +553,11 @@ export const Testimonials = () => {
   );
 };
 
-export const CTA = ({ onNavigate }: { onNavigate?: (page: "home" | "services" | "about" | "clients" | "contact", id?: string) => void }) => {
+/**
+ * Afsluitend CTA-blok. `secondary` bepaalt de tweede knop; op de Diensten-pagina zou
+ * "Bekijk diensten" naar zichzelf verwijzen, dus die geeft "contact" mee.
+ */
+export const CTA = ({ onNavigate, secondary = "services" }: { onNavigate?: (page: "home" | "services" | "about" | "clients" | "contact", id?: string) => void, secondary?: "services" | "contact" }) => {
   return (
     <section id="contact" className="py-28 bg-white">
       <div className="container-custom">
@@ -583,10 +587,10 @@ export const CTA = ({ onNavigate }: { onNavigate?: (page: "home" | "services" | 
                 <WhatsappLogoIcon size={28} weight="light" />
               </a>
               <button
-                onClick={() => onNavigate?.("services")}
+                onClick={() => onNavigate?.(secondary)}
                 className="w-full sm:w-auto px-8 py-4 rounded-full border-2 border-secondary-300 text-secondary-300 font-medium text-lg hover:bg-white/5 transition-colors cursor-pointer"
               >
-                Bekijk diensten
+                {secondary === "services" ? "Bekijk diensten" : "Neem contact op"}
               </button>
             </div>
           </div>
