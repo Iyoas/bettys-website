@@ -12,18 +12,14 @@ import { ContactPage } from "./components/ContactPage";
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState<"home" | "services" | "about" | "clients" | "contact">("home");
-  // Voorgeselecteerde case op de Opdrachtgevers-pagina, gezet vanuit een "Bekijk case"-knop.
-  const [selectedClient, setSelectedClient] = useState<string | undefined>();
 
   const navigateTo = (page: "home" | "services" | "about" | "clients" | "contact", id?: string) => {
     setCurrentPage(page);
-    setSelectedClient(page === "clients" ? id : undefined);
 
-    // Naar een specifieke case op de Opdrachtgevers-pagina: scroll naar het casedetail.
-    const targetId = page === "clients" && id ? "case-detail" : id;
-    if (targetId) {
+    // Met een id scrollen we na het wisselen van pagina naar die sectie (bv. "case-detail").
+    if (id) {
       setTimeout(() => {
-        document.getElementById(targetId)?.scrollIntoView({ behavior: "smooth" });
+        document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
       }, 100);
     } else {
       window.scrollTo(0, 0);
@@ -54,7 +50,7 @@ export default function App() {
         ) : currentPage === "about" ? (
           <AboutPage onNavigate={navigateTo} />
         ) : currentPage === "clients" ? (
-          <ClientsPage onNavigate={navigateTo} selectedClient={selectedClient} />
+          <ClientsPage onNavigate={navigateTo} />
         ) : (
           <ContactPage />
         )}

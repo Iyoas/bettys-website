@@ -1,113 +1,164 @@
-import { motion, AnimatePresence } from "motion/react";
-import { MessageCircle, CheckCircle2, ArrowRight, Quote } from "lucide-react";
+import { motion } from "motion/react";
+import { Quote, Landmark, HeartPulse, ShieldCheck, GraduationCap, Users, Search } from "lucide-react";
 import { WhatsappLogo as WhatsappLogoIcon } from "@phosphor-icons/react";
 import { CTA, WHATSAPP_URL } from "./Sections";
-import { useState, useEffect } from "react";
+import { JsonLd, PROVIDER } from "./JsonLd";
+import { usePageMeta } from "../usePageMeta";
 
+/**
+ * Alleen geverifieerde cases. Bron: docs/betty-profiel.md §10 (SCP) en de
+ * referentiebrief van VOZ (Paul Bergmans, 21 september 2016).
+ * Voeg hier niets toe dat niet herleidbaar is tot een bron.
+ */
 const cases = [
   {
-    id: 1,
+    id: "SCP",
     client: "Sociaal en Cultureel Planbureau",
-    shortName: "SCP",
-    situation: "Binnen onderzoek naar integratie en participatie ontstond behoefte aan diepgaand inzicht in de ervaringen en perspectieven van Eritrese gemeenschappen. Er waren signalen dat bestaande communicatie en methoden niet altijd aansloten bij de doelgroep.",
-    approach: "Betty ondersteunde bij het duiden van culturele context en communicatiepatronen. Ze bracht perspectieven vanuit de gemeenschap in, hielp bij het formuleren van passende vragen en zorgde voor betere aansluiting tussen onderzoekers en doelgroep.",
-    result: "Meer genuanceerde inzichten en betrouwbaardere onderzoeksresultaten. De communicatie met de doelgroep verliep soepeler en met meer wederzijds begrip.",
-    // TODO: vervang
-    image: "https://loremflickr.com/800/600/research,people?lock=51"
+    situation:
+      "In onderzoek naar integratie en participatie was er behoefte aan verdiepend inzicht in de ervaringen en perspectieven van Eritrese gemeenschappen. De bestaande onderzoeksbenaderingen en communicatiemethoden sloten niet altijd aan bij de doelgroep.",
+    approach:
+      "Ik duidde de culturele context en de communicatiepatronen die daarbij horen. Ik bracht perspectieven vanuit de Eritrese gemeenschap in, hielp bij het formuleren van cultureel passende onderzoeksvragen en verbeterde de aansluiting tussen onderzoekers en doelgroep.",
+    result:
+      "Genuanceerdere, contextgevoelige inzichten. De communicatie met de doelgroep werd effectiever, met meer wederzijds begrip en betrouwbaardere informatie."
   },
   {
-    id: 2,
-    client: "Nidos",
-    shortName: "Nidos",
-    situation: "Begeleiders werkten met Eritrese jongeren en liepen tegen uitdagingen aan in communicatie, verwachtingen en onderlinge afstemming.",
-    approach: "Betty verzorgde trainingen gericht op interculturele communicatie en praktische handvatten. Ze gaf inzicht in culturele verschillen en hoe professionals hier effectief mee om kunnen gaan.",
-    result: "Meer begrip tussen begeleiders en jongeren, betere samenwerking en meer vertrouwen in de begeleiding.",
-    // TODO: vervang
-    image: "https://loremflickr.com/800/600/youth,mentor?lock=52"
-  },
-  {
-    id: 3,
-    client: "Openbaar Ministerie",
-    shortName: "OM",
-    situation: "Binnen een justitiële context ontstond behoefte aan beter begrip van culturele achtergronden en communicatie met betrokkenen uit Eritrese en andere gemeenschappen.",
-    approach: "Betty adviseerde over culturele context en communicatie en hielp signalen en gedrag vanuit de doelgroep te duiden naar bruikbare inzichten voor professionals.",
-    result: "Meer cultureel begrip in de omgang met betrokkenen en effectievere, zorgvuldigere communicatie.",
-    // TODO: vervang
-    image: "https://loremflickr.com/800/600/community,advice?lock=53"
-  },
-  {
-    id: 4,
-    client: "Verwey-Jonker Instituut",
-    shortName: "Verwey-Jonker",
-    situation: "Onderzoekers wilden beter inzicht krijgen in de ervaringen van Eritrese gemeenschappen binnen maatschappelijke vraagstukken.",
-    approach: "Betty ondersteunde bij het interpreteren van signalen, het aanscherpen van onderzoeksvragen en het verbeteren van communicatie met respondenten.",
-    result: "Sterkere onderzoeksresultaten met meer context en diepgang, en betere aansluiting bij de doelgroep.",
-    // TODO: vervang
-    image: "https://loremflickr.com/800/600/interview,research?lock=54"
-  },
-  {
-    id: 5,
-    client: "ARQ Centrum '45",
-    shortName: "ARQ",
-    situation: "Professionals werkten met cliënten met diverse culturele achtergronden en zochten naar manieren om beter aan te sluiten in begeleiding en behandeling.",
-    approach: "Betty gaf training en advies over culturele sensitiviteit, communicatie en het begrijpen van gedrag binnen context.",
-    result: "Meer effectieve begeleiding, betere relatie met cliënten en meer vertrouwen in het contact.",
-    // TODO: vervang
-    image: "https://loremflickr.com/800/600/counseling,care?lock=55"
-  },
-  {
-    id: 6,
-    client: "COA",
-    shortName: "COA",
-    situation: "Binnen opvanglocaties ontstonden uitdagingen in communicatie en samenwerking tussen bewoners en professionals.",
-    approach: "Betty ondersteunde met begeleiding, advies en het overbruggen van culturele verschillen. Ze hielp bij het creëren van wederzijds begrip.",
-    result: "Rustigere samenwerking, minder miscommunicatie en betere aansluiting tussen bewoners en medewerkers.",
-    // TODO: vervang
-    image: "https://loremflickr.com/800/600/community,people?lock=56"
-  },
-  {
-    id: 7,
-    client: "VOZ – Vluchtelingenopvang Ommoord-Zevenkamp",
-    shortName: "VOZ",
-    situation: "Bij de opvang van nieuw gehuisveste vluchtelingen in Ommoord-Zevenkamp was er behoefte aan taalondersteuning en laagdrempelige, betrouwbare hulpverlening die aansloot bij de bewoners.",
-    approach: "Betty meldde zich in 2015 uit eigen beweging aan. Ze functioneerde als tolk voor Nederlandstalige collega's én als zelfstandig hulpverleenster — via een wekelijks spreekuur, huisbezoeken en telefonisch contact.",
-    result: "Nieuwkomers voelden zich sneller gehoord en wegwijs, en collega's konden effectiever communiceren met de bewoners.",
-    // TODO: vervang
-    image: "https://loremflickr.com/800/600/welcome,volunteer?lock=57"
+    id: "VOZ",
+    client: "VOZ — Vluchtelingenopvang Ommoord-Zevenkamp",
+    situation:
+      "VOZ ving nieuw gehuisveste vluchtelingen op in Ommoord-Zevenkamp, waaronder veel Eritrese nieuwkomers. Het team had geen Tigrinya-sprekende collega's en kon daardoor moeilijk inschatten wat bewoners nodig hadden.",
+    approach:
+      "Ik meldde me in juni 2015 uit eigen beweging bij VOZ. Ik hielp Eritrese vluchtelingen bij integratie- en participatieactiviteiten — via het wekelijkse spreekuur en daarbuiten via huisbezoek en telefonisch contact. Ik werkte als tolk voor Nederlandstalige collega's én als zelfstandig hulpverleenster, en dacht in het werkoverleg mee over praktische oplossingen.",
+    result:
+      "Het VOZ-team kreeg de kennis en vaardigheden om Eritrese nieuwkomers te begeleiden bij het opbouwen van een leven in Nederland."
   }
 ];
 
-export const ClientsPage = ({ onNavigate, selectedClient }: {
+const doelgroepen = [
+  {
+    title: "Gemeenten & overheid",
+    desc: "Advies en begeleiding rond integratie, participatie en vraagstukken in het sociaal domein.",
+    icon: <Landmark size={26} className="text-secondary-300" />
+  },
+  {
+    title: "Zorg & hulpverlening",
+    desc: "Ondersteuning bij de begeleiding van Eritrese cliënten en gezinnen, ook bij trauma en mentale gezondheid.",
+    icon: <HeartPulse size={26} className="text-secondary-300" />
+  },
+  {
+    title: "Jeugdzorg & Veilig Thuis",
+    desc: "Culturele duiding bij opvoedvraagstukken, onveiligheid in gezinnen en complexe casuïstiek.",
+    icon: <ShieldCheck size={26} className="text-secondary-300" />
+  },
+  {
+    title: "Onderwijs",
+    desc: "Voorlichting en training voor scholen en docenten die met Eritrese jongeren en hun ouders werken.",
+    icon: <GraduationCap size={26} className="text-secondary-300" />
+  },
+  {
+    title: "NGO’s & maatschappelijke organisaties",
+    desc: "Begeleiding en advies binnen projecten gericht op opvang, participatie en zelfredzaamheid.",
+    icon: <Users size={26} className="text-secondary-300" />
+  },
+  {
+    title: "Kennisinstituten & onderzoek",
+    desc: "Culturele duiding bij onderzoek naar Eritrese gemeenschappen, van vraagstelling tot interpretatie.",
+    icon: <Search size={26} className="text-secondary-300" />
+  }
+];
+
+const roster = [
+  "COA",
+  "Nidos",
+  "VluchtelingenWerk Nederland",
+  "Open Embassy",
+  "Raad voor de Kinderbescherming (Overijssel)",
+  "Openbaar Ministerie",
+  "Verwey-Jonker Instituut",
+  "Sociaal en Cultureel Planbureau (SCP)",
+  "ARQ Centrum '45",
+  "Het JIT",
+  "VOZ",
+  "GGD",
+  "Parnassia Groep",
+  "Diverse gemeenten"
+];
+
+/**
+ * Alleen geverifieerde testimonials (docs/betty-profiel.md §9). Items zonder `quote`
+ * worden hieronder weggefilterd, zodat een placeholder nooit live kan gaan.
+ */
+const testimonials = [
+  {
+    quote:
+      "Ik ervaar Bet-El als een integere en zeer betrouwbare professional die een belangrijke rol vervult als cultureel verbinder en tolk/vertaler. In de samenwerking is zij prettig in de omgang, staat zij open voor verschillende perspectieven en denkt zij altijd constructief mee. Zij komt afspraken consequent na, is flexibel in haar aanpak en levert vaak meer dan verwacht wordt. Haar betrokkenheid en zorgvuldigheid maken haar een waardevolle samenwerkingspartner.",
+    name: "Monique Haveman",
+    sub: "",
+    wide: true
+  },
+  {
+    quote:
+      "Betty is ongelooflijk betrouwbaar. Je voelt dat ze haar werk met liefde en toewijding doet. Als geen ander heeft ze oog voor de obstakels die vluchtelingen tegenkomen.",
+    name: "Lost in Europe",
+    sub: "",
+    wide: false
+  },
+  {
+    quote:
+      "Bet-El signaleert veel en deelt dat gemakkelijk met anderen. Ze is zorgvuldig in afspraken, en haar betrokkenheid bij vluchtelingen is groot.",
+    name: "VOZ",
+    sub: "Vluchtelingenopvang Ommoord-Zevenkamp",
+    wide: false
+  },
+  // TODO: COA-testimonial aanleveren en verifiëren. Zonder `quote` rendert dit item niet.
+  {
+    quote: "",
+    name: "Team Geldrop",
+    sub: "COA",
+    wide: false
+  }
+];
+
+const CLIENTS_SCHEMA = {
+  "@context": "https://schema.org",
+  "@graph": [
+    PROVIDER,
+    ...cases.map((c) => ({
+      "@type": "CreativeWork",
+      "@id": `https://bettyteklemariam.nl/opdrachtgevers#${c.id.toLowerCase()}`,
+      name: `Samenwerking met ${c.client}`,
+      about: c.situation,
+      abstract: c.result,
+      author: { "@id": PROVIDER.founder["@id"] }
+    }))
+  ]
+};
+
+export const ClientsPage = ({ onNavigate }: {
   onNavigate: (page: "home" | "services" | "about" | "clients" | "contact", id?: string) => void;
-  selectedClient?: string;
 }) => {
-  const [activeClientId, setActiveClientId] = useState(
-    () => cases.find(c => c.shortName === selectedClient)?.id ?? cases[0].id
+  usePageMeta(
+    "Opdrachtgevers & cases — Betty Teklemariam",
+    "Organisaties waarvoor Betty Teklemariam werkt — van COA, Nidos en het SCP tot gemeenten en jeugdzorg — met cases rond de Eritrese gemeenschap."
   );
 
-  useEffect(() => {
-    const match = cases.find(c => c.shortName === selectedClient);
-    if (match) {
-      setActiveClientId(match.id);
-    }
-  }, [selectedClient]);
-
-  const currentCase = cases.find(c => c.id === activeClientId) || cases[0];
+  const zichtbareTestimonials = testimonials.filter((t) => t.quote);
 
   return (
     <div className="bg-white">
+      <JsonLd data={CLIENTS_SCHEMA} />
+
       {/* SECTION 1 — HERO */}
-      <section className="bg-white py-20 overflow-hidden">
+      <section className="bg-white py-12 lg:py-20 overflow-hidden">
         <div className="container-custom">
-          <div className="flex flex-col lg:flex-row lg:items-start gap-12 lg:gap-12">
+          <div className="flex flex-col lg:flex-row lg:items-center gap-12 lg:gap-16">
             <div className="flex-1 space-y-6">
               <h1 className="text-4xl md:text-5xl lg:text-[46px] font-bold leading-[1.2] lg:leading-[69px] text-primary-500">
                 Voor wie ik werk
               </h1>
               <p className="text-lg text-neutral-700 max-w-[512px] leading-[30px]">
-                Ik ondersteun organisaties bij het verbeteren van communicatie en samenwerking met Eritrese gemeenschappen, met aandacht voor context, vertrouwen en duurzame impact.
+                Gemeenten, zorginstellingen, jeugdzorg en kennisinstituten schakelen mij in wanneer een standaardaanpak niet volstaat — als er duiding nodig is bij wat een Eritrese cliënt zegt, doet of juist niet zegt.
               </p>
-              
+
               <div className="flex flex-wrap gap-4 pt-4">
                 <a
                   href={WHATSAPP_URL}
@@ -119,16 +170,16 @@ export const ClientsPage = ({ onNavigate, selectedClient }: {
                   <WhatsappLogoIcon size={28} weight="light" />
                 </a>
               </div>
-              
-              <div className="hidden lg:block h-[145px]" />
             </div>
-            
-            <div className="flex-1 w-full lg:pt-2">
-              <div className="relative max-w-[540px] lg:ml-auto bg-primary-50/95 rounded-[32px] p-8 shadow-[0px_2px_4px_rgba(27,28,29,0.04)]">
-                {/* TODO: vervang */}
+
+            <div className="flex-1 w-full">
+              <div className="relative max-w-[540px] lg:ml-auto bg-primary-50/95 rounded-[32px] p-3 shadow-[0px_2px_4px_rgba(27,28,29,0.04)]">
+                {/* TODO: hier hoort een relevante foto — Betty in gesprek met een
+                    opdrachtgever, of een neutraal beeld. Het huidige beeld is een
+                    stockfoto en toont Betty niet. Fallback-logica bewust ongewijzigd. */}
                 <img
                   src="/images/illustration-clients.png"
-                  alt="Illustratie Opdrachtgevers"
+                  alt="Betty in gesprek met professionals van een opdrachtgever"
                   className="w-full h-auto rounded-[24px] object-cover aspect-[4/3]"
                   onError={(e) => {
                     const img = e.currentTarget;
@@ -148,48 +199,31 @@ export const ClientsPage = ({ onNavigate, selectedClient }: {
       </section>
 
       {/* SECTION 2 — DOELGROEPEN */}
-      <section className="py-28 bg-neutral-50">
-        <div className="container-custom space-y-4 mb-16">
+      <section className="py-20 lg:py-28 bg-neutral-50">
+        <div className="container-custom space-y-4 mb-16 max-w-2xl">
           <h2 className="text-[38px] font-bold text-primary-400">Met welke organisaties werk ik</h2>
-          <p className="text-lg text-neutral-700 max-w-2xl">
-            Ik werk samen met organisaties die werken met diverse doelgroepen en behoefte hebben aan betere communicatie, samenwerking en culturele aansluiting.
+          <p className="text-lg text-neutral-700 leading-[30px]">
+            Overal waar professionals met Eritrese cliënten en gemeenschappen te maken krijgen.
           </p>
         </div>
-        
-        <div className="container-custom grid md:grid-cols-2 gap-8">
-          {[
-            { 
-              title: "Overheid", 
-              desc: "Samenwerking met overheidsorganisaties rondom integratie, participatie en vraagstukken binnen het sociaal domein." 
-            },
-            { 
-              title: "Zorginstellingen", 
-              desc: "Ondersteuning bij begeleiding van cliënten en gezinnen met diverse culturele achtergronden binnen zorg en hulpverlening." 
-            },
-            { 
-              title: "Maatschappelijke organisaties", 
-              desc: "Samenwerking met organisaties die actief zijn in het sociaal domein, gericht op ondersteuning, participatie en inclusie." 
-            },
-            { 
-              title: "NGO’s", 
-              desc: "Ondersteuning binnen projecten en programma’s gericht op inclusie, community building en internationale of lokale samenwerking." 
-            }
-          ].map((item, i) => (
-            <div key={i} className="bg-white p-8 rounded-[32px] shadow-[0px_0px_4px_rgba(27,28,29,0.04)] space-y-8 hover:shadow-md transition-all duration-300">
+
+        <div className="container-custom grid md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
+          {doelgroepen.map((item) => (
+            <div key={item.title} className="h-full bg-white p-8 rounded-[32px] shadow-[0px_0px_4px_rgba(27,28,29,0.04)] space-y-6 hover:shadow-md transition-all duration-300">
               <div className="w-16 h-16 bg-primary-500 rounded-full flex items-center justify-center">
-                <div className="w-6 h-6 bg-secondary-300 rounded-sm" />
+                {item.icon}
               </div>
               <div className="space-y-4">
-                <h3 className="text-[26px] font-bold text-primary-500">{item.title}</h3>
-                <p className="text-lg text-neutral-800 leading-[32px] max-w-sm">{item.desc}</p>
+                <h3 className="text-2xl font-bold text-primary-500">{item.title}</h3>
+                <p className="text-neutral-800 leading-[32px]">{item.desc}</p>
               </div>
             </div>
           ))}
         </div>
       </section>
 
-      {/* SECTION 2.5 — OPDRACHTGEVERS ROSTER */}
-      <section className="py-28 bg-white">
+      {/* SECTION 3 — OPDRACHTGEVERS ROSTER */}
+      <section className="py-20 lg:py-28 bg-white">
         <div className="container-custom space-y-4 mb-12 max-w-2xl">
           <h2 className="text-[38px] font-bold text-primary-400">Organisaties waarmee ik heb samengewerkt</h2>
           <p className="text-lg text-neutral-700 leading-[30px]">
@@ -197,142 +231,52 @@ export const ClientsPage = ({ onNavigate, selectedClient }: {
           </p>
         </div>
 
-        <div className="container-custom grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {[
-            "COA",
-            "Nidos",
-            "VluchtelingenWerk Nederland",
-            "Open Embassy",
-            "Raad voor de Kinderbescherming",
-            "Openbaar Ministerie",
-            "Verwey-Jonker Instituut",
-            "Sociaal en Cultureel Planbureau (SCP)",
-            "ARQ Centrum '45",
-            "Het JIT",
-            "VOZ",
-            "GGD",
-            "Parnassia Groep",
-            "Diverse gemeenten"
-          ].map((name) => (
-            <div
+        <div className="container-custom flex flex-wrap gap-3">
+          {roster.map((name) => (
+            <span
               key={name}
-              className="bg-neutral-50 rounded-2xl border border-neutral-100 px-5 py-6 flex items-center justify-center text-center shadow-[0px_2px_4px_rgba(27,28,29,0.04)] hover:shadow-md transition-shadow"
+              className="bg-neutral-50 px-5 py-2 rounded-full text-sm text-neutral-700 border border-neutral-100 font-medium"
             >
-              <span className="font-display font-semibold text-primary-500 leading-snug">{name}</span>
-            </div>
+              {name}
+            </span>
           ))}
         </div>
       </section>
 
-      {/* SECTION 3 — CASES */}
-      <section id="case-detail" className="scroll-mt-28 py-28 bg-white border-t border-neutral-100">
-        <div className="container-custom space-y-4 mb-12">
+      {/* SECTION 4 — CASES */}
+      <section id="case-detail" className="scroll-mt-28 py-20 lg:py-28 bg-neutral-50 border-t border-neutral-100">
+        <div className="container-custom space-y-4 mb-12 max-w-2xl">
           <h2 className="text-[38px] font-bold text-primary-400">Samenwerkingen in de praktijk</h2>
-          <p className="text-lg text-neutral-700 max-w-2xl">
-            Een selectie van trajecten waarin ik organisaties heb ondersteund bij communicatie, begeleiding en samenwerking.
+          <p className="text-lg text-neutral-700 leading-[30px]">
+            Twee trajecten, uitgeschreven: wat de situatie was, wat ik deed en wat het opleverde.
           </p>
         </div>
 
-        <div className="container-custom">
-          {/* Filters - Horizontal Scroll on Mobile/Tablet */}
-          <div className="flex overflow-x-auto pb-4 mb-16 no-scrollbar -mx-4 px-4 lg:mx-0 lg:px-0 lg:flex-wrap gap-3">
-            {cases.map((c) => (
-              <button
-                key={c.id}
-                onClick={() => setActiveClientId(c.id)}
-                className={`px-6 py-3 rounded-full text-sm font-medium transition-all whitespace-nowrap ${
-                  activeClientId === c.id 
-                    ? "bg-primary-500 text-secondary-300 shadow-md" 
-                    : "bg-neutral-50 text-neutral-600 hover:bg-neutral-100"
-                }`}
-              >
-                {c.shortName}
-              </button>
-            ))}
-          </div>
-
-          {/* Dynamic Case Display */}
-          <div className="bg-neutral-50 rounded-[40px] p-8 lg:p-16 shadow-[0px_4px_20px_rgba(0,0,0,0.03)] border border-neutral-100 min-h-[500px]">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={currentCase.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.3 }}
-                className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20"
-              >
-                <div className="flex-1 space-y-8">
-                  <h3 className="text-[32px] font-bold text-primary-500">{currentCase.client}</h3>
-                  
-                  <div className="space-y-6">
-                    <div className="space-y-2">
-                      <p className="font-display font-bold text-primary-500 uppercase tracking-widest text-sm">Situatie</p>
-                      <p className="text-lg text-neutral-700 leading-relaxed">{currentCase.situation}</p>
-                    </div>
-                    <div className="space-y-2">
-                      <p className="font-display font-bold text-primary-500 uppercase tracking-widest text-sm">Aanpak</p>
-                      <p className="text-lg text-neutral-700 leading-relaxed">{currentCase.approach}</p>
-                    </div>
-                    <div className="space-y-2">
-                      <p className="font-display font-bold text-primary-500 uppercase tracking-widest text-sm">Resultaat</p>
-                      <p className="text-lg text-neutral-700 leading-relaxed">{currentCase.result}</p>
-                    </div>
-                  </div>
+        <div className="container-custom space-y-8">
+          {cases.map((c) => (
+            <article key={c.id} className="bg-white rounded-[40px] p-6 sm:p-8 lg:p-12 shadow-[0px_4px_20px_rgba(0,0,0,0.03)] border border-neutral-100 space-y-8">
+              <h3 className="text-2xl md:text-[32px] font-bold text-primary-500 leading-tight break-words hyphens-auto">{c.client}</h3>
+              <div className="space-y-6 max-w-3xl">
+                <div className="space-y-2">
+                  <p className="font-display font-bold text-primary-500 uppercase tracking-widest text-sm">Situatie</p>
+                  <p className="text-lg text-neutral-700 leading-relaxed">{c.situation}</p>
                 </div>
-                
-                <div className="flex-1 w-full">
-                  <img
-                    src={currentCase.image}
-                    alt={currentCase.client}
-                    className="w-full h-auto rounded-[32px] shadow-lg aspect-[4/3] object-cover"
-                    onError={(e) => {
-                      e.currentTarget.onerror = null;
-                      e.currentTarget.src = `https://picsum.photos/seed/case${currentCase.id}/800/600`;
-                    }}
-                    referrerPolicy="no-referrer"
-                  />
+                <div className="space-y-2">
+                  <p className="font-display font-bold text-primary-500 uppercase tracking-widest text-sm">Aanpak</p>
+                  <p className="text-lg text-neutral-700 leading-relaxed">{c.approach}</p>
                 </div>
-              </motion.div>
-            </AnimatePresence>
-          </div>
-        </div>
-      </section>
-
-      {/* SECTION 4 — WERKWIJZE */}
-      <section className="py-28 bg-neutral-50">
-        <div className="container-custom text-center space-y-6 mb-24">
-          <h2 className="text-[38px] font-bold text-primary-400">Hoe een samenwerking verloopt</h2>
-          <p className="text-lg text-neutral-700 max-w-2xl mx-auto leading-relaxed">
-            Elke samenwerking begint met luisteren en afstemmen, gevolgd door gerichte ondersteuning.
-          </p>
-        </div>
-        
-        <div className="container-custom grid md:grid-cols-4 gap-12">
-          {[
-            { step: "1", title: "Kennismaking", desc: "We bespreken de situatie en jouw vraag." },
-            { step: "2", title: "Analyse", desc: "We brengen de context en uitdagingen in kaart." },
-            { step: "3", title: "Begeleiding", desc: "Gerichte ondersteuning, training of bemiddeling." },
-            { step: "4", title: "Evaluatie", desc: "We reflecteren en borgen de resultaten." }
-          ].map((item, i) => (
-            <div key={i} className="relative space-y-8 text-center group">
-              {i < 3 && (
-                <div className="hidden lg:block absolute top-12 left-[60%] w-full h-[2px] bg-neutral-200 -z-10" />
-              )}
-              <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center mx-auto shadow-md border border-neutral-100 group-hover:border-secondary-300 transition-colors duration-300">
-                <span className="text-3xl font-bold text-primary-500">{item.step}</span>
+                <div className="space-y-2">
+                  <p className="font-display font-bold text-primary-500 uppercase tracking-widest text-sm">Resultaat</p>
+                  <p className="text-lg text-neutral-700 leading-relaxed">{c.result}</p>
+                </div>
               </div>
-              <div className="space-y-3">
-                <h3 className="text-xl font-bold text-primary-500">{item.title}</h3>
-                <p className="text-neutral-600 leading-relaxed text-lg">{item.desc}</p>
-              </div>
-            </div>
+            </article>
           ))}
         </div>
       </section>
 
-      {/* SECTION 4.5 — TESTIMONIALS */}
-      <section className="py-28 bg-white">
+      {/* SECTION 5 — TESTIMONIALS */}
+      <section className="py-20 lg:py-28 bg-white">
         <div className="container-custom">
           <div className="space-y-4 mb-16 max-w-2xl">
             <h2 className="text-[38px] font-bold text-primary-400">Wat opdrachtgevers zeggen</h2>
@@ -341,27 +285,8 @@ export const ClientsPage = ({ onNavigate, selectedClient }: {
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8 items-start">
-            {[
-              {
-                quote: "Ik ervaar Bet-El als een integere en zeer betrouwbare professional die een belangrijke rol vervult als cultureel verbinder en tolk/vertaler. In de samenwerking is zij prettig in de omgang, staat zij open voor verschillende perspectieven en denkt zij altijd constructief mee. Zij komt afspraken consequent na, is flexibel in haar aanpak en levert vaak meer dan verwacht wordt. Haar betrokkenheid en zorgvuldigheid maken haar een waardevolle samenwerkingspartner.",
-                name: "Monique Haveman",
-                sub: "",
-                wide: true
-              },
-              {
-                quote: "Jouw hulp, steun en zorg hebben onze jongere tijdens haar bevalling ontzettend geholpen. We zijn daar enorm dankbaar voor.",
-                name: "Team Geldrop",
-                sub: "COA",
-                wide: false
-              },
-              {
-                quote: "Bet-El signaleert veel en deelt dat gemakkelijk met anderen. Ze is zorgvuldig in afspraken, en haar betrokkenheid bij vluchtelingen is groot.",
-                name: "VOZ",
-                sub: "Vluchtelingenopvang Ommoord-Zevenkamp",
-                wide: false
-              }
-            ].map((t) => (
+          <div className="grid md:grid-cols-2 gap-8 items-stretch">
+            {zichtbareTestimonials.map((t) => (
               <motion.div
                 key={t.name}
                 initial={{ opacity: 0, y: 20 }}
@@ -390,4 +315,3 @@ export const ClientsPage = ({ onNavigate, selectedClient }: {
     </div>
   );
 };
-

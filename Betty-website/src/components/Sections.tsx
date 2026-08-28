@@ -431,25 +431,19 @@ export const About = ({ onNavigate }: { onNavigate: (page: "home" | "services" |
 };
 
 export const Clients = ({ onNavigate }: { onNavigate: (page: "home" | "services" | "about" | "clients" | "contact", id?: string) => void }) => {
-  // Geverifieerde opdrachtgevers uit docs/betty-profiel.md — de overige staan op de Opdrachtgevers-pagina.
+  // Alleen opdrachtgevers met een uitgeschreven, geverifieerde case op de
+  // Opdrachtgevers-pagina (docs/betty-profiel.md §10 + de VOZ-referentiebrief).
+  // Voeg hier geen organisatie toe zonder bijbehorende case — de knop linkt erheen.
   const clients = [
     {
       name: "Sociaal en Cultureel Planbureau",
-      caseId: "SCP",
       tag: "Onderzoek",
       desc: "Culturele duiding binnen onderzoek naar integratie en participatie van Eritrese gemeenschappen."
     },
     {
-      name: "COA",
-      caseId: "COA",
+      name: "VOZ — Vluchtelingenopvang Ommoord-Zevenkamp",
       tag: "Begeleiding",
-      desc: "Bemiddeling en advies rond communicatie tussen bewoners en medewerkers op opvanglocaties."
-    },
-    {
-      name: "ARQ Centrum '45",
-      caseId: "ARQ",
-      tag: "Advies",
-      desc: "Advies en training over cultuursensitief werken in begeleiding en behandeling."
+      desc: "Tolk en zelfstandig hulpverleenster bij de opvang van Eritrese nieuwkomers, via spreekuur en huisbezoek."
     }
   ];
 
@@ -462,10 +456,10 @@ export const Clients = ({ onNavigate }: { onNavigate: (page: "home" | "services"
         </p>
       </div>
 
-      <div className="container-custom grid md:grid-cols-3 gap-6">
+      <div className="container-custom grid md:grid-cols-2 gap-6">
         {clients.map((c) => (
           <div
-            key={c.caseId}
+            key={c.name}
             className="flex flex-col bg-white p-6 rounded-[32px] shadow-[0px_2px_4px_rgba(27,28,29,0.04)] transition duration-200 hover:-translate-y-1"
           >
             <div className="flex justify-end">
@@ -479,7 +473,7 @@ export const Clients = ({ onNavigate }: { onNavigate: (page: "home" | "services"
             </div>
             <div className="mt-auto pt-8">
               <button
-                onClick={() => onNavigate("clients", c.caseId)}
+                onClick={() => onNavigate("clients", "case-detail")}
                 className="px-8 py-4 rounded-full border border-secondary-300 text-primary-500 font-display font-medium text-lg inline-flex items-center gap-2 hover:bg-neutral-50 transition-colors cursor-pointer"
               >
                 Bekijk case
