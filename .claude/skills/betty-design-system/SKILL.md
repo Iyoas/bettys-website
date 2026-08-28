@@ -53,7 +53,7 @@ Beide fonts worden geladen via een Google Fonts `@import` bovenaan `index.css` �
 - Alle koppen (h1–h6) gebruiken automatisch `font-display` (globaal ingesteld via `@layer base`)
 - Body-tekst gebruikt `font-sans` (Inter), kleur `neutral-1000`
 - H1-patroon: `text-4xl md:text-5xl lg:text-[46px] font-bold leading-[1.2] lg:leading-[69px] text-primary-500`
-- H2-patroon (sectiekoppen): `text-[38px] font-bold text-primary-400 leading-tight` — **let op:** de Werkwijze-koppen op `ServicesPage`/`ClientsPage` wijken hiervan af en gebruiken `text-primary-500` in plaats van `text-primary-400`. Bestaande inconsistentie, niet als norm overnemen voor nieuwe secties.
+- H2-patroon (sectiekoppen): `text-[38px] font-bold text-primary-400 leading-tight`. De eerdere uitzondering (Werkwijze-koppen op `text-primary-500`) is opgeheven — alle sectiekoppen op de subpagina's volgen nu dit ene patroon. Uitzondering blijft de H2 in het donkere `<CTA />`-blok: die is `text-secondary-300` op de groene achtergrond.
 - Body/intro-tekst: `text-lg text-neutral-700 leading-[30px]` (of `leading-relaxed`)
 - Card-/beschrijvingstekst: `text-neutral-800 leading-[32px]`
 - Labels/eyebrows (bijv. "Wat Betty concreet doet"): `font-display text-sm font-bold text-primary-500 uppercase tracking-widest` (soms `tracking-[0.2em]`, bijv. bij "Samenwerkingen met" in TrustedBy)
@@ -107,12 +107,7 @@ met het icoon zelf in `text-secondary-300`.
 **Checklist-item** (oudere variant, nog in gebruik op sommige plekken buiten `ServicesPage`):
 Groene ronde bullet met wit vinkje-icoon (`CheckCircle2` uit lucide-react) in een `bg-primary-500 rounded-full p-1` cirkel, gevolgd door `text-lg text-neutral-700`. Op `ServicesPage` is dit patroon vervangen door de **Onderwerp-kaartengrid** hieronder — gebruik voor nieuwe "wat Betty concreet doet"-achtige opsommingen die grid, niet de checklist.
 
-**Categorie-eyebrow-badge** (nieuw, `ServicesPage`): klein, ondergeschikt label boven een dienst-titel — icoon + korte functionele categorie (bijv. "Ondersteuning", "Bemiddeling", "Advies", "Training"):
-```
-inline-flex items-center gap-1.5 bg-secondary-100 text-primary-500 px-4 py-1.5 rounded-full
-font-display text-xs font-bold uppercase tracking-widest
-```
-Icoon binnenin op `size={14} strokeWidth={1.5}`. Houd dit bewust klein — het is een label, geen tweede kop; niet groter maken dan `text-xs`/`py-1.5`, ook niet op mobiel.
+**~~Categorie-eyebrow-badge~~ — VERVALLEN.** Dit patroon stond alleen op `ServicesPage` en is verwijderd: het bestond nergens anders op de site (ook niet in de homepage-teaser) en het label "Advies" boven "Culturele vertaling" dekte de lading niet. **Niet opnieuw introduceren.** De lime titel-underline hieronder blijft wél het merkelement boven een dienst-titel.
 
 **Titel-underline** (nieuw, volgt op een H2 binnen een dienst-sectie): klein lime streepje, geen brede balk — `h-1 w-16 bg-secondary-300 rounded-full`, direct onder de titel in dezelfde `space-y-5`-wrapper.
 
@@ -138,7 +133,9 @@ font-display font-medium inline-flex items-center gap-2 hover:border-secondary-3
 ```
 Klik scrollt smooth naar de bijbehorende sectie-id (`document.getElementById(id)?.scrollIntoView({ behavior: "smooth" })`).
 
-**Werkwijze/stappenblok — ontbrak volledig in het concept.** Komt voor op zowel `ServicesPage` als `ClientsPage`: 4 genummerde cirkels (`w-24 h-24 bg-white rounded-full border border-neutral-100`, hover-rand wordt lime) verbonden door een horizontale lijn (`grid md:grid-cols-4`), met net iets andere stapnamen per pagina.
+**Werkwijze/stappenblok.** Staat nog uitsluitend op `ServicesPage` — de bijna identieke kopie op `ClientsPage` is verwijderd (twee vrijwel gelijke blokken op één site). Herzien: 4 genummerde cirkels (`w-14 h-14`, actief `bg-primary-500` + lime cijfer, inactief wit met `border-neutral-200`) op een dunne `h-px`-voortgangslijn, met kaarten van gelijke hoogte (`h-full` + `items-stretch`). Hover/focus/klik schakelt de actieve stap; transities zijn `duration-500 ease-in-out` op kleur, **geen** `hover:scale` en geen forse maatsprong tussen actief en inactief. De horizontale layout begint pas op `lg` — op `md` (768px) zijn vier kolommen te smal en breekt de tekst naar één à twee woorden per regel; daaronder een verticale stappenlijst.
+
+**Filterbare case-viewer — VERVALLEN.** De pill-filters + `AnimatePresence`-paneel op `ClientsPage` zijn verwijderd toen de niet-geverifieerde cases eruit gingen; met twee cases was die UI overbodig. De vaste **Situatie / Aanpak / Resultaat**-structuur blijft, nu als losse `rounded-[40px]`-blokken onder elkaar.
 
 **TrustedBy logo-marquee — ontbrak volledig in het concept.** Een oneindig doorlopende, automatisch scrollende rij klantlogo's (Motion `animate={{x: ["0%","-50%"]}}`, logo's gedupliceerd voor een naadloze loop), met een gradient-fademasker aan beide randen en `grayscale hover:opacity-100` op elk logo.
 
@@ -148,13 +145,13 @@ Klik scrollt smooth naar de bijbehorende sectie-id (`document.getElementById(id)
 1. Home (`Testimonials`): grid van 3 kaarten met decoratieve lime vierkantjes boven/onder de quote, plus twee ronde pijl-knoppen (`bg-primary-500 text-secondary-300`) om te "bladeren" (niet functioneel gekoppeld aan een echte carousel-state).
 2. Opdrachtgevers (`ClientsPage`): één uitgelichte quote in een groot, gecentreerd paneel met een `Quote`-icoon in een lichte cirkel — geen grid, geen pijlen.
 
-**Quick-contact 3-kaartenrij (ContactPage) — ontbrak in het concept.** Drie identieke kaarten (E-mail / Telefoon / Kennismaking) met iconbadge, titel, korte uitleg en actie-link, met een `Motion`-stagger (`initial`/`whileInView`, oplopende `delay`).
+**~~Quick-contact 3-kaartenrij~~ (ContactPage) — VERVALLEN.** De drie kaarten (E-mail / Telefoon / Kennismaking) dupliceerden het "Liever direct contact"-blok vlak eronder. Verwijderd, inclusief de `showQuickContact`-prop op `ContactForm`.
 
-**Bedrijfsgegevens-grid (ContactPage) — ontbrak in het concept.** Label/waarde-paren in een `grid-cols-[140px_1fr]`/`md:grid-cols-[200px_1fr]`-layout (Bedrijfsnaam, KvK-nummer, BTW-nummer, Vestigingsplaats, Werkgebied).
+**~~Bedrijfsgegevens-grid~~ (ContactPage) — VERVALLEN.** De sectie had een lege rechterkolom op desktop en herhaalde de footer. De gegevens (bedrijfsnaam, KvK, vestigingsplaats, werkgebied) staan nu alleen nog in de footer-kolom "Bedrijfsgegevens".
 
 **CTA-blok** (herbruikbare `<CTA />` component, onderaan bijna elke pagina): donkergroen (`bg-primary-500`) afgerond paneel met twee lichte blur-accenten, lime kop, witte tekst, en twee knoppen (primary lime + outline lime, zie kleurinversie in §4).
 
-**Navbar:** sticky, wit/lichtgrijs afgerond paneel binnen de container, logo + naam links, centrale nav-links met lime underline op actieve pagina (Motion `layoutId`), primary-button "Samenwerken" rechts. **Belangrijke ontbrekende functionaliteit (stond niet in het concept):** er is géén hamburgermenu — onder het `md`-breakpoint zijn de navigatielinks volledig verborgen (`hidden md:flex`) zonder enig alternatief om tussen pagina's te navigeren op mobiel.
+**Navbar:** sticky, wit/lichtgrijs afgerond paneel binnen de container, logo + naam links, centrale nav-links met lime underline op actieve pagina (Motion `layoutId`), primary-button "Samenwerken" rechts. Er **is** inmiddels een hamburgermenu onder het `md`-breakpoint (`Menu`/`X` uit lucide-react); de eerdere notitie dat mobiele navigatie ontbrak is achterhaald.
 
 **Footer:** 3 kolommen (Navigatie / Contact / Bedrijfsgegevens) naast een logo+beschrijving-blok, met copyright-regel onderaan. Achtergrond wisselt wit/`neutral-50` via een `variant`-prop die per pagina wordt ingesteld in `App.tsx`.
 
@@ -183,17 +180,25 @@ De site gebruikte twee icon-libraries door elkaar: `lucide-react` en `@phosphor-
 
 | Pagina | Status | Bestand |
 |---|---|---|
-| Home | Structureel compleet (Hero, TrustedBy, Features, Services-teaser, About-teaser, Clients-teaser, Testimonials, CTA, ContactForm-compact) — **maar** de Testimonials- en Clients-teaser-secties tonen elk hetzelfde gefabriceerde placeholder-object 3×/6× herhaald (`Array(n).fill(...)`), geen echte, gevarieerde content | `src/components/Sections.tsx` |
-| Diensten | Compleet — jump-nav + 4 diensten in het herziene full-width kaartengrid-patroon (Begeleiding, Culturele bemiddeling, Culturele vertaling, Workshops & voorlichting, met categorieën Ondersteuning/Bemiddeling/Advies/Training) + Maatwerk-sectie + Werkwijze. Geen foto's meer in de dienst-secties (bewust verwijderd) | `src/components/ServicesPage.tsx` |
-| Over mij | **Nog steeds onvolledig, ongewijzigd t.o.v. het concept** — bevat alleen Hero + CTA, geen daadwerkelijk verhaal, opleiding, tijdlijn of missie-quotes uit `betty-profiel.md` | `src/components/AboutPage.tsx` |
-| Opdrachtgevers | Compleet, met filterbare case-structuur (Situatie/Aanpak/Resultaat) per klant en één losstaande testimonial (Monique Haveman staat hier **niet** in — de huidige cases gebruiken andere, deels fictieve namen). **Te checken:** de case "Ministerie van Veiligheid en Justitie" is mogelijk dezelfde opdrachtgever als "Openbaar Ministerie" uit `betty-profiel.md` — niet zomaar samenvoegen zonder verificatie bij Betty | `src/components/ClientsPage.tsx` |
-| Contact | Structureel compleet — formulier + quick-contact-kaarten + socials + bedrijfsgegevens-grid — **maar** telefoon-/WhatsApp-nummer (`+31600000000`), LinkedIn/Facebook-links (`href="#"`) en KvK-/BTW-nummer (`XXXXXXXX`) zijn nog placeholders | via `ContactForm` in `Sections.tsx` + `ContactPage.tsx` |
+| Home | Structureel compleet (Hero, TrustedBy, Features, Services-teaser, About-teaser, Clients-teaser, Testimonials, ContactForm). Testimonials tonen de drie geverifieerde quotes uit `betty-profiel.md` §9; de Clients-teaser toont nog **2** organisaties — alleen die met een uitgeschreven case (SCP en VOZ), omdat de "Bekijk case"-knop daarheen linkt | `src/components/Sections.tsx` |
+| Diensten | Compleet — jump-nav + 4 diensten (Begeleiding, Culturele bemiddeling, Culturele vertaling, Workshops & voorlichting) in het full-width kaartengrid-patroon, + Samenwerking op maat (lichte sectie) + Werkwijze + afsluitende `<CTA />`. Geen foto's en geen eyebrow-badges meer in de dienst-secties. De gevoelige thema's uit `betty-profiel.md` §6-C zijn als losse kaarten in de TopicGrids verweven, zonder eigen kop | `src/components/ServicesPage.tsx` |
+| Over mij | **Compleet** — Hero met staand portret + functie-regel, Mijn verhaal (met sticky motto-card), tijdlijn, expertise-grid, Opleiding & talen, Missie (lichte sectie) en `<CTA />`. Alles in de ik-vorm | `src/components/AboutPage.tsx` |
+| Opdrachtgevers | Compleet — Hero, doelgroepen-grid (6 kaarten, echte lucide-iconen), roster als tekst-pills, **2 geverifieerde cases** (SCP en VOZ) als losse blokken, 3 geverifieerde testimonials, `<CTA />`. De filterbare case-viewer en de duplicaat-werkwijze zijn verwijderd | `src/components/ClientsPage.tsx` |
+| Contact | Compleet — Hero met staand portret + twee CTA's, en het formulier met de "Liever direct contact"-kolom. Quick-contact-kaarten en de bedrijfsgegevens-sectie zijn verwijderd; die gegevens staan nu in de footer | `src/components/ContactPage.tsx` + `ContactForm` in `Sections.tsx` |
 
-**Ontbrekende afbeeldingen (vallen terug op `picsum.photos`-placeholders):** `illustration-about.png` en `illustration-clients.png` staan niet in `public/images/`, terwijl `AboutPage` en `ClientsPage` er wel naar verwijzen.
+**Afbeeldingen:** `betty-portret.jpg` wordt gebruikt op zowel Over mij als Contact. `illustration-clients.png` ontbreekt nog en valt terug op een `loremflickr`/`picsum`-placeholder — de `<img>` + `onError`-structuur staat er bewust in met een `TODO` erboven; **wijzig die fallback-logica niet**, vervang alleen het bestand zodra Betty een foto aanlevert.
 
-**Ontbrekende pagina's/secties, niet in het concept genoemd:** geen privacyverklaring, algemene voorwaarden, cookiemelding, 404-pagina of blog/actueel-sectie.
+**Per-pagina meta:** de site heeft geen router. `src/usePageMeta.ts` zet `document.title` + meta-description per pagina en zet bij unmount de site-defaults terug — een nieuwe pagina die dat niet aanroept, houdt anders de titel van de vorige pagina. `src/components/JsonLd.tsx` levert de `JsonLd`-helper en de gedeelde `PROVIDER`-entiteit; elke subpagina hangt zijn schema daaraan op (Service / Person / CreativeWork / ContactPage + ContactPoint).
 
-**Prioriteit voor uitbreiding:** de Over mij-pagina is de belangrijkste plek om aan te vullen — met Betty's persoonlijke verhaal, educatie en talen uit `docs/betty-profiel.md`, in dezelfde hero + sectie-stijl als de rest van de site. Daarna: het ontbrekende mobiele navigatiemenu (Navbar, §4) en het vervangen van placeholder-data (contactgegevens, Home-testimonials/clients) door echte content uit `betty-profiel.md`.
+**Openstaande punten (niet zelf invullen — bij Betty verifiëren):**
+- Bedrijfsnaam tegen de KvK-inschrijving: "Teklemariam" of "Betty Teklemariam" als handelsnaam (`TODO` in de footer).
+- BTW-nummer: alleen tonen als Betty dat wil; nu bewust weggelaten.
+- COA-testimonial: staat als leeg item met `TODO` in `ClientsPage.tsx` en wordt bij het renderen weggefilterd — een placeholder mag nooit live.
+- Het contactformulier is nog niet gekoppeld aan een verzendactie (`TODO` in `ContactForm`); het bevestigt alleen visueel.
+
+**Ontbrekende pagina's/secties:** geen privacyverklaring, algemene voorwaarden, cookiemelding, 404-pagina of blog/actueel-sectie.
+
+**Prioriteit voor uitbreiding:** het contactformulier koppelen aan een echte verzendactie, `illustration-clients.png` vervangen, en de openstaande punten hierboven met Betty verifiëren.
 
 ## 7. Tone-of-voice
 
