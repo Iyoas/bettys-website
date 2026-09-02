@@ -39,6 +39,9 @@ Tijdlijn zoals beschreven in het document:
 
 **Kernwaarden (LinkedIn):** Verbinding, vertrouwen, maatwerk
 
+**Persoonlijk motto (door Betty bevestigd):** "Beter voorkomen dan genezen." — mag als
+haar eigen motto op de site, inclusief naamsvermelding.
+
 ---
 
 ## 3. Opleiding & certificaten
