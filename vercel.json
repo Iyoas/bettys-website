@@ -1,4 +1,0 @@
-{
-  "buildCommand": "cd Betty-website && npm install && npm run build",
-  "outputDirectory": "Betty-website/dist"
-}
