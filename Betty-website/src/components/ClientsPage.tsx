@@ -174,12 +174,9 @@ export const ClientsPage = ({ onNavigate }: {
 
             <div className="flex-1 w-full">
               <div className="relative max-w-[540px] lg:ml-auto bg-primary-50/95 rounded-[32px] p-3 shadow-[0px_2px_4px_rgba(27,28,29,0.04)]">
-                {/* TODO: hier hoort een relevante foto — Betty in gesprek met een
-                    opdrachtgever, of een neutraal beeld. Het huidige beeld is een
-                    stockfoto en toont Betty niet. Fallback-logica bewust ongewijzigd. */}
                 <img
-                  src="/images/illustration-clients.png"
-                  alt="Betty in gesprek met professionals van een opdrachtgever"
+                  src="/images/betty-groep.png"
+                  alt="Betty werkt samen met een groep professionals"
                   className="w-full h-auto rounded-[24px] object-cover aspect-[4/3]"
                   onError={(e) => {
                     const img = e.currentTarget;

@@ -262,12 +262,11 @@ export const ServicesPage = ({ onNavigate }: { onNavigate: (page: "home" | "serv
             </div>
 
             <div className="flex-1 w-full">
-              {/* TODO: vervangen door een definitieve foto van Betty in een workshop. */}
               <div className="relative max-w-[540px] lg:ml-auto bg-primary-50/95 rounded-[32px] p-3 shadow-[0px_2px_4px_rgba(27,28,29,0.04)]">
                 <img
-                  src="/images/betty-workshop.png"
+                  src="/images/betty-services-workshop.png"
                   alt="Betty geeft een workshop aan een groep deelnemers"
-                  className="w-full h-auto rounded-[24px] object-cover aspect-[3/2]"
+                  className="w-full h-auto rounded-[24px] object-cover aspect-[4/3]"
                   loading="eager"
                 />
               </div>

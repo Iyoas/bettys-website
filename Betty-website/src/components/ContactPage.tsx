@@ -74,13 +74,11 @@ export const ContactPage = () => {
             </div>
 
             <div className="flex-1 w-full">
-              <div className="relative max-w-[460px] lg:ml-auto bg-primary-50/95 rounded-[32px] p-3 shadow-[0px_2px_4px_rgba(27,28,29,0.04)]">
-                {/* Zelfde staande portretfoto als op de Over mij-pagina.
-                    Fallback-logica bewust ongewijzigd. */}
+              <div className="relative max-w-[540px] lg:ml-auto bg-primary-50/95 rounded-[32px] p-3 shadow-[0px_2px_4px_rgba(27,28,29,0.04)]">
                 <img
-                  src="/images/betty-portret.jpg"
-                  alt="Portretfoto van Betty Teklemariam"
-                  className="w-full h-auto rounded-[24px] object-cover object-top aspect-[3/4]"
+                  src="/images/betty-1op1.png"
+                  alt="Betty Teklemariam in een persoonlijk gesprek"
+                  className="w-full h-auto rounded-[24px] object-cover aspect-[4/3]"
                   onError={(e) => {
                     const img = e.currentTarget;
                     if (img.src.includes("loremflickr")) {
