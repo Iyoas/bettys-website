@@ -1,7 +1,8 @@
+import { Fragment } from "react";
 import { motion } from "motion/react";
-import { Quote, Landmark, HeartPulse, ShieldCheck, GraduationCap, Users, Search } from "lucide-react";
+import { Quote, Landmark, HeartPulse, ShieldCheck, GraduationCap, Users, Search, ArrowDown } from "lucide-react";
 import { WhatsappLogo as WhatsappLogoIcon } from "@phosphor-icons/react";
-import { CTA, WHATSAPP_URL } from "./Sections";
+import { CTA, WHATSAPP_URL, HeroPhotoBlobs } from "./Sections";
 import { JsonLd, PROVIDER } from "./JsonLd";
 import { usePageMeta } from "../usePageMeta";
 
@@ -27,7 +28,7 @@ const cases = [
     situation:
       "VOZ ving nieuw gehuisveste vluchtelingen op in Ommoord-Zevenkamp, waaronder veel Eritrese nieuwkomers. Het team had geen Tigrinya-sprekende collega's en kon daardoor moeilijk inschatten wat bewoners nodig hadden.",
     approach:
-      "Ik meldde me in juni 2015 uit eigen beweging bij VOZ. Ik hielp Eritrese vluchtelingen bij integratie- en participatieactiviteiten — via het wekelijkse spreekuur en daarbuiten via huisbezoek en telefonisch contact. Ik werkte als tolk voor Nederlandstalige collega's én als zelfstandig hulpverleenster, en dacht in het werkoverleg mee over praktische oplossingen.",
+      "Ik meldde me in juni 2015 uit eigen beweging bij VOZ. Ik hielp Eritrese vluchtelingen bij integratie- en participatieactiviteiten, via het wekelijkse spreekuur en daarbuiten via huisbezoek en telefonisch contact. Ik werkte als tolk voor Nederlandstalige collega's én als zelfstandig hulpverleenster, en dacht in het werkoverleg mee over praktische oplossingen.",
     result:
       "Het VOZ-team kreeg de kennis en vaardigheden om Eritrese nieuwkomers te begeleiden bij het opbouwen van een leven in Nederland."
   }
@@ -148,15 +149,18 @@ export const ClientsPage = ({ onNavigate }: {
       <JsonLd data={CLIENTS_SCHEMA} />
 
       {/* SECTION 1 — HERO */}
-      <section className="bg-white py-12 lg:py-20 overflow-hidden">
+      <section className="bg-neutral-50 py-12 lg:py-20 overflow-hidden">
         <div className="container-custom">
           <div className="flex flex-col lg:flex-row lg:items-center gap-12 lg:gap-16">
             <div className="flex-1 space-y-6">
+              <p className="font-display text-xs font-bold text-primary-500 uppercase tracking-[0.18em]">
+                Intercultureel adviseur en mediator
+              </p>
               <h1 className="text-4xl md:text-5xl lg:text-[46px] font-bold leading-[1.2] lg:leading-[69px] text-primary-500">
                 Voor wie ik werk
               </h1>
               <p className="text-lg text-neutral-700 max-w-[512px] leading-[30px]">
-                Gemeenten, zorginstellingen, jeugdzorg en kennisinstituten schakelen mij in wanneer een standaardaanpak niet volstaat — als er duiding nodig is bij wat een Eritrese cliënt zegt, doet of juist niet zegt.
+                Ik ondersteun gemeenten, zorginstellingen, jeugdzorg en kennisinstituten wanneer een standaardaanpak niet volstaat en er culturele duiding nodig is.
               </p>
 
               <div className="flex flex-wrap gap-4 pt-4">
@@ -169,26 +173,36 @@ export const ClientsPage = ({ onNavigate }: {
                   Start een gesprek
                   <WhatsappLogoIcon size={28} weight="light" />
                 </a>
+                <button
+                  onClick={() => document.getElementById("case-detail")?.scrollIntoView({ behavior: "smooth" })}
+                  className="bg-white text-primary-500 px-8 py-4 rounded-full border-2 border-secondary-300 font-medium text-lg inline-flex items-center gap-2 hover:bg-neutral-50 transition-colors cursor-pointer"
+                >
+                  Bekijk cases
+                  <ArrowDown className="w-5 h-5" />
+                </button>
               </div>
             </div>
 
             <div className="flex-1 w-full">
-              <div className="relative max-w-[540px] lg:ml-auto bg-primary-50/95 rounded-[32px] p-3 shadow-[0px_2px_4px_rgba(27,28,29,0.04)]">
-                <img
-                  src="/images/betty-groep.png"
-                  alt="Betty werkt samen met een groep professionals"
-                  className="w-full h-auto rounded-[24px] object-cover aspect-[4/3]"
-                  onError={(e) => {
-                    const img = e.currentTarget;
-                    if (img.src.includes("loremflickr")) {
-                      img.onerror = null;
-                      img.src = "https://picsum.photos/seed/clients/800/600";
-                    } else {
-                      img.src = "https://loremflickr.com/800/600/diverse,community?lock=61";
-                    }
-                  }}
-                  referrerPolicy="no-referrer"
-                />
+              <div className="relative max-w-[540px] lg:ml-auto">
+                <HeroPhotoBlobs />
+                <div className="relative z-10">
+                  <img
+                    src="/images/betty-groep.png"
+                    alt="Betty werkt samen met een groep professionals"
+                    className="w-full h-auto rounded-[24px] object-cover aspect-[4/3]"
+                    onError={(e) => {
+                      const img = e.currentTarget;
+                      if (img.src.includes("loremflickr")) {
+                        img.onerror = null;
+                        img.src = "https://picsum.photos/seed/clients/800/600";
+                      } else {
+                        img.src = "https://loremflickr.com/800/600/diverse,community?lock=61";
+                      }
+                    }}
+                    referrerPolicy="no-referrer"
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -196,7 +210,7 @@ export const ClientsPage = ({ onNavigate }: {
       </section>
 
       {/* SECTION 2 — DOELGROEPEN */}
-      <section className="py-20 lg:py-28 bg-neutral-50">
+      <section className="py-20 lg:py-28 bg-white">
         <div className="container-custom space-y-4 mb-16 max-w-2xl">
           <h2 className="text-[38px] font-bold text-primary-400">Met welke organisaties werk ik</h2>
           <p className="text-lg text-neutral-700 leading-[30px]">
@@ -206,7 +220,7 @@ export const ClientsPage = ({ onNavigate }: {
 
         <div className="container-custom grid md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
           {doelgroepen.map((item) => (
-            <div key={item.title} className="h-full bg-white p-8 rounded-[32px] shadow-[0px_0px_4px_rgba(27,28,29,0.04)] space-y-6 hover:shadow-md transition-all duration-300">
+            <div key={item.title} className="h-full bg-neutral-50 p-8 rounded-[32px] shadow-[0px_0px_4px_rgba(27,28,29,0.04)] space-y-6 hover:shadow-md transition-all duration-300">
               <div className="w-16 h-16 bg-primary-500 rounded-full flex items-center justify-center">
                 {item.icon}
               </div>
@@ -219,8 +233,58 @@ export const ClientsPage = ({ onNavigate }: {
         </div>
       </section>
 
-      {/* SECTION 3 — OPDRACHTGEVERS ROSTER */}
-      <section className="py-20 lg:py-28 bg-white">
+      {/* SECTION 3 — CASES */}
+      <section id="case-detail" className="scroll-mt-28 py-20 lg:py-28 bg-neutral-50">
+        <div className="container-custom space-y-4 mb-12 max-w-2xl">
+          <h2 className="text-[38px] font-bold text-primary-400">Samenwerkingen in de praktijk</h2>
+          <p className="text-lg text-neutral-700 leading-[30px]">
+            Twee trajecten, uitgeschreven: wat de situatie was, wat ik deed en wat het opleverde.
+          </p>
+        </div>
+
+        <div className="container-custom space-y-8">
+          {cases.map((c, i) => (
+            <Fragment key={c.id}>
+              <article className="bg-white rounded-[40px] p-6 sm:p-8 lg:p-12 shadow-[0px_4px_20px_rgba(0,0,0,0.03)] border border-neutral-100 space-y-8">
+                <h3 className="text-2xl md:text-[32px] font-bold text-primary-500 leading-tight break-words hyphens-auto">{c.client}</h3>
+                <div className="space-y-6 max-w-3xl">
+                  <div className="space-y-2">
+                    <p className="font-display font-bold text-primary-500 uppercase tracking-widest text-sm">Situatie</p>
+                    <p className="text-lg text-neutral-700 leading-relaxed">{c.situation}</p>
+                  </div>
+                  <div className="space-y-2">
+                    <p className="font-display font-bold text-primary-500 uppercase tracking-widest text-sm">Aanpak</p>
+                    <p className="text-lg text-neutral-700 leading-relaxed">{c.approach}</p>
+                  </div>
+                  <div className="space-y-2">
+                    <p className="font-display font-bold text-primary-500 uppercase tracking-widest text-sm">Resultaat</p>
+                    <p className="text-lg text-neutral-700 leading-relaxed">{c.result}</p>
+                  </div>
+                </div>
+              </article>
+
+              {/* Rustpunt tussen de twee cases: één beeld uit de praktijk. Bewust
+                  smaller dan de kaarten (max-w-3xl) — het bronbestand is 550px breed. */}
+              {i === 0 && (
+                <figure className="max-w-3xl mx-auto space-y-3 py-4">
+                  <img
+                    src="/images/betty-clients-groep.png"
+                    alt="Betty tijdens een bijeenkomst met een groep deelnemers in een bibliotheek"
+                    className="w-full h-auto rounded-[32px] object-cover aspect-[16/9]"
+                    loading="lazy"
+                  />
+                  <figcaption className="text-sm text-neutral-700 text-center">
+                    Een bijeenkomst met deelnemers, waar voorlichting en onderling gesprek samenkomen.
+                  </figcaption>
+                </figure>
+              )}
+            </Fragment>
+          ))}
+        </div>
+      </section>
+
+      {/* SECTION 4 — OPDRACHTGEVERS ROSTER */}
+      <section className="py-20 lg:py-28 bg-white border-t border-neutral-100">
         <div className="container-custom space-y-4 mb-12 max-w-2xl">
           <h2 className="text-[38px] font-bold text-primary-400">Organisaties waarmee ik heb samengewerkt</h2>
           <p className="text-lg text-neutral-700 leading-[30px]">
@@ -240,40 +304,8 @@ export const ClientsPage = ({ onNavigate }: {
         </div>
       </section>
 
-      {/* SECTION 4 — CASES */}
-      <section id="case-detail" className="scroll-mt-28 py-20 lg:py-28 bg-neutral-50 border-t border-neutral-100">
-        <div className="container-custom space-y-4 mb-12 max-w-2xl">
-          <h2 className="text-[38px] font-bold text-primary-400">Samenwerkingen in de praktijk</h2>
-          <p className="text-lg text-neutral-700 leading-[30px]">
-            Twee trajecten, uitgeschreven: wat de situatie was, wat ik deed en wat het opleverde.
-          </p>
-        </div>
-
-        <div className="container-custom space-y-8">
-          {cases.map((c) => (
-            <article key={c.id} className="bg-white rounded-[40px] p-6 sm:p-8 lg:p-12 shadow-[0px_4px_20px_rgba(0,0,0,0.03)] border border-neutral-100 space-y-8">
-              <h3 className="text-2xl md:text-[32px] font-bold text-primary-500 leading-tight break-words hyphens-auto">{c.client}</h3>
-              <div className="space-y-6 max-w-3xl">
-                <div className="space-y-2">
-                  <p className="font-display font-bold text-primary-500 uppercase tracking-widest text-sm">Situatie</p>
-                  <p className="text-lg text-neutral-700 leading-relaxed">{c.situation}</p>
-                </div>
-                <div className="space-y-2">
-                  <p className="font-display font-bold text-primary-500 uppercase tracking-widest text-sm">Aanpak</p>
-                  <p className="text-lg text-neutral-700 leading-relaxed">{c.approach}</p>
-                </div>
-                <div className="space-y-2">
-                  <p className="font-display font-bold text-primary-500 uppercase tracking-widest text-sm">Resultaat</p>
-                  <p className="text-lg text-neutral-700 leading-relaxed">{c.result}</p>
-                </div>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
-
       {/* SECTION 5 — TESTIMONIALS */}
-      <section className="py-20 lg:py-28 bg-white">
+      <section className="py-20 lg:py-28 bg-neutral-50">
         <div className="container-custom">
           <div className="space-y-4 mb-16 max-w-2xl">
             <h2 className="text-[38px] font-bold text-primary-400">Wat opdrachtgevers zeggen</h2>
@@ -290,9 +322,9 @@ export const ClientsPage = ({ onNavigate }: {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5 }}
-                className={`bg-neutral-50 p-8 md:p-10 rounded-[40px] shadow-[0px_4px_20px_rgba(0,0,0,0.03)] border border-neutral-100 space-y-6 h-full flex flex-col ${t.wide ? "md:col-span-2" : ""}`}
+                className={`bg-white p-8 md:p-10 rounded-[40px] shadow-[0px_4px_20px_rgba(0,0,0,0.03)] border border-neutral-100 space-y-6 h-full flex flex-col ${t.wide ? "md:col-span-2" : ""}`}
               >
-                <div className="bg-white p-4 rounded-full w-fit shadow-[0px_2px_4px_rgba(27,28,29,0.04)]">
+                <div className="bg-neutral-50 p-4 rounded-full w-fit shadow-[0px_2px_4px_rgba(27,28,29,0.04)]">
                   <Quote className="w-7 h-7 text-primary-400 fill-primary-400/10" />
                 </div>
                 <blockquote className="text-lg md:text-xl text-primary-500 italic leading-[1.5] font-medium flex-1">
