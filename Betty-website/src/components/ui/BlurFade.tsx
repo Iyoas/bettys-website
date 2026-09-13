@@ -21,7 +21,10 @@ export function BlurFade({
   ...props
 }: BlurFadeProps) {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-60px" });
+  // amount i.p.v. een negatieve margin: content die bij het laden al in beeld
+  // staat (deeplink, trage JS) wordt zo meteen zichtbaar in plaats van op
+  // opacity 0 te blijven hangen tot er gescrold wordt.
+  const isInView = useInView(ref, { once: true, amount: 0.15 });
   const reduceMotion = useReducedMotion();
 
   // Bij reduced-motion tonen we de inhoud direct: geen verschuiving, geen blur.
