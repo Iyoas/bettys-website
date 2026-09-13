@@ -1,6 +1,6 @@
 import { WhatsappLogo as WhatsappLogoIcon } from "@phosphor-icons/react";
 import { ArrowDown } from "lucide-react";
-import { ContactForm, WHATSAPP_URL } from "./Sections";
+import { ContactForm, WHATSAPP_URL, HeroPhotoBlobs } from "./Sections";
 import { JsonLd, PROVIDER } from "./JsonLd";
 import { usePageMeta } from "../usePageMeta";
 
@@ -33,7 +33,7 @@ const CONTACT_SCHEMA = {
 
 export const ContactPage = () => {
   usePageMeta(
-    "Contact — Betty Teklemariam, intercultureel adviseur",
+    "Contact met Betty Teklemariam, intercultureel adviseur",
     "Plan een kennismakingsgesprek met Betty Teklemariam, intercultureel adviseur en bemiddelaar. Gevestigd in Rotterdam, werkzaam door heel Nederland."
   );
 
@@ -42,15 +42,18 @@ export const ContactPage = () => {
       <JsonLd data={CONTACT_SCHEMA} />
 
       {/* Hero Section */}
-      <section className="bg-white py-12 lg:py-20 overflow-hidden">
+      <section className="bg-neutral-50 py-12 lg:py-20 overflow-hidden">
         <div className="container-custom">
           <div className="flex flex-col lg:flex-row lg:items-center gap-12 lg:gap-16">
             <div className="flex-1 space-y-6">
+              <p className="font-display text-xs font-bold text-primary-500 uppercase tracking-[0.18em]">
+                Intercultureel adviseur en mediator
+              </p>
               <h1 className="text-4xl md:text-5xl lg:text-[46px] font-bold leading-[1.2] lg:leading-[69px] text-primary-500">
                 Neem contact op
               </h1>
               <p className="text-lg text-neutral-700 max-w-[512px] leading-[30px]">
-                Loopt een traject vast, of wil je je team beter toerusten? Bel of app me, dan plannen we een kennismakingsgesprek. Ook als je vraag nog niet scherp is.
+                Ik plan graag een vrijblijvend kennismakingsgesprek, ook als je vraag nog niet scherp is. Bel of app me om een moment te prikken.
               </p>
 
               <div className="flex flex-wrap gap-4 pt-4">
@@ -58,14 +61,14 @@ export const ContactPage = () => {
                   href={WHATSAPP_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-primary-500 text-secondary-300 px-8 py-4 rounded-full font-medium text-lg inline-flex items-center gap-2 hover:scale-105 transition-transform shadow-md cursor-pointer"
+                  className="bg-primary-500 text-secondary-300 px-8 py-4 rounded-full font-medium text-lg inline-flex items-center gap-2 hover:scale-105 transition-transform cursor-pointer"
                 >
-                  Plan een kennismaking
+                  Start een gesprek
                   <WhatsappLogoIcon size={28} weight="light" />
                 </a>
                 <button
                   onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
-                  className="bg-white text-primary-500 px-8 py-4 rounded-full border-2 border-secondary-300 font-medium text-lg inline-flex items-center gap-2 hover:bg-neutral-50 transition-colors cursor-pointer"
+                  className="bg-white text-primary-500 px-8 py-4 rounded-full font-medium text-lg inline-flex items-center gap-2 hover:bg-neutral-50 transition-colors cursor-pointer"
                 >
                   Naar het formulier
                   <ArrowDown className="w-5 h-5" />
@@ -74,29 +77,32 @@ export const ContactPage = () => {
             </div>
 
             <div className="flex-1 w-full">
-              <div className="relative max-w-[540px] lg:ml-auto bg-primary-50/95 rounded-[32px] p-3 shadow-[0px_2px_4px_rgba(27,28,29,0.04)]">
-                <img
-                  src="/images/betty-1op1.png"
-                  alt="Betty Teklemariam in een persoonlijk gesprek"
-                  className="w-full h-auto rounded-[24px] object-cover aspect-[4/3]"
-                  onError={(e) => {
-                    const img = e.currentTarget;
-                    if (img.src.includes("loremflickr")) {
-                      img.onerror = null;
-                      img.src = "https://picsum.photos/seed/contact/800/600";
-                    } else {
-                      img.src = "https://loremflickr.com/800/600/conversation,welcome?lock=71";
-                    }
-                  }}
-                  referrerPolicy="no-referrer"
-                />
+              <div className="relative max-w-[540px] lg:ml-auto">
+                <HeroPhotoBlobs />
+                <div className="relative z-10">
+                  <img
+                    src="/images/betty-1op1.png"
+                    alt="Betty Teklemariam in een persoonlijk gesprek"
+                    className="w-full h-auto rounded-[24px] object-cover aspect-[4/3]"
+                    onError={(e) => {
+                      const img = e.currentTarget;
+                      if (img.src.includes("loremflickr")) {
+                        img.onerror = null;
+                        img.src = "https://picsum.photos/seed/contact/800/600";
+                      } else {
+                        img.src = "https://loremflickr.com/800/600/conversation,welcome?lock=71";
+                      }
+                    }}
+                    referrerPolicy="no-referrer"
+                  />
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <ContactForm />
+      <ContactForm variant="white" />
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import { WhatsappLogo as WhatsappLogoIcon } from "@phosphor-icons/react";
-import { CTA, WHATSAPP_URL } from "./Sections";
+import { CTA, WHATSAPP_URL, HeroPhotoBlobs } from "./Sections";
 import { Globe, HeartHandshake, Award, GraduationCap, Languages, Quote, CheckCircle2, ArrowDown } from "lucide-react";
 import { JsonLd, PROVIDER } from "./JsonLd";
 import { usePageMeta } from "../usePageMeta";
@@ -32,7 +32,7 @@ const PERSON_SCHEMA = {
 
 export const AboutPage = ({ onNavigate }: { onNavigate: (page: "home" | "services" | "about" | "clients" | "contact", id?: string) => void }) => {
   usePageMeta(
-    "Over Betty Teklemariam — intercultureel adviseur en bemiddelaar",
+    "Over Betty Teklemariam, intercultureel adviseur en bemiddelaar",
     "Betty Teklemariam is intercultureel adviseur en cultureel bemiddelaar. Sociaal pedagoog, geboren in Asmara, sinds 2000 werkzaam met de Eritrese gemeenschap in Nederland."
   );
 
@@ -72,7 +72,7 @@ export const AboutPage = ({ onNavigate }: { onNavigate: (page: "home" | "service
     },
     {
       title: "Praktijkervaring",
-      desc: "Sinds 2000 begeleid ik gezinnen, vrouwen en kinderen en adviseer ik organisaties — juist waar standaardaanpakken vastlopen.",
+      desc: "Sinds 2000 begeleid ik gezinnen, vrouwen en kinderen en adviseer ik organisaties, juist waar standaardaanpakken vastlopen.",
       icon: <Award size={26} className="text-secondary-300" />
     }
   ];
@@ -82,18 +82,18 @@ export const AboutPage = ({ onNavigate }: { onNavigate: (page: "home" | "service
       <JsonLd data={PERSON_SCHEMA} />
 
       {/* Hero Section */}
-      <section className="bg-white py-12 lg:py-20 overflow-hidden">
+      <section className="bg-neutral-50 py-12 lg:py-20 overflow-hidden">
         <div className="container-custom">
           <div className="flex flex-col lg:flex-row lg:items-center gap-12 lg:gap-16">
             <div className="flex-1 space-y-6">
+              <p className="font-display text-xs font-bold text-primary-500 uppercase tracking-[0.18em]">
+                Intercultureel adviseur en mediator
+              </p>
               <h1 className="text-4xl md:text-5xl lg:text-[46px] font-bold leading-[1.2] lg:leading-[69px] text-primary-500">
                 Over Betty Teklemariam
               </h1>
-              <p className="font-display text-lg font-semibold text-primary-400">
-                Intercultureel adviseur en bemiddelaar
-              </p>
               <p className="text-lg text-neutral-700 max-w-[512px] leading-[30px]">
-                Ik ben geboren in Asmara en werk sinds 2000 in Nederland met Eritrese gemeenschappen en de organisaties die hen ondersteunen. Ik ken beide kanten van het gesprek — als sociaal pedagoog en uit eigen ervaring.
+                Ik werk sinds 2000 met Eritrese gemeenschappen en ken beide kanten van het gesprek: als sociaal pedagoog en uit eigen ervaring.
               </p>
 
               <div className="flex flex-wrap gap-4 pt-4">
@@ -101,14 +101,14 @@ export const AboutPage = ({ onNavigate }: { onNavigate: (page: "home" | "service
                   href={WHATSAPP_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-primary-500 text-secondary-300 px-8 py-4 rounded-full font-medium text-lg inline-flex items-center gap-2 hover:scale-105 transition-transform shadow-md cursor-pointer"
+                  className="bg-primary-500 text-secondary-300 px-8 py-4 rounded-full font-medium text-lg inline-flex items-center gap-2 hover:scale-105 transition-transform cursor-pointer"
                 >
                   Start een gesprek
                   <WhatsappLogoIcon size={28} weight="light" />
                 </a>
                 <button
                   onClick={() => document.getElementById("mijn-verhaal")?.scrollIntoView({ behavior: "smooth" })}
-                  className="bg-white text-primary-500 px-8 py-4 rounded-full border-2 border-secondary-300 font-medium text-lg inline-flex items-center gap-2 hover:bg-neutral-50 transition-colors cursor-pointer"
+                  className="bg-white text-primary-500 px-8 py-4 rounded-full font-medium text-lg inline-flex items-center gap-2 hover:bg-neutral-50 transition-colors cursor-pointer"
                 >
                   Lees mijn verhaal
                   <ArrowDown className="w-5 h-5" />
@@ -117,22 +117,25 @@ export const AboutPage = ({ onNavigate }: { onNavigate: (page: "home" | "service
             </div>
 
             <div className="flex-1 w-full">
-              <div className="relative max-w-[540px] lg:ml-auto bg-primary-50/95 rounded-[32px] p-3 shadow-[0px_2px_4px_rgba(27,28,29,0.04)]">
-                <img
-                  src="/images/betty-about-portret.png"
-                  alt="Betty Teklemariam in haar werkomgeving"
-                  className="w-full h-auto rounded-[24px] object-cover aspect-[4/3]"
-                  onError={(e) => {
-                    const img = e.currentTarget;
-                    if (img.src.includes("loremflickr")) {
-                      img.onerror = null;
-                      img.src = "https://picsum.photos/seed/about-page/800/600";
-                    } else {
-                      img.src = "https://loremflickr.com/800/600/community,people?lock=81";
-                    }
-                  }}
-                  referrerPolicy="no-referrer"
-                />
+              <div className="relative max-w-[540px] lg:ml-auto">
+                <HeroPhotoBlobs />
+                <div className="relative z-10">
+                  <img
+                    src="/images/betty-about-workshop.png"
+                    alt="Betty Teklemariam tijdens een workshop met een groep vrouwen"
+                    className="w-full h-auto rounded-[24px] object-cover aspect-[4/3]"
+                    onError={(e) => {
+                      const img = e.currentTarget;
+                      if (img.src.includes("loremflickr")) {
+                        img.onerror = null;
+                        img.src = "https://picsum.photos/seed/about-page/800/600";
+                      } else {
+                        img.src = "https://loremflickr.com/800/600/community,people?lock=81";
+                      }
+                    }}
+                    referrerPolicy="no-referrer"
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -140,7 +143,7 @@ export const AboutPage = ({ onNavigate }: { onNavigate: (page: "home" | "service
       </section>
 
       {/* Mijn verhaal */}
-      <section id="mijn-verhaal" className="scroll-mt-28 py-20 lg:py-28 bg-neutral-50">
+      <section id="mijn-verhaal" className="scroll-mt-28 py-20 lg:py-28 bg-white">
         <div className="container-custom">
           <div className="flex flex-col lg:flex-row lg:items-start gap-16 lg:gap-24">
             <div className="flex-1 space-y-6">
@@ -159,7 +162,7 @@ export const AboutPage = ({ onNavigate }: { onNavigate: (page: "home" | "service
             </div>
 
             <div className="flex-1 w-full">
-              <div className="lg:sticky lg:top-32 bg-white p-8 md:p-10 rounded-[32px] shadow-[0px_2px_4px_rgba(27,28,29,0.04)] border border-neutral-100 space-y-4">
+              <div className="lg:sticky lg:top-32 bg-neutral-50 p-8 md:p-10 rounded-[32px] shadow-[0px_2px_4px_rgba(27,28,29,0.04)] border border-neutral-100 space-y-4">
                 <p className="font-display text-sm font-bold text-primary-500 uppercase tracking-widest">Mijn motto</p>
                 <Quote className="w-8 h-8 text-primary-400 fill-primary-400/10" />
                 <blockquote className="text-xl md:text-2xl text-primary-500 italic leading-[1.5] font-medium">
@@ -173,12 +176,12 @@ export const AboutPage = ({ onNavigate }: { onNavigate: (page: "home" | "service
       </section>
 
       {/* Tijdlijn */}
-      <section className="py-20 lg:py-28 bg-white">
+      <section className="py-20 lg:py-28 bg-neutral-50">
         <div className="container-custom">
           <div className="space-y-4 mb-16 max-w-2xl">
             <h2 className="text-[38px] font-bold text-primary-400 leading-tight">Van Asmara naar Nederland</h2>
             <p className="text-lg text-neutral-700 leading-[30px]">
-              De route die mijn werk vormde — van eigen ervaring als nieuwkomer tot intercultureel adviseur en bemiddelaar.
+              De route die mijn werk vormde, van eigen ervaring als nieuwkomer tot intercultureel adviseur en bemiddelaar.
             </p>
           </div>
 
@@ -205,7 +208,7 @@ export const AboutPage = ({ onNavigate }: { onNavigate: (page: "home" | "service
       </section>
 
       {/* Expertise */}
-      <section className="py-20 lg:py-28 bg-neutral-50">
+      <section className="py-20 lg:py-28 bg-white">
         <div className="container-custom space-y-4 mb-16 max-w-2xl">
           <h2 className="text-[38px] font-bold text-primary-400 leading-tight">Wat Betty meebrengt</h2>
           <p className="text-lg text-neutral-700 leading-[30px]">
@@ -215,7 +218,7 @@ export const AboutPage = ({ onNavigate }: { onNavigate: (page: "home" | "service
 
         <div className="container-custom grid md:grid-cols-3 gap-8 items-stretch">
           {expertise.map((e) => (
-            <div key={e.title} className="h-full bg-white p-8 rounded-[32px] shadow-[0px_2px_4px_rgba(27,28,29,0.04)] space-y-6">
+            <div key={e.title} className="h-full bg-neutral-50 p-8 rounded-[32px] shadow-[0px_2px_4px_rgba(27,28,29,0.04)] space-y-6">
               <div className="w-12 h-12 bg-primary-500 rounded-full flex items-center justify-center">
                 {e.icon}
               </div>
@@ -229,10 +232,10 @@ export const AboutPage = ({ onNavigate }: { onNavigate: (page: "home" | "service
       </section>
 
       {/* Opleiding & talen */}
-      <section className="py-20 lg:py-28 bg-white">
+      <section className="py-20 lg:py-28 bg-neutral-50">
         <div className="container-custom grid md:grid-cols-2 gap-8 items-stretch">
           {/* Opleiding */}
-          <div className="h-full bg-neutral-50 p-8 md:p-10 rounded-[32px] shadow-[0px_2px_4px_rgba(27,28,29,0.04)] space-y-6">
+          <div className="h-full bg-white p-8 md:p-10 rounded-[32px] shadow-[0px_2px_4px_rgba(27,28,29,0.04)] space-y-6">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 bg-primary-500 rounded-full flex items-center justify-center shrink-0">
                 <GraduationCap size={24} className="text-secondary-300" />
@@ -256,7 +259,7 @@ export const AboutPage = ({ onNavigate }: { onNavigate: (page: "home" | "service
           </div>
 
           {/* Talen */}
-          <div className="h-full bg-neutral-50 p-8 md:p-10 rounded-[32px] shadow-[0px_2px_4px_rgba(27,28,29,0.04)] space-y-6">
+          <div className="h-full bg-white p-8 md:p-10 rounded-[32px] shadow-[0px_2px_4px_rgba(27,28,29,0.04)] space-y-6">
             <div className="flex items-center gap-4">
               <div className="w-12 h-12 bg-primary-500 rounded-full flex items-center justify-center shrink-0">
                 <Languages size={24} className="text-secondary-300" />
@@ -265,20 +268,20 @@ export const AboutPage = ({ onNavigate }: { onNavigate: (page: "home" | "service
             </div>
             <div className="flex flex-wrap gap-3">
               {["Nederlands", "Tigrinya", "Duits", "Engels"].map((taal) => (
-                <span key={taal} className="bg-white px-5 py-2 rounded-full text-sm text-neutral-600 border border-neutral-100 font-medium">
+                <span key={taal} className="bg-neutral-50 px-5 py-2 rounded-full text-sm text-neutral-600 border border-neutral-100 font-medium">
                   {taal}
                 </span>
               ))}
             </div>
             <p className="text-neutral-700 leading-[30px]">
-              Ik werk in het Nederlands, Tigrinya, Duits en Engels — en ken de culturele context achter elke taal.
+              Ik werk in het Nederlands, Tigrinya, Duits en Engels, en ken de culturele context achter elke taal.
             </p>
           </div>
         </div>
       </section>
 
       {/* Missie */}
-      <section className="py-20 lg:py-28 bg-neutral-50">
+      <section className="py-20 lg:py-28 bg-white">
         <div className="container-custom">
           <div className="max-w-3xl mx-auto text-center space-y-8">
             <Quote className="w-10 h-10 text-primary-400 mx-auto" />

@@ -6,6 +6,31 @@ import { useState, useEffect, useRef, type FormEvent } from "react";
 // Betty's WhatsApp (gebruikt voor alle "Start een gesprek"-knoppen)
 export const WHATSAPP_URL = "https://wa.me/31639244184";
 
+// Decoratieve lime blobs achter de hero-foto's, hergebruikt op alle 5 hero's.
+//
+// Dekking bewust laag (35%/25%): de blob is achtergrondaccent, geen blikvanger —
+// de foto en de CTA moeten de aandacht winnen.
+//
+// De maat/offset verschilt per breakpoint. Op desktop staan de vormen ruimer
+// (-10/-12, w-56/w-64) zodat ze de tekst- en fotokolom visueel verbinden.
+// Op mobiel staat de foto onder de tekst en is er geen kolom meer om te
+// verbinden; daar zou diezelfde offset de blob tot in de pagina-marge duwen.
+// Vandaar de kleinere mobiele waarden (-5/-6, w-32/w-36), strak tegen de foto.
+export const HeroPhotoBlobs = () => (
+  <>
+    <div
+      aria-hidden="true"
+      className="absolute -top-5 -right-5 w-32 h-32 md:-top-10 md:-right-10 md:w-56 md:h-56 bg-secondary-300 opacity-35 z-0"
+      style={{ borderRadius: "62% 38% 55% 45% / 45% 60% 40% 55%" }}
+    />
+    <div
+      aria-hidden="true"
+      className="absolute -bottom-6 -left-6 w-36 h-36 md:-bottom-12 md:-left-12 md:w-64 md:h-64 bg-secondary-300 opacity-25 z-0"
+      style={{ borderRadius: "40% 60% 45% 55% / 55% 45% 60% 40%" }}
+    />
+  </>
+);
+
 export const Navbar = ({ onNavigate, currentPage }: { onNavigate: (page: "home" | "services" | "about" | "clients" | "contact", id?: string) => void, currentPage: string }) => {
   const [logoError, setLogoError] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -19,9 +44,10 @@ export const Navbar = ({ onNavigate, currentPage }: { onNavigate: (page: "home" 
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const isHome = currentPage === "home";
-  const navBg = isHome ? "bg-neutral-50" : "bg-white";
-  const barBg = isHome ? "bg-white" : "bg-neutral-50";
+  // De navstrook krijgt de tegenovergestelde kleur van de hero eronder, zodat de
+  // balk zelf altijd afsteekt. Alle pagina's hebben een grijze hero.
+  const navBg = "bg-neutral-50";
+  const barBg = "bg-white";
 
   const navItems: { label: string; page: "home" | "services" | "about" | "clients" | "contact" }[] = [
     { label: "Home", page: "home" },
@@ -159,14 +185,14 @@ export const Hero = ({ onNavigate }: { onNavigate: (page: "home" | "services" | 
                 href={WHATSAPP_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-primary-500 text-secondary-300 px-8 py-4 rounded-full font-medium text-lg inline-flex items-center gap-2 hover:scale-105 transition-transform shadow-md cursor-pointer"
+                className="bg-primary-500 text-secondary-300 px-8 py-4 rounded-full font-medium text-lg inline-flex items-center gap-2 hover:scale-105 transition-transform cursor-pointer"
               >
                 Start een gesprek
                 <WhatsappLogoIcon size={28} weight="light" />
               </a>
               <button
                 onClick={() => onNavigate("services")}
-                className="bg-white text-primary-500 px-8 py-4 rounded-full font-medium text-lg border-2 border-secondary-300 hover:bg-neutral-50 transition-colors cursor-pointer"
+                className="bg-white text-primary-500 px-8 py-4 rounded-full font-medium text-lg hover:bg-neutral-50 transition-colors cursor-pointer"
               >
                 Bekijk diensten
               </button>
@@ -174,13 +200,16 @@ export const Hero = ({ onNavigate }: { onNavigate: (page: "home" | "services" | 
           </div>
           
           <div className="flex-1 w-full lg:pt-2">
-            <div className="relative max-w-[540px] lg:ml-auto bg-primary-50 rounded-[32px] p-4 shadow-[0px_2px_4px_rgba(27,28,29,0.04)]">
-              <img
-                src="/images/betty-portret.jpg"
-                alt="Betty Teklemariam"
-                className="w-full h-auto rounded-[24px] object-cover aspect-[4/3]"
-                loading="eager"
-              />
+            <div className="relative max-w-[540px] lg:ml-auto">
+              <HeroPhotoBlobs />
+              <div className="relative z-10">
+                <img
+                  src="/images/betty-portret.jpg"
+                  alt="Betty Teklemariam"
+                  className="w-full h-auto rounded-[24px] object-cover aspect-[4/3]"
+                  loading="eager"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -330,7 +359,7 @@ export const Services = ({ onNavigate }: { onNavigate: (page: "home" | "services
             </div>
             <button 
               onClick={() => onNavigate("services")}
-              className="self-start px-8 py-4 rounded-full border border-secondary-300 text-primary-500 font-display font-medium text-lg flex items-center gap-2 hover:bg-neutral-50 transition-colors cursor-pointer"
+              className="self-start bg-neutral-50 px-8 py-4 rounded-full text-primary-500 font-display font-medium text-lg flex items-center gap-2 hover:brightness-95 transition-all cursor-pointer"
             >
               Bekijk dienst
               <ArrowRight className="w-4 h-4" />
@@ -366,7 +395,7 @@ export const About = ({ onNavigate }: { onNavigate: (page: "home" | "services" |
       <div className="container-custom space-y-4 mb-16">
         <h2 className="text-[38px] font-bold text-primary-400">Over mij</h2>
         <p className="text-lg text-neutral-700 max-w-2xl">
-          Bet-El Teklemariam — intercultureel adviseur, mediator, trainer en sociaal pedagoog.
+          Bet-El Teklemariam, intercultureel adviseur, mediator, trainer en sociaal pedagoog.
         </p>
       </div>
 
@@ -402,7 +431,7 @@ export const About = ({ onNavigate }: { onNavigate: (page: "home" | "services" |
 
           <button
             onClick={() => onNavigate("about")}
-            className="w-fit bg-white text-primary-500 px-8 py-4 rounded-full border border-secondary-300 font-display font-medium text-lg inline-flex items-center gap-2 hover:bg-neutral-50 transition-colors cursor-pointer"
+            className="w-fit bg-neutral-50 text-primary-500 px-8 py-4 rounded-full font-display font-medium text-lg inline-flex items-center gap-2 hover:bg-white transition-colors cursor-pointer"
           >
             Lees meer over Betty
             <ArrowRight className="w-4 h-4" />
@@ -441,7 +470,7 @@ export const Clients = ({ onNavigate }: { onNavigate: (page: "home" | "services"
       desc: "Culturele duiding binnen onderzoek naar integratie en participatie van Eritrese gemeenschappen."
     },
     {
-      name: "VOZ — Vluchtelingenopvang Ommoord-Zevenkamp",
+      name: "VOZ, Vluchtelingenopvang Ommoord-Zevenkamp",
       tag: "Begeleiding",
       desc: "Tolk en zelfstandig hulpverleenster bij de opvang van Eritrese nieuwkomers, via spreekuur en huisbezoek."
     }
@@ -474,7 +503,7 @@ export const Clients = ({ onNavigate }: { onNavigate: (page: "home" | "services"
             <div className="mt-auto pt-8">
               <button
                 onClick={() => onNavigate("clients", "case-detail")}
-                className="px-8 py-4 rounded-full border border-secondary-300 text-primary-500 font-display font-medium text-lg inline-flex items-center gap-2 hover:bg-neutral-50 transition-colors cursor-pointer"
+                className="bg-neutral-50 px-8 py-4 rounded-full text-primary-500 font-display font-medium text-lg inline-flex items-center gap-2 hover:brightness-95 transition-all cursor-pointer"
               >
                 Bekijk case
                 <ArrowRight className="w-4 h-4" />
@@ -487,7 +516,7 @@ export const Clients = ({ onNavigate }: { onNavigate: (page: "home" | "services"
       <div className="container-custom mt-12">
         <button
           onClick={() => onNavigate("clients")}
-          className="w-fit bg-white text-primary-500 px-8 py-4 rounded-full border border-secondary-300 font-display font-medium text-lg inline-flex items-center gap-2 hover:bg-neutral-50 transition-colors cursor-pointer"
+          className="w-fit bg-white text-primary-500 px-8 py-4 rounded-full font-display font-medium text-lg inline-flex items-center gap-2 hover:bg-neutral-50 transition-colors cursor-pointer"
         >
           Bekijk alle opdrachtgevers
           <ArrowRight className="w-4 h-4" />
@@ -575,14 +604,14 @@ export const CTA = ({ onNavigate, secondary = "services" }: { onNavigate?: (page
                 href={WHATSAPP_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full sm:w-auto bg-secondary-300 text-primary-500 px-8 py-4 rounded-[40px] font-semibold text-lg inline-flex items-center justify-center gap-2 hover:scale-105 transition-transform shadow-md cursor-pointer"
+                className="w-full sm:w-auto bg-secondary-300 text-primary-500 px-8 py-4 rounded-[40px] font-semibold text-lg inline-flex items-center justify-center gap-2 hover:scale-105 transition-transform cursor-pointer"
               >
                 Start een gesprek
                 <WhatsappLogoIcon size={28} weight="light" />
               </a>
               <button
                 onClick={() => onNavigate?.(secondary)}
-                className="w-full sm:w-auto px-8 py-4 rounded-full border-2 border-secondary-300 text-secondary-300 font-medium text-lg hover:bg-white/5 transition-colors cursor-pointer"
+                className="w-full sm:w-auto px-8 py-4 rounded-full border border-secondary-300 text-secondary-300 font-medium text-lg hover:bg-white/5 transition-colors cursor-pointer"
               >
                 {secondary === "services" ? "Bekijk diensten" : "Neem contact op"}
               </button>
@@ -594,7 +623,7 @@ export const CTA = ({ onNavigate, secondary = "services" }: { onNavigate?: (page
   );
 };
 
-export const ContactForm = () => {
+export const ContactForm = ({ variant = "grey" }: { variant?: "white" | "grey" } = {}) => {
   const [sent, setSent] = useState(false);
   const statusRef = useRef<HTMLParagraphElement>(null);
 
@@ -616,12 +645,12 @@ export const ContactForm = () => {
   return (
     <>
       {/* 2. Main Contact Section */}
-      <section id="contact" className="scroll-mt-28 py-16 lg:py-20 bg-neutral-50">
+      <section id="contact" className={`scroll-mt-28 py-16 lg:py-20 ${variant === "white" ? "bg-white" : "bg-neutral-50"}`}>
         <div className="container-custom">
           <div className="flex flex-col lg:flex-row gap-16 lg:gap-24">
             {/* Left Column: Contact Form */}
             <div className="flex-1">
-              <div className="bg-white p-8 md:p-12 rounded-[40px] shadow-[0px_4px_20px_rgba(0,0,0,0.03)] border border-neutral-100">
+              <div className={`${variant === "white" ? "bg-neutral-50" : "bg-white"} p-8 md:p-12 rounded-[40px] shadow-[0px_4px_20px_rgba(0,0,0,0.03)] border border-neutral-100`}>
                 <form className="space-y-6" onSubmit={handleSubmit}>
                   {/* TODO: koppel aan een echte verzendactie (e-mailservice of endpoint).
                       Nu bevestigt het formulier alleen visueel; er wordt niets verstuurd. */}
@@ -648,7 +677,7 @@ export const ContactForm = () => {
                       name="name"
                       required
                       autoComplete="name"
-                      className="w-full bg-neutral-50 px-6 py-4 rounded-2xl border-none focus:ring-2 focus:ring-primary-100 transition-all outline-none text-neutral-1000"
+                      className={`w-full ${variant === "white" ? "bg-white" : "bg-neutral-50"} px-6 py-4 rounded-2xl border-none focus:ring-2 focus:ring-primary-100 transition-all outline-none text-neutral-1000`}
                       placeholder="Je naam"
                     />
                   </div>
@@ -659,7 +688,7 @@ export const ContactForm = () => {
                       id="org"
                       name="organization"
                       autoComplete="organization"
-                      className="w-full bg-neutral-50 px-6 py-4 rounded-2xl border-none focus:ring-2 focus:ring-primary-100 transition-all outline-none text-neutral-1000"
+                      className={`w-full ${variant === "white" ? "bg-white" : "bg-neutral-50"} px-6 py-4 rounded-2xl border-none focus:ring-2 focus:ring-primary-100 transition-all outline-none text-neutral-1000`}
                       placeholder="Naam van je organisatie"
                     />
                   </div>
@@ -671,7 +700,7 @@ export const ContactForm = () => {
                       name="email"
                       required
                       autoComplete="email"
-                      className="w-full bg-neutral-50 px-6 py-4 rounded-2xl border-none focus:ring-2 focus:ring-primary-100 transition-all outline-none text-neutral-1000"
+                      className={`w-full ${variant === "white" ? "bg-white" : "bg-neutral-50"} px-6 py-4 rounded-2xl border-none focus:ring-2 focus:ring-primary-100 transition-all outline-none text-neutral-1000`}
                       placeholder="je@email.nl"
                     />
                   </div>
@@ -682,14 +711,14 @@ export const ContactForm = () => {
                       name="message"
                       required
                       rows={5}
-                      className="w-full bg-neutral-50 px-6 py-4 rounded-2xl border-none focus:ring-2 focus:ring-primary-100 transition-all outline-none text-neutral-1000 resize-none"
+                      className={`w-full ${variant === "white" ? "bg-white" : "bg-neutral-50"} px-6 py-4 rounded-2xl border-none focus:ring-2 focus:ring-primary-100 transition-all outline-none text-neutral-1000 resize-none`}
                       placeholder="Waarmee kan Betty je helpen?"
                     ></textarea>
                   </div>
                   <button
                     type="submit"
                     aria-describedby={sent ? "form-status" : undefined}
-                    className="w-full bg-primary-500 text-secondary-300 py-5 rounded-full font-semibold text-lg hover:brightness-95 transition-all shadow-md cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary-500"
+                    className="w-full bg-primary-500 text-secondary-300 py-5 rounded-full font-semibold text-lg hover:brightness-95 transition-all cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary-500"
                   >
                     Verstuur bericht
                   </button>
@@ -702,7 +731,7 @@ export const ContactForm = () => {
               <div className="space-y-6">
                 <h2 className="text-[38px] font-bold text-primary-400 leading-tight">Vertel kort wat er speelt</h2>
                 <p className="text-lg text-neutral-700 leading-relaxed max-w-2xl">
-                  Voor begeleiding, culturele bemiddeling, culturele vertaling of een workshop — of gewoon om je vraag te verkennen.
+                  Voor begeleiding, culturele bemiddeling, culturele vertaling of een workshop, of gewoon om je vraag te verkennen.
                 </p>
               </div>
 

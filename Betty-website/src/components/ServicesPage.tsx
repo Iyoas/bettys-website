@@ -21,10 +21,11 @@ import {
   Globe,
   HeartPulse,
   ShieldAlert,
-  Sprout
+  Sprout,
+  ArrowDown
 } from "lucide-react";
 import { WhatsappLogo as WhatsappLogoIcon } from "@phosphor-icons/react";
-import { WHATSAPP_URL, CTA } from "./Sections";
+import { WHATSAPP_URL, CTA, HeroPhotoBlobs } from "./Sections";
 import { JsonLd, PROVIDER } from "./JsonLd";
 import { usePageMeta } from "../usePageMeta";
 
@@ -72,7 +73,7 @@ const WERKWIJZE_STEPS: Step[] = [
   {
     step: "2",
     title: "Aanpak bepalen",
-    desc: "Samen kiezen we wat past: begeleiding, bemiddeling, culturele vertaling of een workshop — of een combinatie."
+    desc: "Samen kiezen we wat past: begeleiding, bemiddeling, culturele vertaling of een workshop, of een combinatie."
   },
   {
     step: "3",
@@ -125,7 +126,7 @@ const WerkwijzeSteps = () => {
                 </div>
                 <div
                   className={`w-full h-full rounded-[24px] p-6 border transition-colors duration-500 ease-in-out ${
-                    isActive ? "bg-primary-50 border-secondary-300" : "bg-neutral-50 border-transparent"
+                    isActive ? "bg-primary-50 border-secondary-300" : "bg-white border-transparent"
                   }`}
                 >
                   <h3 className="text-xl font-bold text-primary-500 mb-2">{item.title}</h3>
@@ -225,7 +226,7 @@ const SERVICE_SCHEMA = {
 
 export const ServicesPage = ({ onNavigate }: { onNavigate: (page: "home" | "services" | "about" | "clients" | "contact", id?: string) => void }) => {
   usePageMeta(
-    "Diensten — Betty Teklemariam, cultureel adviseur",
+    "Diensten van Betty Teklemariam, cultureel adviseur",
     "Begeleiding, culturele bemiddeling, culturele vertaling en training rond de Eritrese gemeenschap. Voor gemeenten, zorg, jeugdzorg, onderwijs en NGO's."
   );
 
@@ -234,18 +235,18 @@ export const ServicesPage = ({ onNavigate }: { onNavigate: (page: "home" | "serv
       <JsonLd data={SERVICE_SCHEMA} />
 
       {/* Hero Section */}
-      <section className="bg-white py-12 lg:py-20 overflow-hidden">
+      <section className="bg-neutral-50 py-12 lg:py-20 overflow-hidden">
         <div className="container-custom">
           <div className="flex flex-col lg:flex-row lg:items-center gap-12 lg:gap-16">
             <div className="flex-1 space-y-6">
               <p className="font-display text-xs font-bold text-primary-500 uppercase tracking-[0.18em]">
-                Diensten
+                Intercultureel adviseur en mediator
               </p>
               <h1 className="text-4xl md:text-5xl lg:text-[46px] font-bold leading-[1.2] lg:leading-[69px] text-primary-500">
                 Wat ik voor je organisatie doe
               </h1>
               <p className="text-lg text-neutral-700 max-w-[512px] leading-[30px]">
-                Vier vormen van ondersteuning rond Eritrese cliënten en gemeenschappen: begeleiding, culturele bemiddeling, culturele vertaling en workshops. Ik werk sinds 2000 in Nederland, daarvoor als sociaal pedagoog in de Duitse jeugdzorg en psychiatrie.
+                Ik bied begeleiding, culturele bemiddeling, culturele vertaling en workshops voor iedereen die met Eritrese gemeenschappen werkt of leeft.
               </p>
 
               <div className="flex flex-wrap gap-4 pt-4">
@@ -253,30 +254,40 @@ export const ServicesPage = ({ onNavigate }: { onNavigate: (page: "home" | "serv
                   href={WHATSAPP_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-primary-500 text-secondary-300 px-8 py-4 rounded-full font-medium text-lg inline-flex items-center gap-2 hover:scale-105 transition-transform shadow-md cursor-pointer"
+                  className="bg-primary-500 text-secondary-300 px-8 py-4 rounded-full font-medium text-lg inline-flex items-center gap-2 hover:scale-105 transition-transform cursor-pointer"
                 >
                   Start een gesprek
                   <WhatsappLogoIcon size={28} weight="light" />
                 </a>
+                <button
+                  onClick={() => document.getElementById("begeleiding")?.scrollIntoView({ behavior: "smooth" })}
+                  className="bg-white text-primary-500 px-8 py-4 rounded-full font-medium text-lg inline-flex items-center gap-2 hover:bg-neutral-50 transition-colors cursor-pointer"
+                >
+                  Naar de diensten
+                  <ArrowDown className="w-5 h-5" />
+                </button>
               </div>
             </div>
 
             <div className="flex-1 w-full">
-              <div className="relative max-w-[540px] lg:ml-auto bg-primary-50/95 rounded-[32px] p-3 shadow-[0px_2px_4px_rgba(27,28,29,0.04)]">
-                <img
-                  src="/images/betty-services-workshop.png"
-                  alt="Betty geeft een workshop aan een groep deelnemers"
-                  className="w-full h-auto rounded-[24px] object-cover aspect-[4/3]"
-                  loading="eager"
-                />
+              <div className="relative max-w-[540px] lg:ml-auto">
+                <HeroPhotoBlobs />
+                <div className="relative z-10">
+                  <img
+                    src="/images/betty-services-training.png"
+                    alt="Betty geeft een training over opvoeden aan een groep deelnemers"
+                    className="w-full h-auto rounded-[24px] object-cover aspect-[4/3]"
+                    loading="eager"
+                  />
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Jump-nav — spring direct naar een dienst */}
-      <nav aria-label="Diensten" className="py-8 bg-white border-t border-neutral-100">
+      {/* Jump-nav — spring direct naar een dienst. Alleen mobiel: op desktop is de pagina kort genoeg om te scrollen. */}
+      <nav aria-label="Diensten" className="lg:hidden py-8 bg-white border-t border-neutral-100">
         <div className="container-custom space-y-5">
           <p className="font-display text-sm font-bold text-primary-500 uppercase tracking-widest">Spring naar een dienst</p>
           <div className="flex flex-wrap gap-3">
@@ -300,7 +311,7 @@ export const ServicesPage = ({ onNavigate }: { onNavigate: (page: "home" | "serv
       </nav>
 
       {/* Dienst 1 — Begeleiding */}
-      <section id="begeleiding" className="scroll-mt-28 py-16 md:py-20 bg-neutral-50">
+      <section id="begeleiding" className="scroll-mt-28 py-16 md:py-20 bg-neutral-50 lg:bg-white">
         <div className="container-custom space-y-8">
           <div className="space-y-4">
             <div className="space-y-4">
@@ -314,7 +325,7 @@ export const ServicesPage = ({ onNavigate }: { onNavigate: (page: "home" | "serv
 
           <TopicGrid
             title="Wat Betty concreet doet"
-            cardClass="bg-white"
+            cardClass="bg-white lg:bg-neutral-50"
             topics={[
               { label: "Cultuursensitieve gezins- en opvoedbegeleiding", icon: <Home size={18} strokeWidth={1.5} /> },
               { label: "Communicatie tussen ouders en jongeren versterken", icon: <MessagesSquare size={18} strokeWidth={1.5} /> },
@@ -327,14 +338,14 @@ export const ServicesPage = ({ onNavigate }: { onNavigate: (page: "home" | "serv
 
           <AudienceTags
             title="Geschikt voor"
-            tagClass="bg-white"
+            tagClass="bg-white lg:bg-neutral-50"
             tags={["Gemeenten", "Jeugdzorg", "Veilig Thuis", "NGO’s"]}
           />
 
           <div>
             <button
               onClick={() => onNavigate("contact")}
-              className="bg-white px-8 py-4 rounded-full border border-secondary-300 text-primary-500 font-display font-medium text-lg flex items-center gap-2 hover:bg-neutral-50 transition-colors cursor-pointer"
+              className="bg-white lg:bg-neutral-50 px-8 py-4 rounded-full text-primary-500 font-display font-medium text-lg flex items-center gap-2 hover:brightness-95 transition-all cursor-pointer"
             >
               Bespreek begeleiding
               <ArrowRight className="w-5 h-5" />
@@ -344,7 +355,7 @@ export const ServicesPage = ({ onNavigate }: { onNavigate: (page: "home" | "serv
       </section>
 
       {/* Dienst 2 — Culturele bemiddeling */}
-      <section id="culturele-bemiddeling" className="scroll-mt-28 py-16 md:py-20 bg-white">
+      <section id="culturele-bemiddeling" className="scroll-mt-28 py-16 md:py-20 bg-white lg:bg-neutral-50">
         <div className="container-custom space-y-8">
           <div className="space-y-4">
             <div className="space-y-4">
@@ -352,13 +363,13 @@ export const ServicesPage = ({ onNavigate }: { onNavigate: (page: "home" | "serv
               <div className="h-1 w-16 bg-secondary-300 rounded-full" />
             </div>
             <p className="text-lg text-neutral-700 leading-[30px] max-w-3xl">
-              Tussen organisaties en nieuwkomers ontstaat vaak een onzichtbare kloof. Betty zit erbij als professionals en Eritrese cliënten elkaar niet bereiken, en maakt duidelijk wat er aan beide kanten wordt bedoeld — in taal, maar ook in gedrag, verwachtingen en context.
+              Tussen organisaties en nieuwkomers ontstaat vaak een onzichtbare kloof. Betty zit erbij als professionals en Eritrese cliënten elkaar niet bereiken, en maakt duidelijk wat er aan beide kanten wordt bedoeld, in taal, maar ook in gedrag, verwachtingen en context.
             </p>
           </div>
 
           <TopicGrid
             title="Wat Betty concreet doet"
-            cardClass="bg-neutral-50"
+            cardClass="bg-neutral-50 lg:bg-white"
             topics={[
               { label: "Aanschuiven bij gesprekken met cliënten en gezinnen", icon: <MessageCircle size={18} strokeWidth={1.5} /> },
               { label: "Bemiddelen in complexe casussen", icon: <Scale size={18} strokeWidth={1.5} /> },
@@ -371,14 +382,14 @@ export const ServicesPage = ({ onNavigate }: { onNavigate: (page: "home" | "serv
 
           <AudienceTags
             title="Inzetbaar bij"
-            tagClass="bg-neutral-50"
+            tagClass="bg-neutral-50 lg:bg-white"
             tags={["Zorg", "Jeugdzorg", "Veilig Thuis", "Gemeenten"]}
           />
 
           <div>
             <button
               onClick={() => onNavigate("contact")}
-              className="bg-white px-8 py-4 rounded-full border border-secondary-300 text-primary-500 font-display font-medium text-lg flex items-center gap-2 hover:bg-neutral-50 transition-colors cursor-pointer"
+              className="bg-neutral-50 lg:bg-white px-8 py-4 rounded-full text-primary-500 font-display font-medium text-lg flex items-center gap-2 hover:brightness-95 lg:hover:bg-neutral-50 transition-all cursor-pointer"
             >
               Bespreek culturele bemiddeling
               <ArrowRight className="w-5 h-5" />
@@ -388,7 +399,7 @@ export const ServicesPage = ({ onNavigate }: { onNavigate: (page: "home" | "serv
       </section>
 
       {/* Dienst 3 — Culturele vertaling */}
-      <section id="culturele-vertaling" className="scroll-mt-28 py-16 md:py-20 bg-neutral-50">
+      <section id="culturele-vertaling" className="scroll-mt-28 py-16 md:py-20 bg-neutral-50 lg:bg-white">
         <div className="container-custom space-y-8">
           <div className="space-y-4">
             <div className="space-y-4">
@@ -402,7 +413,7 @@ export const ServicesPage = ({ onNavigate }: { onNavigate: (page: "home" | "serv
 
           <TopicGrid
             title="Wat Betty concreet doet"
-            cardClass="bg-white"
+            cardClass="bg-white lg:bg-neutral-50"
             topics={[
               { label: "Culturele duiding van communicatie en beleid", icon: <Compass size={18} strokeWidth={1.5} /> },
               { label: "Advies bij voorlichtingsmateriaal en projecten", icon: <FileText size={18} strokeWidth={1.5} /> },
@@ -415,14 +426,14 @@ export const ServicesPage = ({ onNavigate }: { onNavigate: (page: "home" | "serv
 
           <AudienceTags
             title="Ondersteunt bij"
-            tagClass="bg-white"
+            tagClass="bg-white lg:bg-neutral-50"
             tags={["Gemeenten", "Onderwijs", "NGO’s", "Zorg", "Onderzoek & beleid"]}
           />
 
           <div>
             <button
               onClick={() => onNavigate("contact")}
-              className="bg-white px-8 py-4 rounded-full border border-secondary-300 text-primary-500 font-display font-medium text-lg flex items-center gap-2 hover:bg-neutral-50 transition-colors cursor-pointer"
+              className="bg-white lg:bg-neutral-50 px-8 py-4 rounded-full text-primary-500 font-display font-medium text-lg flex items-center gap-2 hover:brightness-95 transition-all cursor-pointer"
             >
               Bespreek culturele vertaling
               <ArrowRight className="w-5 h-5" />
@@ -466,7 +477,7 @@ export const ServicesPage = ({ onNavigate }: { onNavigate: (page: "home" | "serv
           <div>
             <button
               onClick={() => onNavigate("contact")}
-              className="bg-white px-8 py-4 rounded-full border border-secondary-300 text-primary-500 font-display font-medium text-lg flex items-center gap-2 hover:bg-neutral-50 transition-colors cursor-pointer"
+              className="bg-neutral-50 px-8 py-4 rounded-full text-primary-500 font-display font-medium text-lg flex items-center gap-2 hover:brightness-95 transition-all cursor-pointer"
             >
               Bespreek een workshop
               <ArrowRight className="w-5 h-5" />
@@ -476,7 +487,7 @@ export const ServicesPage = ({ onNavigate }: { onNavigate: (page: "home" | "serv
       </section>
 
       {/* Samenwerking op maat */}
-      <section className="py-16 md:py-20 bg-neutral-50">
+      <section className="py-16 md:py-20 bg-neutral-50 lg:bg-white">
         <div className="container-custom space-y-8">
           <div className="space-y-4">
             <h2 className="text-[38px] font-bold text-primary-400 leading-tight">Samenwerking op maat</h2>
@@ -488,7 +499,7 @@ export const ServicesPage = ({ onNavigate }: { onNavigate: (page: "home" | "serv
           <div>
             <button
               onClick={() => onNavigate("contact")}
-              className="bg-white px-8 py-4 rounded-full border border-secondary-300 text-primary-500 font-display font-medium text-lg flex items-center gap-2 hover:bg-neutral-50 transition-colors cursor-pointer"
+              className="bg-white lg:bg-neutral-50 px-8 py-4 rounded-full text-primary-500 font-display font-medium text-lg flex items-center gap-2 hover:brightness-95 transition-all cursor-pointer"
             >
               Bespreek jouw vraag
               <ArrowRight className="w-5 h-5" />
@@ -498,11 +509,11 @@ export const ServicesPage = ({ onNavigate }: { onNavigate: (page: "home" | "serv
       </section>
 
       {/* Werkwijze */}
-      <section id="werkwijze" className="scroll-mt-28 py-16 md:py-20 bg-white">
+      <section id="werkwijze" className="scroll-mt-28 py-16 md:py-20 bg-white lg:bg-neutral-50">
         <div className="container-custom space-y-4 mb-16">
           <h2 className="text-[38px] font-bold text-primary-400 leading-tight">Werkwijze</h2>
           <p className="text-lg text-neutral-700 max-w-2xl leading-relaxed">
-            Van eerste vraag tot terugkoppeling — in vier stappen.
+            Van eerste vraag tot terugkoppeling in vier stappen.
           </p>
         </div>
 

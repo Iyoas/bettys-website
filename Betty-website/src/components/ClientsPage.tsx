@@ -24,7 +24,7 @@ const cases = [
   },
   {
     id: "VOZ",
-    client: "VOZ — Vluchtelingenopvang Ommoord-Zevenkamp",
+    client: "VOZ, Vluchtelingenopvang Ommoord-Zevenkamp",
     situation:
       "VOZ ving nieuw gehuisveste vluchtelingen op in Ommoord-Zevenkamp, waaronder veel Eritrese nieuwkomers. Het team had geen Tigrinya-sprekende collega's en kon daardoor moeilijk inschatten wat bewoners nodig hadden.",
     approach:
@@ -138,8 +138,8 @@ export const ClientsPage = ({ onNavigate }: {
   onNavigate: (page: "home" | "services" | "about" | "clients" | "contact", id?: string) => void;
 }) => {
   usePageMeta(
-    "Opdrachtgevers & cases — Betty Teklemariam",
-    "Organisaties waarvoor Betty Teklemariam werkt — van COA, Nidos en het SCP tot gemeenten en jeugdzorg — met cases rond de Eritrese gemeenschap."
+    "Opdrachtgevers & cases van Betty Teklemariam",
+    "Organisaties waarvoor Betty Teklemariam werkt, van COA, Nidos en het SCP tot gemeenten en jeugdzorg, met cases rond de Eritrese gemeenschap."
   );
 
   const zichtbareTestimonials = testimonials.filter((t) => t.quote);
@@ -168,14 +168,14 @@ export const ClientsPage = ({ onNavigate }: {
                   href={WHATSAPP_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-primary-500 text-secondary-300 px-8 py-4 rounded-full font-medium text-lg inline-flex items-center gap-2 hover:scale-105 transition-transform shadow-md cursor-pointer"
+                  className="bg-primary-500 text-secondary-300 px-8 py-4 rounded-full font-medium text-lg inline-flex items-center gap-2 hover:scale-105 transition-transform cursor-pointer"
                 >
                   Start een gesprek
                   <WhatsappLogoIcon size={28} weight="light" />
                 </a>
                 <button
                   onClick={() => document.getElementById("case-detail")?.scrollIntoView({ behavior: "smooth" })}
-                  className="bg-white text-primary-500 px-8 py-4 rounded-full border-2 border-secondary-300 font-medium text-lg inline-flex items-center gap-2 hover:bg-neutral-50 transition-colors cursor-pointer"
+                  className="bg-white text-primary-500 px-8 py-4 rounded-full font-medium text-lg inline-flex items-center gap-2 hover:bg-neutral-50 transition-colors cursor-pointer"
                 >
                   Bekijk cases
                   <ArrowDown className="w-5 h-5" />
