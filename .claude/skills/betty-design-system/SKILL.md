@@ -124,15 +124,38 @@ Elke kaart: `w-full rounded-2xl p-4 flex items-center gap-3 h-full`, achtergrond
 **Hero-sectiepatroon** (gebruikt op Home, About, Services, Opdrachtgevers, Contact — het concept noemde alleen Home/About/Services):
 Twee kolommen op desktop (`flex-col lg:flex-row`): links tekst (h1 + intro + CTA-knop), rechts een afbeelding in een `bg-primary-50 rounded-[32px] p-8` kader met `aspect-[4/3] object-cover` en een `picsum.photos`-fallback via `onError`. Op de subpagina's (niet Home) zit er een verborgen spacer-`div` (`hidden lg:block h-[145px]`) om de herohoogte gelijk te houden met de homepage.
 
-**Hero-blobs (`HeroPhotoBlobs` in `Sections.tsx`) — dekking is bewust laag.** Twee organisch gevormde lime vlakken (`bg-secondary-300`) achter de hero-foto, rechtsboven `opacity-35` en linksonder `opacity-25`, op alle 5 hero's identiek. Ze staan er als achtergrondaccent, niet als blikvanger: de foto en de CTA moeten de aandacht winnen.
+**Hero-blobs (`HeroPhotoBlobs` in `Sections.tsx`).** Twee organisch gevormde lime vlakken (`bg-secondary-300`) achter de hero-foto, rechtsboven `opacity-35` en linksonder `opacity-25`, op alle 5 hero's identiek. Ze staan er als achtergrondaccent, niet als blikvanger: de foto en de CTA moeten de aandacht winnen. De maat en offset verschillen per breakpoint:
 
-Dit is herzien na een visuele vergelijking van zes varianten (vol lime, zacht lime, donkergroen transparant, één enkele blob, contourlijn, en helemaal geen blobs), telkens gescreenshot op alle vijf pagina's:
-- **Vol lime (`opacity-90`/`opacity-60`, de oude waarde) — niet meer gebruiken.** Dat maakte de decoratie het felste element van de pagina: feller dan Betty's gezicht en dan de primaire CTA. Het botste vooral met de inhoudelijke foto's op Diensten, Over mij, Opdrachtgevers en Contact, en het overtrad de eigen palet-regel uit §1 ("lime nooit als vlakvullende achtergrondkleur voor grote oppervlakten").
-- **Donkergroen op lage dekking (`primary-500` transparant) — niet doen.** Op de grijze `neutral-50`-hero vergrijst dat tot een vuile vlek die als renderfout leest, niet als opzet.
+```
+rechtsboven: -top-5 -right-5 w-32 h-32  md:-top-10 md:-right-10 md:w-56 md:h-56  opacity-35
+linksonder:  -bottom-6 -left-6 w-36 h-36 md:-bottom-12 md:-left-12 md:w-64 md:h-64 opacity-25
+```
+
+Dit is vastgesteld in twee testrondes waarin vorm, positie, kleur en dekking los van elkaar zijn gevarieerd en telkens gescreenshot (ronde 1 op alle vijf pagina's, ronde 2 op desktop 1440px én mobiel 425px).
+
+**Dekking — vastgelegd in ronde 1:**
+- **Vol lime (`opacity-90`/`opacity-60`, de oorspronkelijke waarde) — niet meer gebruiken.** Dat maakte de decoratie het felste element van de pagina: feller dan Betty's gezicht en dan de primaire CTA. Het botste vooral met de inhoudelijke foto's op Diensten, Over mij, Opdrachtgevers en Contact, en het overtrad de eigen palet-regel uit §1 ("lime nooit als vlakvullende achtergrondkleur voor grote oppervlakten").
+
+**Kleur — twee keer langs verschillende weg afgewezen, niet opnieuw proberen:**
+- **Donkergroen op lage dekking (`primary-500` of `primary-400` transparant) — niet doen.** Op de grijze `neutral-50`-hero vergrijst elke transparante groentint tot een vuile vlek die als renderfout leest. Geldt ook voor de duotoon-variant (lime boven + groen onder): de twee vormen horen dan visueel niet bij elkaar.
 - **`primary-50` op volle dekking — niet doen.** Te dicht bij de hero-achtergrond (#f0f5f3 vs #F7F7F7); de vorm verdwijnt en oogt als artefact.
+- **Tweede lime-tint (`secondary-400`) — zinloos.** Het verschil met `secondary-300` is bij deze dekking niet zichtbaar; alleen extra complexiteit.
+- Conclusie: **één kleur lime is juist.** Elke tweede kleur maakt het slechter.
+
+**Vorm — ronde 2:**
+- **Organisch (huidig) is de keuze**: kenmerkender voor het merk dan de alternatieven.
+- **Cirkels** werken op zich prima en sluiten aan bij de `rounded-full`-knoppen, maar maken het beeld generieker.
+- **Ovaal/langgerekt — niet doen.** Leest als een gradient-vlek of renderfout, niet als vorm.
+- **"Rondere" organische vormen** zijn niet te onderscheiden van de huidige; geen winst.
+
+**Positie — ronde 2:**
+- **Beide blobs aan één kant — niet doen.** De hero kantelt uit balans en de andere zijde wordt kaal.
+- **Eén enkele blob — niet doen.** De foto zweeft dan aan de tegenoverliggende hoek.
 - **Contourlijn of blobs helemaal weg** — technisch rustig, maar de hero verliest zijn merkkarakter en de foto zweeft in het grijs.
 
-De blobs blijven op **alle vijf** hero's staan, niet alleen op de homepage: ze zijn het element dat de vijf hero's als één familie laat lezen, en bij deze lage dekking kosten ze geen aandacht. Wijzig de dekking niet omhoog zonder opnieuw op alle vijf pagina's te screenshotten.
+**Mobiel (belangrijk).** Op desktop staan de vormen ruim (`-10`/`-12`, `w-56`/`w-64`) zodat ze de tekst- en fotokolom visueel verbinden. Op mobiel stapelt de hero en staat de foto ónder de tekst — er is dan geen kolom meer om te verbinden, en diezelfde offset duwde de linksonder-blob tot in de pagina-marge (zichtbaar als een losse groene vlek naast de foto). Daarom kleinere mobiele waarden, strak tegen de foto. **Gebruik dus nooit één set offsets voor beide breakpoints**; controleer een wijziging altijd op 425px én 1440px.
+
+De blobs blijven op **alle vijf** hero's staan, niet alleen op de homepage: ze zijn het element dat de vijf hero's als één familie laat lezen, en bij deze lage dekking kosten ze geen aandacht. Wijzig dekking of offsets niet zonder opnieuw te screenshotten op beide breakpoints.
 
 **Dienst-sectiepatroon** (ServicesPage, herzien — geen foto meer): full-width, één kolom, `container-custom space-y-12`. Vaste volgorde: categorie-eyebrow-badge → titel + lime underline → korte intro-alinea (max-w-3xl, 2-3 zinnen) → Onderwerp-kaartengrid ("Wat Betty concreet doet"/"Mogelijke onderwerpen") → doelgroep-tags ("Geschikt voor"/"Inzetbaar bij"/"Ondersteunt bij"/"Voor wie") → CTA-knop. Elke sectie heeft `scroll-mt-28` (voor de sticky navbar bij anchor-scroll) en alterneert `bg-neutral-50`/`bg-white` tussen diensten voor ritme; de kaarten in de grid gebruiken steeds de tegenovergestelde kleur van hun sectie. Foto's zijn bewust verwijderd uit dit patroon (voorheen tweekoloms foto+content) — voeg geen foto terug toe zonder expliciet akkoord.
 
