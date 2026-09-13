@@ -78,7 +78,7 @@ flex items-center gap-2 hover:scale-105 transition-transform shadow-md
 ```
 Twee nuances die in het concept ontbraken:
 - Op de Home-hero mist deze knop `shadow-md` (alle andere pagina-hero's hebben het wel) — bestaande inconsistentie, geen doelpatroon.
-- In de Navbar is er een compactere variant: `bg-primary-500 text-secondary-300 px-6 py-2.5 rounded-full font-semibold hover:bg-opacity-90 transition-all` (kleinere padding, geen scale-hover, wel opacity-hover).
+- In de Navbar is er een compactere variant: `bg-primary-500 text-secondary-300 px-6 py-2.5 rounded-full font-semibold hover:brightness-95 transition-all` (kleinere padding, geen scale-hover). Dit was `hover:bg-opacity-90`, wat in Tailwind v4 niet betrouwbaar werkt op een `bg-primary-500`-knop.
 - Op een donkere `primary-500`-achtergrond (het CTA-blok) draait de kleur om: `bg-secondary-300 text-primary-500`, en daar wordt uitzonderlijk `rounded-[40px]` gebruikt in plaats van `rounded-full`.
 
 **Secondary/outline button:**
@@ -91,8 +91,9 @@ Op een donkere achtergrond (CTA-blok) wordt dit: `border-2 border-secondary-300 
 **Tertiary/link-style button** (bijv. "Meer over begeleiding", "Bekijk dienst"):
 ```
 bg-white px-8 py-4 rounded-full border border-secondary-300 text-primary-500
-font-display font-medium text-lg flex items-center gap-2 hover:bg-neutral-50 transition-colors
+font-display font-medium text-lg flex items-center gap-2 hover:brightness-95 transition-all
 ```
+De achtergrond wisselt mee met de sectie (`bg-white` of `bg-neutral-50`, zie de contrastregel in §3). Juist daarom is `hover:brightness-95` hier het patroon en geen vaste kleur: één regel werkt op beide achtergronden, terwijl `hover:bg-neutral-50` op een grijze sectie niets doet.
 
 **Iconbadge** (ontbrak als apart patroon in het concept, komt terug op vrijwel elke feature-/dienst-/contactcard):
 ```
@@ -170,7 +171,7 @@ Klik scrollt smooth naar de bijbehorende sectie-id (`document.getElementById(id)
 
 **Filterbare case-viewer — VERVALLEN.** De pill-filters + `AnimatePresence`-paneel op `ClientsPage` zijn verwijderd toen de niet-geverifieerde cases eruit gingen; met twee cases was die UI overbodig. De vaste **Situatie / Aanpak / Resultaat**-structuur blijft, nu als losse `rounded-[40px]`-blokken onder elkaar.
 
-**TrustedBy logo-marquee — ontbrak volledig in het concept.** Een oneindig doorlopende, automatisch scrollende rij klantlogo's (Motion `animate={{x: ["0%","-50%"]}}`, logo's gedupliceerd voor een naadloze loop), met een gradient-fademasker aan beide randen en `grayscale hover:opacity-100` op elk logo.
+**TrustedBy logo-marquee.** Een oneindig doorlopende rij klantlogo's, met een gradient-fademasker aan beide randen en `grayscale hover:opacity-100` op elk logo. Draait sinds de Magic UI-ronde op `<Marquee pauseOnHover>` (zie §4a) in plaats van op een handgerolde `motion.div` met `animate={{x: ["0%","-50%"]}}`. Geef de logo's **één keer** mee als children: het component dupliceert de rij zelf (`repeat={2}`) en zet `aria-hidden` op de kopie, zodat screenreaders de logo's niet dubbel voorlezen. Dat laatste deed de oude versie niet.
 
 **Filterbare case-viewer (ClientsPage) — het concept noemde alleen de Situatie/Aanpak-structuur, niet de UI eromheen.** Pill-vormige filterknoppen per klant (actief: `bg-primary-500 text-secondary-300 shadow-md`, inactief: `bg-neutral-50 text-neutral-600 hover:bg-neutral-100`) besturen een geanimeerd contentpaneel (Motion `AnimatePresence`) met de vaste structuur Situatie / Aanpak / Resultaat.
 
@@ -187,6 +188,32 @@ Klik scrollt smooth naar de bijbehorende sectie-id (`document.getElementById(id)
 **Navbar:** sticky, wit/lichtgrijs afgerond paneel binnen de container, logo + naam links, centrale nav-links met lime underline op actieve pagina (Motion `layoutId`), primary-button "Samenwerken" rechts. Er **is** inmiddels een hamburgermenu onder het `md`-breakpoint (`Menu`/`X` uit lucide-react); de eerdere notitie dat mobiele navigatie ontbrak is achterhaald.
 
 **Footer:** 3 kolommen (Navigatie / Contact / Bedrijfsgegevens) naast een logo+beschrijving-blok, met copyright-regel onderaan. Achtergrond wisselt wit/`neutral-50` via een `variant`-prop die per pagina wordt ingesteld in `App.tsx`.
+
+## 4a. Hover-patronen en animatiecomponenten
+
+**Drie hover-patronen, meer niet.** De site had er zes voor drie soorten elementen; dat is teruggebracht. Kies op basis van *wat* het element is, niet op basis van de sectie:
+
+| Element | Hover | Waar |
+|---|---|---|
+| Primaire CTA | `hover:scale-105 transition-transform` | "Start een gesprek" op de 5 hero's + CTA-blok |
+| Tertiaire/link-knop | `hover:brightness-95 transition-all` | "Bekijk dienst", "Bekijk case", navbar-knop, formulier-verzendknop |
+| Kaart | `transition duration-200 hover:-translate-y-1` | feature-, dienst-, opdrachtgever- en doelgroepkaarten |
+
+Twee bewuste uitzonderingen, die géén afwijkers zijn:
+- **Secondary/outline button** houdt `hover:bg-neutral-50` — dat is een eigen knopsoort met een witte vlakvulling, geen tertiaire knop.
+- **Op de donkere CTA-achtergrond** blijft `hover:bg-white/5` staan: `brightness-95` maakt een donkergroen vlak alleen maar donkerder en is daar dus onzichtbaar.
+- **De jump-nav pill** (ServicesPage) houdt `hover:border-secondary-300 hover:bg-white` — die communiceert via zijn rand, niet via helderheid.
+
+Gebruik **geen** `hover:shadow-md` en **geen** `hover:bg-opacity-*` meer; beide zijn eruit gehaald.
+
+**Magic UI-componenten in `src/components/ui/`.** De Magic UI MCP-server is beschikbaar, maar het merendeel van die library (shimmer-, rainbow- en pulsating buttons, meteors, confetti, sparkles, retro-grid) is gemaakt voor SaaS-landingspagina's en botst met de terughoudendheid die in §1 en bij de hero-blobs is vastgelegd. **Voeg niets toe dat feller is dan Betty's foto of de primaire CTA.** Twee componenten zijn overgenomen, allebei zonder de `cn`-helper zodat `clsx`/`tailwind-merge` niet nodig zijn:
+
+- **`Marquee`** — CSS-keyframes (`--animate-marquee` in `index.css`, met `translateX(calc(-50% - var(--gap)/2))`), `pauseOnHover`, en zelf-dupliceren via `repeat`. Gebruikt in TrustedBy.
+- **`BlurFade`** — scroll-in via `useInView({ once: true, amount: 0.15 })`, met `useReducedMotion` zodat de animatie vervalt bij `prefers-reduced-motion`. Gebruikt voor de testimonials op `ClientsPage`.
+
+**Let op bij `BlurFade`:** gebruik `amount`, nooit een negatieve `margin`. Met een negatieve margin blijft content die bij het laden al in beeld staat (deeplink, trage JS) op `opacity: 0` hangen tot er gescrold wordt.
+
+**Verificatie-valkuil:** een Playwright-screenshot met `fullPage: true` stitcht de pagina zonder er echt doorheen te scrollen, dus `useInView` triggert niet en `BlurFade`-secties lijken leeg. Dat is een meetartefact, geen bug — controleer met een echte `scrollIntoView` plus een `opacity`-meting voordat je iets "repareert".
 
 ## 5. Icon library
 
