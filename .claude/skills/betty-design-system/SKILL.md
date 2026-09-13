@@ -124,6 +124,16 @@ Elke kaart: `w-full rounded-2xl p-4 flex items-center gap-3 h-full`, achtergrond
 **Hero-sectiepatroon** (gebruikt op Home, About, Services, Opdrachtgevers, Contact — het concept noemde alleen Home/About/Services):
 Twee kolommen op desktop (`flex-col lg:flex-row`): links tekst (h1 + intro + CTA-knop), rechts een afbeelding in een `bg-primary-50 rounded-[32px] p-8` kader met `aspect-[4/3] object-cover` en een `picsum.photos`-fallback via `onError`. Op de subpagina's (niet Home) zit er een verborgen spacer-`div` (`hidden lg:block h-[145px]`) om de herohoogte gelijk te houden met de homepage.
 
+**Hero-blobs (`HeroPhotoBlobs` in `Sections.tsx`) — dekking is bewust laag.** Twee organisch gevormde lime vlakken (`bg-secondary-300`) achter de hero-foto, rechtsboven `opacity-35` en linksonder `opacity-25`, op alle 5 hero's identiek. Ze staan er als achtergrondaccent, niet als blikvanger: de foto en de CTA moeten de aandacht winnen.
+
+Dit is herzien na een visuele vergelijking van zes varianten (vol lime, zacht lime, donkergroen transparant, één enkele blob, contourlijn, en helemaal geen blobs), telkens gescreenshot op alle vijf pagina's:
+- **Vol lime (`opacity-90`/`opacity-60`, de oude waarde) — niet meer gebruiken.** Dat maakte de decoratie het felste element van de pagina: feller dan Betty's gezicht en dan de primaire CTA. Het botste vooral met de inhoudelijke foto's op Diensten, Over mij, Opdrachtgevers en Contact, en het overtrad de eigen palet-regel uit §1 ("lime nooit als vlakvullende achtergrondkleur voor grote oppervlakten").
+- **Donkergroen op lage dekking (`primary-500` transparant) — niet doen.** Op de grijze `neutral-50`-hero vergrijst dat tot een vuile vlek die als renderfout leest, niet als opzet.
+- **`primary-50` op volle dekking — niet doen.** Te dicht bij de hero-achtergrond (#f0f5f3 vs #F7F7F7); de vorm verdwijnt en oogt als artefact.
+- **Contourlijn of blobs helemaal weg** — technisch rustig, maar de hero verliest zijn merkkarakter en de foto zweeft in het grijs.
+
+De blobs blijven op **alle vijf** hero's staan, niet alleen op de homepage: ze zijn het element dat de vijf hero's als één familie laat lezen, en bij deze lage dekking kosten ze geen aandacht. Wijzig de dekking niet omhoog zonder opnieuw op alle vijf pagina's te screenshotten.
+
 **Dienst-sectiepatroon** (ServicesPage, herzien — geen foto meer): full-width, één kolom, `container-custom space-y-12`. Vaste volgorde: categorie-eyebrow-badge → titel + lime underline → korte intro-alinea (max-w-3xl, 2-3 zinnen) → Onderwerp-kaartengrid ("Wat Betty concreet doet"/"Mogelijke onderwerpen") → doelgroep-tags ("Geschikt voor"/"Inzetbaar bij"/"Ondersteunt bij"/"Voor wie") → CTA-knop. Elke sectie heeft `scroll-mt-28` (voor de sticky navbar bij anchor-scroll) en alterneert `bg-neutral-50`/`bg-white` tussen diensten voor ritme; de kaarten in de grid gebruiken steeds de tegenovergestelde kleur van hun sectie. Foto's zijn bewust verwijderd uit dit patroon (voorheen tweekoloms foto+content) — voeg geen foto terug toe zonder expliciet akkoord.
 
 **Jump-nav** (nieuw, ServicesPage — vervangt het oude "Diensten in één oogopslag"-kaartenoverzicht): compacte pill-rij direct onder de hero, één per dienst, alleen icoon + titel (geen beschrijving, om duplicatie met de homepage-teaser en de verdieping verderop te vermijden):
