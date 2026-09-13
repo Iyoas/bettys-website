@@ -389,7 +389,7 @@ export const ServicesPage = ({ onNavigate }: { onNavigate: (page: "home" | "serv
           <div>
             <button
               onClick={() => onNavigate("contact")}
-              className="bg-neutral-50 lg:bg-white px-8 py-4 rounded-full text-primary-500 font-display font-medium text-lg flex items-center gap-2 hover:brightness-95 lg:hover:bg-neutral-50 transition-all cursor-pointer"
+              className="bg-neutral-50 lg:bg-white px-8 py-4 rounded-full text-primary-500 font-display font-medium text-lg flex items-center gap-2 hover:brightness-95 transition-all cursor-pointer"
             >
               Bespreek culturele bemiddeling
               <ArrowRight className="w-5 h-5" />

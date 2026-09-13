@@ -1,5 +1,5 @@
 import { Fragment } from "react";
-import { motion } from "motion/react";
+import { BlurFade } from "./ui/BlurFade";
 import { Quote, Landmark, HeartPulse, ShieldCheck, GraduationCap, Users, Search, ArrowDown } from "lucide-react";
 import { WhatsappLogo as WhatsappLogoIcon } from "@phosphor-icons/react";
 import { CTA, WHATSAPP_URL, HeroPhotoBlobs } from "./Sections";
@@ -220,7 +220,7 @@ export const ClientsPage = ({ onNavigate }: {
 
         <div className="container-custom grid md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
           {doelgroepen.map((item) => (
-            <div key={item.title} className="h-full bg-neutral-50 p-8 rounded-[32px] shadow-[0px_0px_4px_rgba(27,28,29,0.04)] space-y-6 hover:shadow-md transition-all duration-300">
+            <div key={item.title} className="h-full bg-neutral-50 p-8 rounded-[32px] shadow-[0px_0px_4px_rgba(27,28,29,0.04)] space-y-6 transition duration-200 hover:-translate-y-1">
               <div className="w-16 h-16 bg-primary-500 rounded-full flex items-center justify-center">
                 {item.icon}
               </div>
@@ -315,13 +315,10 @@ export const ClientsPage = ({ onNavigate }: {
           </div>
 
           <div className="grid md:grid-cols-2 gap-8 items-stretch">
-            {zichtbareTestimonials.map((t) => (
-              <motion.div
+            {zichtbareTestimonials.map((t, i) => (
+              <BlurFade
                 key={t.name}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5 }}
+                delay={i * 0.1}
                 className={`bg-white p-8 md:p-10 rounded-[40px] shadow-[0px_4px_20px_rgba(0,0,0,0.03)] border border-neutral-100 space-y-6 h-full flex flex-col ${t.wide ? "md:col-span-2" : ""}`}
               >
                 <div className="bg-neutral-50 p-4 rounded-full w-fit shadow-[0px_2px_4px_rgba(27,28,29,0.04)]">
@@ -334,7 +331,7 @@ export const ClientsPage = ({ onNavigate }: {
                   <p className="text-lg font-bold text-primary-500">{t.name}</p>
                   {t.sub && <p className="text-primary-400 text-sm">{t.sub}</p>}
                 </div>
-              </motion.div>
+              </BlurFade>
             ))}
           </div>
         </div>

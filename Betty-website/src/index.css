@@ -22,6 +22,20 @@
   --color-neutral-700: #777777;
   --color-neutral-800: #606060;
   --color-neutral-1000: #333333;
+
+  /* Marquee: de rij wordt gedupliceerd, dus -50% is precies één set logo's. */
+  --animate-marquee: marquee var(--duration, 32s) linear infinite;
+  --animate-marquee-vertical: marquee-vertical var(--duration, 32s) linear infinite;
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(calc(-50% - var(--gap) / 2)); }
+  }
+
+  @keyframes marquee-vertical {
+    from { transform: translateY(0); }
+    to { transform: translateY(calc(-50% - var(--gap) / 2)); }
+  }
 }
 
 @layer base {

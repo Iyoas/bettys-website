@@ -2,6 +2,8 @@ import { motion } from "motion/react";
 import { ArrowRight, Heart, Mail, Phone, Linkedin, Globe, Languages, ShieldCheck, Menu, X, Quote, Lightbulb, Handshake as HandshakeIcon, Waypoints as BridgeIcon, Presentation as PresentationIcon } from "lucide-react";
 import { WhatsappLogo as WhatsappLogoIcon } from "@phosphor-icons/react";
 import { useState, useEffect, useRef, type FormEvent } from "react";
+import { Marquee } from "./ui/Marquee";
+import { BlurFade } from "./ui/BlurFade";
 
 // Betty's WhatsApp (gebruikt voor alle "Start een gesprek"-knoppen)
 export const WHATSAPP_URL = "https://wa.me/31639244184";
@@ -111,7 +113,7 @@ export const Navbar = ({ onNavigate, currentPage }: { onNavigate: (page: "home" 
 
             <button
               onClick={() => go("contact")}
-              className="hidden md:block bg-primary-500 text-secondary-300 px-6 py-2.5 rounded-full font-semibold hover:bg-opacity-90 transition-all cursor-pointer"
+              className="hidden md:block bg-primary-500 text-secondary-300 px-6 py-2.5 rounded-full font-semibold hover:brightness-95 transition-all cursor-pointer"
             >
               Samenwerken
             </button>
@@ -152,7 +154,7 @@ export const Navbar = ({ onNavigate, currentPage }: { onNavigate: (page: "home" 
               })}
               <button
                 onClick={() => go("contact")}
-                className="mt-2 bg-primary-500 text-secondary-300 px-6 py-3 rounded-full font-semibold hover:bg-opacity-90 transition-all cursor-pointer"
+                className="mt-2 bg-primary-500 text-secondary-300 px-6 py-3 rounded-full font-semibold hover:brightness-95 transition-all cursor-pointer"
               >
                 Samenwerken
               </button>
@@ -243,14 +245,10 @@ export const TrustedBy = () => {
           <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-white to-transparent z-10" />
           <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-white to-transparent z-10" />
 
-          <motion.div
-            className="flex w-max items-center gap-x-9 sm:gap-x-24"
-            animate={{ x: ["0%", "-50%"] }}
-            transition={{ duration: 32, ease: "linear", repeat: Infinity }}
-          >
-            {[...partners, ...partners].map((partner, i) => (
+          <Marquee pauseOnHover className="p-0">
+            {partners.map((partner) => (
               <div
-                key={`${partner.name}-${i}`}
+                key={partner.name}
                 className="flex shrink-0 items-center justify-center opacity-80 grayscale transition-opacity duration-200 hover:opacity-100"
               >
                 <img
@@ -260,7 +258,7 @@ export const TrustedBy = () => {
                 />
               </div>
             ))}
-          </motion.div>
+          </Marquee>
         </div>
       </div>
     </section>
@@ -431,7 +429,7 @@ export const About = ({ onNavigate }: { onNavigate: (page: "home" | "services" |
 
           <button
             onClick={() => onNavigate("about")}
-            className="w-fit bg-neutral-50 text-primary-500 px-8 py-4 rounded-full font-display font-medium text-lg inline-flex items-center gap-2 hover:bg-white transition-colors cursor-pointer"
+            className="w-fit bg-neutral-50 text-primary-500 px-8 py-4 rounded-full font-display font-medium text-lg inline-flex items-center gap-2 hover:brightness-95 transition-all cursor-pointer"
           >
             Lees meer over Betty
             <ArrowRight className="w-4 h-4" />
@@ -516,7 +514,7 @@ export const Clients = ({ onNavigate }: { onNavigate: (page: "home" | "services"
       <div className="container-custom mt-12">
         <button
           onClick={() => onNavigate("clients")}
-          className="w-fit bg-white text-primary-500 px-8 py-4 rounded-full font-display font-medium text-lg inline-flex items-center gap-2 hover:bg-neutral-50 transition-colors cursor-pointer"
+          className="w-fit bg-white text-primary-500 px-8 py-4 rounded-full font-display font-medium text-lg inline-flex items-center gap-2 hover:brightness-95 transition-all cursor-pointer"
         >
           Bekijk alle opdrachtgevers
           <ArrowRight className="w-4 h-4" />
