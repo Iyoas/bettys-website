@@ -1,41 +1,46 @@
 import { WhatsappLogo as WhatsappLogoIcon } from "@phosphor-icons/react";
 import { ArrowDown } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { ContactForm, WHATSAPP_URL, HeroPhotoBlobs } from "./Sections";
-import { JsonLd, PROVIDER } from "./JsonLd";
+import { JsonLd, getProvider } from "./JsonLd";
 import { usePageMeta } from "../usePageMeta";
+import { useLangNav } from "../i18n/useLangNav";
+import { buildPath } from "../i18n/routes";
 
 const LINKEDIN_URL = "https://www.linkedin.com/in/bet-el-teklemariam-b1896b165/";
 
-const CONTACT_SCHEMA = {
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      ...PROVIDER,
-      sameAs: [LINKEDIN_URL],
-      founder: { ...PROVIDER.founder, sameAs: [LINKEDIN_URL] },
-      contactPoint: {
-        "@type": "ContactPoint",
-        contactType: "customer service",
-        email: "info@bettyteklemariam.nl",
-        telephone: "+31639244184",
-        areaServed: "NL",
-        availableLanguage: ["nl", "ti", "de", "en"]
-      }
-    },
-    {
-      "@type": "ContactPage",
-      "@id": "https://bettyteklemariam.nl/contact#pagina",
-      name: "Contact",
-      about: { "@id": PROVIDER["@id"] }
-    }
-  ]
-};
-
 export const ContactPage = () => {
-  usePageMeta(
-    "Contact met Betty Teklemariam, intercultureel adviseur",
-    "Plan een kennismakingsgesprek met Betty Teklemariam, intercultureel adviseur en bemiddelaar. Gevestigd in Rotterdam, werkzaam door heel Nederland."
-  );
+  const { t } = useTranslation("contact");
+  const { t: tc } = useTranslation("common");
+  const { lang } = useLangNav();
+  usePageMeta(t("meta.title"), t("meta.description"), lang, "contact");
+
+  const provider = getProvider(tc);
+
+  const CONTACT_SCHEMA = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        ...provider,
+        sameAs: [LINKEDIN_URL],
+        founder: { ...provider.founder, sameAs: [LINKEDIN_URL] },
+        contactPoint: {
+          "@type": "ContactPoint",
+          contactType: "customer service",
+          email: "info@bettyteklemariam.nl",
+          telephone: "+31639244184",
+          areaServed: "NL",
+          availableLanguage: ["nl", "ti", "de", "en"]
+        }
+      },
+      {
+        "@type": "ContactPage",
+        "@id": `https://bettyteklemariam.nl${buildPath(lang, "contact")}#pagina`,
+        name: "Contact",
+        about: { "@id": provider["@id"] }
+      }
+    ]
+  };
 
   return (
     <div className="bg-white">
@@ -47,13 +52,13 @@ export const ContactPage = () => {
           <div className="flex flex-col lg:flex-row lg:items-center gap-12 lg:gap-16">
             <div className="flex-1 space-y-6">
               <p className="font-display text-xs font-bold text-primary-500 uppercase tracking-[0.18em]">
-                Intercultureel adviseur en mediator
+                {t("hero.eyebrow")}
               </p>
               <h1 className="text-4xl md:text-5xl lg:text-[46px] font-bold leading-[1.2] lg:leading-[69px] text-primary-500">
-                Neem contact op
+                {t("hero.title")}
               </h1>
               <p className="text-lg text-neutral-700 max-w-[512px] leading-[30px]">
-                Ik plan graag een vrijblijvend kennismakingsgesprek, ook als je vraag nog niet scherp is. Bel of app me om een moment te prikken.
+                {t("hero.intro")}
               </p>
 
               <div className="flex flex-wrap gap-4 pt-4">
@@ -63,14 +68,14 @@ export const ContactPage = () => {
                   rel="noopener noreferrer"
                   className="bg-primary-500 text-secondary-300 px-8 py-4 rounded-full font-medium text-lg inline-flex items-center gap-2 hover:scale-105 transition-transform cursor-pointer"
                 >
-                  Start een gesprek
+                  {t("common:cta.startConversation")}
                   <WhatsappLogoIcon size={28} weight="light" />
                 </a>
                 <button
                   onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
                   className="bg-white text-primary-500 px-8 py-4 rounded-full font-medium text-lg inline-flex items-center gap-2 hover:bg-neutral-50 transition-colors cursor-pointer"
                 >
-                  Naar het formulier
+                  {t("hero.ctaForm")}
                   <ArrowDown className="w-5 h-5" />
                 </button>
               </div>

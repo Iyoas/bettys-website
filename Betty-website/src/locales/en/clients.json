@@ -1,0 +1,111 @@
+{
+  "meta": {
+    "title": "Clients & cases of Betty Teklemariam",
+    "description": "Organisations Betty Teklemariam works with, from COA, Nidos and the SCP to municipalities and youth care, with cases involving the Eritrean community."
+  },
+  "hero": {
+    "eyebrow": "Intercultural advisor and mediator",
+    "title": "Who I work for",
+    "intro": "I support municipalities, healthcare organisations, youth care and research institutes when a standard approach isn't enough and cultural interpretation is needed.",
+    "ctaCases": "View cases"
+  },
+  "audiences": {
+    "heading": "Who I work with",
+    "intro": "Anywhere professionals encounter Eritrean clients and communities.",
+    "items": [
+      {
+        "title": "Municipalities & government",
+        "desc": "Advice and guidance on integration, participation and issues within the social domain."
+      },
+      {
+        "title": "Healthcare & support services",
+        "desc": "Support in guiding Eritrean clients and families, including with trauma and mental health."
+      },
+      {
+        "title": "Youth care & Safe at Home",
+        "desc": "Cultural interpretation for parenting issues, unsafe family situations and complex cases."
+      },
+      {
+        "title": "Education",
+        "desc": "Information sessions and training for schools and teachers working with Eritrean young people and their parents."
+      },
+      {
+        "title": "NGOs & community organisations",
+        "desc": "Guidance and advice within projects focused on reception, participation and self-reliance."
+      },
+      {
+        "title": "Research institutes",
+        "desc": "Cultural interpretation for research into Eritrean communities, from framing the questions to interpreting the results."
+      }
+    ]
+  },
+  "cases": {
+    "heading": "Collaborations in practice",
+    "intro": "Two trajectories, written out in full: what the situation was, what I did, and what it delivered.",
+    "collaborationWith": "Collaboration with",
+    "situationLabel": "Situation",
+    "approachLabel": "Approach",
+    "resultLabel": "Result",
+    "items": {
+      "SCP": {
+        "client": "The Netherlands Institute for Social Research (SCP)",
+        "situation": "Research into integration and participation called for deeper insight into the experiences and perspectives of Eritrean communities. The existing research approaches and communication methods didn't always connect with the target group.",
+        "approach": "I interpreted the cultural context and the communication patterns that come with it. I brought in perspectives from the Eritrean community, helped formulate culturally appropriate research questions, and improved the connection between researchers and the target group.",
+        "result": "More nuanced, context-sensitive insights. Communication with the target group became more effective, with greater mutual understanding and more reliable information."
+      },
+      "VOZ": {
+        "client": "VOZ, Refugee Reception Ommoord-Zevenkamp",
+        "situation": "VOZ housed newly settled refugees in Ommoord-Zevenkamp, including many Eritrean newcomers. The team had no Tigrinya-speaking colleagues and struggled to assess what residents needed.",
+        "approach": "I reached out to VOZ on my own initiative in June 2015. I helped Eritrean refugees with integration and participation activities, through the weekly walk-in hours and beyond, via home visits and phone contact. I worked as an interpreter for Dutch-speaking colleagues as well as an independent support worker, and contributed practical solutions in team meetings.",
+        "result": "The VOZ team gained the knowledge and skills to guide Eritrean newcomers in building a life in the Netherlands."
+      }
+    },
+    "photoCaption": "A gathering with participants, where information sessions and open conversation come together."
+  },
+  "roster": {
+    "heading": "Organisations I've worked with",
+    "intro": "From municipalities and healthcare organisations to research institutes and community organisations.",
+    "items": [
+      "COA (Central Agency for the Reception of Asylum Seekers)",
+      "Nidos",
+      "VluchtelingenWerk Nederland (Dutch Council for Refugees)",
+      "Open Embassy",
+      "Child Protection Board (Overijssel)",
+      "Public Prosecution Service",
+      "Verwey-Jonker Institute",
+      "The Netherlands Institute for Social Research (SCP)",
+      "ARQ Centrum '45",
+      "Het JIT",
+      "VOZ",
+      "GGD (Public Health Service)",
+      "Parnassia Groep",
+      "Various municipalities"
+    ]
+  },
+  "testimonials": {
+    "heading": "What clients say",
+    "intro": "Experiences from organisations and professionals who have worked with Betty.",
+    "items": [
+      {
+        "quote": "I experience Bet-El as an honest and highly reliable professional who plays an important role as a cultural connector and interpreter/translator. In our collaboration she is pleasant to work with, open to different perspectives, and always thinks along constructively. She consistently keeps her commitments, is flexible in her approach, and often delivers more than expected. Her commitment and care make her a valuable partner to work with.",
+        "name": "Monique Haveman",
+        "sub": ""
+      },
+      {
+        "quote": "Betty is incredibly reliable. You can feel that she does her work with love and dedication. Like no one else, she has an eye for the obstacles refugees face.",
+        "name": "Lost in Europe",
+        "sub": ""
+      },
+      {
+        "quote": "Bet-El notices a great deal and shares it easily with others. She's careful with commitments, and her dedication to refugees is significant.",
+        "name": "VOZ",
+        "sub": "Refugee Reception Ommoord-Zevenkamp"
+      },
+      {
+        "quote": "",
+        "name": "Team Geldrop",
+        "sub": "COA"
+      }
+    ]
+  }
+}

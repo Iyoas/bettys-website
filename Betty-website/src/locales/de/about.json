@@ -1,0 +1,95 @@
+{
+  "meta": {
+    "title": "Über Betty Teklemariam, interkulturelle Beraterin und Vermittlerin",
+    "description": "Betty Teklemariam ist interkulturelle Beraterin und kulturelle Vermittlerin. Sozialpädagogin, geboren in Asmara, seit 2000 tätig für die eritreische Gemeinschaft in den Niederlanden."
+  },
+  "schema": {
+    "description": "Interkulturelle Beraterin und Vermittlerin zwischen eritreischen Gemeinschaften und niederländischen Organisationen. Sozialpädagogin, seit 2000 in den Niederlanden tätig.",
+    "birthPlace": "Asmara, Eritrea",
+    "alumniOf": "Sozialpädagogik (Deutschland)",
+    "knowsAbout": [
+      "Interkulturelle Vermittlung",
+      "Eritreische Gemeinschaft in den Niederlanden",
+      "Kultursensible Familienbegleitung",
+      "Sozialpädagogische Hilfe"
+    ]
+  },
+  "hero": {
+    "eyebrow": "Interkulturelle Beraterin und Mediatorin",
+    "title": "Über Betty Teklemariam",
+    "intro": "Ich arbeite seit 2000 mit eritreischen Gemeinschaften und kenne beide Seiten des Gesprächs: als Sozialpädagogin und aus eigener Erfahrung.",
+    "ctaStory": "Meine Geschichte lesen"
+  },
+  "story": {
+    "heading": "Meine Geschichte",
+    "paragraphs": [
+      "Ich bin in Asmara, Eritrea, geboren. In jungen Jahren musste ich fliehen und landete in einer völlig neuen Umgebung. Ich habe selbst erfahren, wie wichtig Unterstützung und Verständnis sind, um sich sicher und gehört zu fühlen. Das wurde zur Grundlage meiner Arbeit.",
+      "In Deutschland studierte ich Sozialpädagogik und arbeitete anschließend jahrelang in der Jugendhilfe und der Psychiatrie, wo ich Migrantinnen und Migranten bei komplexen psychosozialen Fragen begleitete. 2000 kam ich in die Niederlande.",
+      "Seitdem arbeite ich mit eritreischen und äthiopischen Geflüchteten und Statusinhabern sowie mit den Fachkräften um sie herum. Verbindung, Vertrauen und Maßarbeit sind die drei Dinge, an denen ich mich in jedem Fall orientiere."
+    ],
+    "mottoLabel": "Mein Motto",
+    "motto": "Vorbeugen ist besser als heilen.",
+    "mottoAttribution": "Betty Teklemariam"
+  },
+  "timeline": {
+    "heading": "Von Asmara in die Niederlande",
+    "intro": "Der Weg, der meine Arbeit geprägt hat – von eigener Erfahrung als Neuankömmling bis zur interkulturellen Beraterin und Vermittlerin.",
+    "items": [
+      {
+        "year": "Anfang der 1980er",
+        "title": "Flucht aus Eritrea",
+        "desc": "Ich bin in Asmara geboren. In jungen Jahren musste ich fliehen und kam nach Deutschland."
+      },
+      {
+        "year": "1990 – 2000",
+        "title": "Deutschland: Ausbildung und erste Berufsjahre",
+        "desc": "Ich studierte Sozialpädagogik und arbeitete anschließend jahrelang in der Jugendhilfe und der Psychiatrie, mit Migrantinnen und Migranten und komplexen psychosozialen Fragen."
+      },
+      {
+        "year": "2000",
+        "title": "Umzug in die Niederlande",
+        "desc": "Seit 2000 arbeite ich in den Niederlanden mit eritreischen und äthiopischen Geflüchteten und Statusinhabern."
+      },
+      {
+        "year": "2016 – heute",
+        "title": "Interkulturelle Beraterin und Vermittlerin",
+        "desc": "Ich schule, begleite und berate Organisationen, die mit eritreischen Klientinnen, Klienten und Gemeinschaften arbeiten."
+      }
+    ]
+  },
+  "expertise": {
+    "heading": "Was Betty mitbringt",
+    "intro": "Drei Arten von Wissen, die in jedem Fall zusammenkommen.",
+    "items": [
+      {
+        "title": "Kulturelles Wissen",
+        "desc": "Normen, Kommunikationsmuster, Geschlechterrollen und Familienkontext innerhalb der eritreischen und äthiopischen Gemeinschaft."
+      },
+      {
+        "title": "Pädagogisches & soziales Wissen",
+        "desc": "Sozialpädagogin mit Hintergrund in Jugendhilfe und Psychiatrie. Erfahrung mit Trauma, Erziehungsfragen und Unsicherheit in Familien."
+      },
+      {
+        "title": "Praxiserfahrung",
+        "desc": "Seit 2000 begleite ich Familien, Frauen und Kinder und berate Organisationen – gerade dort, wo Standardansätze nicht weiterhelfen."
+      }
+    ]
+  },
+  "education": {
+    "heading": "Ausbildung & Zertifikate",
+    "items": [
+      "BSc Sozialpädagogik (Deutschland)",
+      "Zertifikat kulturelle Mediatorin",
+      "Mindspring-Trainerin"
+    ]
+  },
+  "languagesBlock": {
+    "heading": "Sprachen",
+    "items": ["Niederländisch", "Tigrinya", "Deutsch", "Englisch"],
+    "note": "Ich arbeite auf Niederländisch, Tigrinya, Deutsch und Englisch und kenne den kulturellen Kontext hinter jeder Sprache."
+  },
+  "mission": {
+    "quote": "Meine Mission ist es, Brücken zu bauen zwischen Menschen, Kulturen und Organisationen. Ich glaube, dass nachhaltige Unterstützung mit Vertrauen, gegenseitigem Verständnis und einem kultursensiblen Ansatz beginnt, der der Herkunft und den Möglichkeiten jedes Einzelnen und jeder Familie gerecht wird.",
+    "attribution": "Betty Teklemariam"
+  }
+}

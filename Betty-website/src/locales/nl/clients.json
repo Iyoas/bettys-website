@@ -1,0 +1,111 @@
+{
+  "meta": {
+    "title": "Opdrachtgevers & cases van Betty Teklemariam",
+    "description": "Organisaties waarvoor Betty Teklemariam werkt, van COA, Nidos en het SCP tot gemeenten en jeugdzorg, met cases rond de Eritrese gemeenschap."
+  },
+  "hero": {
+    "eyebrow": "Intercultureel adviseur en mediator",
+    "title": "Voor wie ik werk",
+    "intro": "Ik ondersteun gemeenten, zorginstellingen, jeugdzorg en kennisinstituten wanneer een standaardaanpak niet volstaat en er culturele duiding nodig is.",
+    "ctaCases": "Bekijk cases"
+  },
+  "audiences": {
+    "heading": "Met welke organisaties werk ik",
+    "intro": "Overal waar professionals met Eritrese cliënten en gemeenschappen te maken krijgen.",
+    "items": [
+      {
+        "title": "Gemeenten & overheid",
+        "desc": "Advies en begeleiding rond integratie, participatie en vraagstukken in het sociaal domein."
+      },
+      {
+        "title": "Zorg & hulpverlening",
+        "desc": "Ondersteuning bij de begeleiding van Eritrese cliënten en gezinnen, ook bij trauma en mentale gezondheid."
+      },
+      {
+        "title": "Jeugdzorg & Veilig Thuis",
+        "desc": "Culturele duiding bij opvoedvraagstukken, onveiligheid in gezinnen en complexe casuïstiek."
+      },
+      {
+        "title": "Onderwijs",
+        "desc": "Voorlichting en training voor scholen en docenten die met Eritrese jongeren en hun ouders werken."
+      },
+      {
+        "title": "NGO’s & maatschappelijke organisaties",
+        "desc": "Begeleiding en advies binnen projecten gericht op opvang, participatie en zelfredzaamheid."
+      },
+      {
+        "title": "Kennisinstituten & onderzoek",
+        "desc": "Culturele duiding bij onderzoek naar Eritrese gemeenschappen, van vraagstelling tot interpretatie."
+      }
+    ]
+  },
+  "cases": {
+    "heading": "Samenwerkingen in de praktijk",
+    "intro": "Twee trajecten, uitgeschreven: wat de situatie was, wat ik deed en wat het opleverde.",
+    "collaborationWith": "Samenwerking met",
+    "situationLabel": "Situatie",
+    "approachLabel": "Aanpak",
+    "resultLabel": "Resultaat",
+    "items": {
+      "SCP": {
+        "client": "Sociaal en Cultureel Planbureau",
+        "situation": "In onderzoek naar integratie en participatie was er behoefte aan verdiepend inzicht in de ervaringen en perspectieven van Eritrese gemeenschappen. De bestaande onderzoeksbenaderingen en communicatiemethoden sloten niet altijd aan bij de doelgroep.",
+        "approach": "Ik duidde de culturele context en de communicatiepatronen die daarbij horen. Ik bracht perspectieven vanuit de Eritrese gemeenschap in, hielp bij het formuleren van cultureel passende onderzoeksvragen en verbeterde de aansluiting tussen onderzoekers en doelgroep.",
+        "result": "Genuanceerdere, contextgevoelige inzichten. De communicatie met de doelgroep werd effectiever, met meer wederzijds begrip en betrouwbaardere informatie."
+      },
+      "VOZ": {
+        "client": "VOZ, Vluchtelingenopvang Ommoord-Zevenkamp",
+        "situation": "VOZ ving nieuw gehuisveste vluchtelingen op in Ommoord-Zevenkamp, waaronder veel Eritrese nieuwkomers. Het team had geen Tigrinya-sprekende collega's en kon daardoor moeilijk inschatten wat bewoners nodig hadden.",
+        "approach": "Ik meldde me in juni 2015 uit eigen beweging bij VOZ. Ik hielp Eritrese vluchtelingen bij integratie- en participatieactiviteiten, via het wekelijkse spreekuur en daarbuiten via huisbezoek en telefonisch contact. Ik werkte als tolk voor Nederlandstalige collega's én als zelfstandig hulpverleenster, en dacht in het werkoverleg mee over praktische oplossingen.",
+        "result": "Het VOZ-team kreeg de kennis en vaardigheden om Eritrese nieuwkomers te begeleiden bij het opbouwen van een leven in Nederland."
+      }
+    },
+    "photoCaption": "Een bijeenkomst met deelnemers, waar voorlichting en onderling gesprek samenkomen."
+  },
+  "roster": {
+    "heading": "Organisaties waarmee ik heb samengewerkt",
+    "intro": "Van gemeenten en zorginstellingen tot kennisinstituten en maatschappelijke organisaties.",
+    "items": [
+      "COA",
+      "Nidos",
+      "VluchtelingenWerk Nederland",
+      "Open Embassy",
+      "Raad voor de Kinderbescherming (Overijssel)",
+      "Openbaar Ministerie",
+      "Verwey-Jonker Instituut",
+      "Sociaal en Cultureel Planbureau (SCP)",
+      "ARQ Centrum '45",
+      "Het JIT",
+      "VOZ",
+      "GGD",
+      "Parnassia Groep",
+      "Diverse gemeenten"
+    ]
+  },
+  "testimonials": {
+    "heading": "Wat opdrachtgevers zeggen",
+    "intro": "Ervaringen van organisaties en professionals die met Betty hebben samengewerkt.",
+    "items": [
+      {
+        "quote": "Ik ervaar Bet-El als een integere en zeer betrouwbare professional die een belangrijke rol vervult als cultureel verbinder en tolk/vertaler. In de samenwerking is zij prettig in de omgang, staat zij open voor verschillende perspectieven en denkt zij altijd constructief mee. Zij komt afspraken consequent na, is flexibel in haar aanpak en levert vaak meer dan verwacht wordt. Haar betrokkenheid en zorgvuldigheid maken haar een waardevolle samenwerkingspartner.",
+        "name": "Monique Haveman",
+        "sub": ""
+      },
+      {
+        "quote": "Betty is ongelooflijk betrouwbaar. Je voelt dat ze haar werk met liefde en toewijding doet. Als geen ander heeft ze oog voor de obstakels die vluchtelingen tegenkomen.",
+        "name": "Lost in Europe",
+        "sub": ""
+      },
+      {
+        "quote": "Bet-El signaleert veel en deelt dat gemakkelijk met anderen. Ze is zorgvuldig in afspraken, en haar betrokkenheid bij vluchtelingen is groot.",
+        "name": "VOZ",
+        "sub": "Vluchtelingenopvang Ommoord-Zevenkamp"
+      },
+      {
+        "quote": "",
+        "name": "Team Geldrop",
+        "sub": "COA"
+      }
+    ]
+  }
+}

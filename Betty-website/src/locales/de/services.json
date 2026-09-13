@@ -1,0 +1,128 @@
+{
+  "meta": {
+    "title": "Leistungen von Betty Teklemariam, interkulturelle Beraterin",
+    "description": "Begleitung, kulturelle Vermittlung, kulturelle Übersetzung und Schulung rund um die eritreische Gemeinschaft. Für Gemeinden, Pflege, Jugendhilfe, Bildung und NGOs."
+  },
+  "hero": {
+    "eyebrow": "Interkulturelle Beraterin und Mediatorin",
+    "title": "Was ich für deine Organisation tue",
+    "intro": "Ich biete Begleitung, kulturelle Vermittlung, kulturelle Übersetzung und Workshops für alle, die mit eritreischen Gemeinschaften arbeiten oder leben.",
+    "ctaJump": "Zu den Leistungen"
+  },
+  "jumpNav": {
+    "label": "Direkt zu einer Leistung"
+  },
+  "schema": {
+    "begeleiding": {
+      "name": "Begleitung",
+      "description": "Kultursensible Begleitung eritreischer Klientinnen und Klienten sowie Familien, und Unterstützung von Fachkräften bei Erziehungs-, Familien- und Sicherheitsfragen.",
+      "serviceType": "Kultursensible Begleitung"
+    },
+    "culturele-bemiddeling": {
+      "name": "Kulturelle Vermittlung",
+      "description": "Vermittlung zwischen Fachkräften und eritreischen Klientinnen und Klienten: Sprache, Verhalten, Erwartungen und Kontext für beide Seiten verständlich machen.",
+      "serviceType": "Kulturelle Vermittlung"
+    },
+    "culturele-vertaling": {
+      "name": "Kulturelle Übersetzung",
+      "description": "Kulturelle Einordnung von Politik, Kommunikation, Aufklärung und Forschung, damit sie eritreische Zielgruppen erreichen.",
+      "serviceType": "Kulturelle Beratung"
+    },
+    "workshops-voorlichting": {
+      "name": "Workshops & Aufklärung",
+      "description": "Workshops und Schulungen für Fachkräfte und Teams, die mit eritreischen Gemeinschaften arbeiten.",
+      "serviceType": "Schulung und Aufklärung"
+    }
+  },
+  "begeleiding": {
+    "title": "Begleitung",
+    "intro": "Fachkräfte holen Betty hinzu, wenn ein Fall mit einer eritreischen Klientin, einem Klienten oder einer Familie ins Stocken gerät. Als Sozialpädagogin begleitet sie die Familie selbst und denkt gleichzeitig mit dem betreuenden Team mit – auch bei Erziehungsfragen, Unsicherheit und Trauma.",
+    "topicsTitle": "Was Betty konkret tut",
+    "topics": [
+      "Kultursensible Familien- und Erziehungsbegleitung",
+      "Kommunikation zwischen Eltern und Jugendlichen stärken",
+      "Unterstützung bei psychischer Gesundheit und Traumaverarbeitung",
+      "Häusliche Gewalt, Sucht und grenzüberschreitendes Verhalten ansprechbar machen",
+      "Mitdenken bei komplexen Fällen",
+      "Integrations- und Teilhabeprozesse"
+    ],
+    "audienceTitle": "Geeignet für",
+    "audience": ["Gemeinden", "Jugendhilfe", "Veilig Thuis (Kinderschutz)", "NGOs"],
+    "cta": "Begleitung besprechen"
+  },
+  "culturele-bemiddeling": {
+    "title": "Kulturelle Vermittlung",
+    "intro": "Zwischen Organisationen und Neuankömmlingen entsteht oft eine unsichtbare Kluft. Betty ist dabei, wenn Fachkräfte und eritreische Klientinnen und Klienten sich nicht erreichen, und macht deutlich, was auf beiden Seiten gemeint ist – sprachlich, aber auch im Verhalten, in Erwartungen und im Kontext.",
+    "topicsTitle": "Was Betty konkret tut",
+    "topics": [
+      "Teilnahme an Gesprächen mit Klientinnen, Klienten und Familien",
+      "Vermitteln bei komplexen Fällen",
+      "Kulturelle Normen und Erwartungen erklären",
+      "Kommunikation zwischen Parteien klären",
+      "Vertrauen nach Missverständnissen wiederherstellen",
+      "Zusammenarbeit mit Familien und Gemeinschaften unterstützen"
+    ],
+    "audienceTitle": "Einsetzbar bei",
+    "audience": ["Pflege", "Jugendhilfe", "Veilig Thuis (Kinderschutz)", "Gemeinden"],
+    "cta": "Kulturelle Vermittlung besprechen"
+  },
+  "culturele-vertaling": {
+    "title": "Kulturelle Übersetzung",
+    "intro": "Politik, Aufklärung und Forschung erreichen eritreische Zielgruppen nur, wenn Ton und Erklärung stimmen. Betty liest mit, deutet die kulturelle Bedeutung hinter den Worten und sagt, was anders sein muss – auch bei Tabuthemen, bei denen ein Standardtext nicht ausreicht.",
+    "topicsTitle": "Was Betty konkret tut",
+    "topics": [
+      "Kulturelle Einordnung von Kommunikation und Politik",
+      "Beratung bei Aufklärungsmaterial und Projekten",
+      "Maßgeschneiderte Beziehungs- und Sexualaufklärung für Jugendliche",
+      "Beratung bei Aufklärung über Tabuthemen",
+      "Unterstützung bei Forschung und Interviews",
+      "Mitdenken bei Politik, Umsetzung und Forschung"
+    ],
+    "audienceTitle": "Unterstützt bei",
+    "audience": ["Gemeinden", "Bildung", "NGOs", "Pflege", "Forschung & Politik"],
+    "cta": "Kulturelle Übersetzung besprechen"
+  },
+  "workshops-voorlichting": {
+    "title": "Workshops & Aufklärung",
+    "intro": "Betty schult Teams, die mit eritreischen Gemeinschaften arbeiten. Sie verbindet kulturelle Einordnung mit 26 Jahren Praxiserfahrung, sodass ein Team hinterher weiß, was es in einem konkreten Fall anders machen kann.",
+    "topicsTitle": "Mögliche Themen",
+    "topics": [
+      "Die eritreische Gemeinschaft in den Niederlanden und der Migrationskontext",
+      "Arbeit mit eritreischen Statusinhabern",
+      "Kommunikation, Vertrauen und Zusammenarbeit",
+      "Kultur, Erziehung, Geschlechterrollen und Familienkontext",
+      "Glaube, psychische Gesundheit und Umgang mit Trauma",
+      "Selbstständigkeit, Teilhabe und Integration"
+    ],
+    "audienceTitle": "Für wen",
+    "audience": ["Gemeinden", "Pflege", "Bildung", "Jugendhilfe"],
+    "cta": "Workshop besprechen"
+  },
+  "custom": {
+    "title": "Maßgeschneiderte Zusammenarbeit",
+    "intro": "Nicht jede Frage passt in eine dieser vier Leistungen. Betty kombiniert Schulung, Beratung und Begleitung, wo nötig, denkt bei einzelnen Fällen ebenso mit wie bei längeren Prozessen, und stimmt die Vorgehensweise auf die Arbeitsweise deiner Organisation ab.",
+    "cta": "Deine Frage besprechen"
+  },
+  "werkwijze": {
+    "heading": "Vorgehensweise",
+    "intro": "Von der ersten Frage bis zur Rückmeldung in vier Schritten.",
+    "steps": [
+      {
+        "title": "Kennenlernen",
+        "desc": "Wir besprechen deine Frage, um welche Zielgruppe es geht und woran es gerade hakt."
+      },
+      {
+        "title": "Vorgehen festlegen",
+        "desc": "Gemeinsam wählen wir, was passt: Begleitung, Vermittlung, kulturelle Übersetzung oder ein Workshop – oder eine Kombination."
+      },
+      {
+        "title": "Umsetzung",
+        "desc": "Betty setzt es um und stimmt sich unterwegs mit deinem Team, Kettenpartnern oder der Familie ab."
+      },
+      {
+        "title": "Rückmeldung",
+        "desc": "Wir blicken zurück auf das Ergebnis und vereinbaren bei Bedarf einen Folgetermin."
+      }
+    ]
+  }
+}

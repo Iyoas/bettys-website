@@ -1,0 +1,45 @@
+{
+  "meta": {
+    "siteTitle": "Betty Teklemariam — intercultural advisor and mediator",
+    "siteDescription": "Betty Teklemariam is an intercultural advisor and mediator between Eritrean communities and Dutch organisations: guidance, cultural mediation, cultural translation and workshops."
+  },
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "about": "About me",
+    "clients": "Clients",
+    "contact": "Contact",
+    "cta": "Work with me",
+    "menuOpen": "Open menu",
+    "menuClose": "Close menu",
+    "brand": "Betty"
+  },
+  "language": {
+    "label": "Language",
+    "switchTo": "Switch to {{language}}"
+  },
+  "cta": {
+    "startConversation": "Start a conversation",
+    "heading": "Let's work together",
+    "body": "Ready to build bridges and make an impact? Get in touch for a no-obligation introductory conversation.",
+    "secondaryServices": "View services",
+    "secondaryContact": "Get in touch"
+  },
+  "schema": {
+    "jobTitle": "Intercultural advisor and mediator"
+  },
+  "footer": {
+    "brandDescription": "Expert in social inclusion and cultural mediation. Together we build a society where everyone counts.",
+    "navigation": "Navigation",
+    "contact": "Contact",
+    "companyDetails": "Company details",
+    "companyName": "Teklemariam",
+    "kvk": "Chamber of Commerce 65787676",
+    "city": "Rotterdam, the Netherlands",
+    "coverage": "Working area: all of the Netherlands",
+    "copyright": "© 2026 Betty Teklemariam. All rights reserved.",
+    "whatsapp": "WhatsApp",
+    "email": "Email",
+    "linkedin": "LinkedIn"
+  }
+}

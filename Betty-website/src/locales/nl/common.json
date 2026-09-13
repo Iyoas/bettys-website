@@ -1,0 +1,45 @@
+{
+  "meta": {
+    "siteTitle": "Betty Teklemariam — intercultureel adviseur en bemiddelaar",
+    "siteDescription": "Betty Teklemariam is intercultureel adviseur en bemiddelaar tussen Eritrese gemeenschappen en Nederlandse organisaties: begeleiding, culturele bemiddeling, culturele vertaling en workshops."
+  },
+  "nav": {
+    "home": "Home",
+    "services": "Diensten",
+    "about": "Over mij",
+    "clients": "Opdrachtgevers",
+    "contact": "Contact",
+    "cta": "Samenwerken",
+    "menuOpen": "Menu openen",
+    "menuClose": "Menu sluiten",
+    "brand": "Betty"
+  },
+  "language": {
+    "label": "Taal",
+    "switchTo": "Schakel over naar {{language}}"
+  },
+  "cta": {
+    "startConversation": "Start een gesprek",
+    "heading": "Laten we samenwerken",
+    "body": "Klaar om bruggen te slaan en impact te maken? Neem contact op voor een vrijblijvend kennismakingsgesprek.",
+    "secondaryServices": "Bekijk diensten",
+    "secondaryContact": "Neem contact op"
+  },
+  "schema": {
+    "jobTitle": "Intercultureel adviseur en bemiddelaar"
+  },
+  "footer": {
+    "brandDescription": "Expert in maatschappelijke inclusie en culturele bemiddeling. Samen bouwen we aan een samenleving waarin iedereen telt.",
+    "navigation": "Navigatie",
+    "contact": "Contact",
+    "companyDetails": "Bedrijfsgegevens",
+    "companyName": "Teklemariam",
+    "kvk": "KvK 65787676",
+    "city": "Rotterdam",
+    "coverage": "Werkgebied: heel Nederland",
+    "copyright": "© 2026 Betty Teklemariam. Alle rechten voorbehouden.",
+    "whatsapp": "Whatsapp",
+    "email": "Email",
+    "linkedin": "Linkedin"
+  }
+}

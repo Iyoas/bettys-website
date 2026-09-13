@@ -1,0 +1,128 @@
+{
+  "meta": {
+    "title": "Services from Betty Teklemariam, cultural advisor",
+    "description": "Guidance, cultural mediation, cultural translation and training around the Eritrean community. For municipalities, healthcare, youth care, education and NGOs."
+  },
+  "hero": {
+    "eyebrow": "Intercultural advisor and mediator",
+    "title": "What I do for your organisation",
+    "intro": "I offer guidance, cultural mediation, cultural translation and workshops for anyone who works or lives alongside Eritrean communities.",
+    "ctaJump": "To the services"
+  },
+  "jumpNav": {
+    "label": "Jump to a service"
+  },
+  "schema": {
+    "begeleiding": {
+      "name": "Guidance",
+      "description": "Culturally sensitive guidance for Eritrean clients and families, and support for professionals on parenting, family and safety issues.",
+      "serviceType": "Culturally sensitive guidance"
+    },
+    "culturele-bemiddeling": {
+      "name": "Cultural mediation",
+      "description": "Mediation between professionals and Eritrean clients: making language, behaviour, expectations and context understandable for both sides.",
+      "serviceType": "Cultural mediation"
+    },
+    "culturele-vertaling": {
+      "name": "Cultural translation",
+      "description": "Cultural interpretation of policy, communication, information campaigns and research, so they land with Eritrean audiences.",
+      "serviceType": "Cultural advice"
+    },
+    "workshops-voorlichting": {
+      "name": "Workshops & training",
+      "description": "Workshops and training for professionals and teams working with Eritrean communities.",
+      "serviceType": "Training and information sessions"
+    }
+  },
+  "begeleiding": {
+    "title": "Guidance",
+    "intro": "Professionals call in Betty when a case involving an Eritrean client or family gets stuck. As a social pedagogue, she guides the family herself and thinks along with the team working on it — including around parenting questions, safety concerns and trauma.",
+    "topicsTitle": "What Betty does, specifically",
+    "topics": [
+      "Culturally sensitive family and parenting guidance",
+      "Strengthening communication between parents and young people",
+      "Support around mental health and trauma processing",
+      "Making domestic violence, addiction and boundary-crossing behaviour discussable",
+      "Thinking along on complex cases",
+      "Integration and participation trajectories"
+    ],
+    "audienceTitle": "Suitable for",
+    "audience": ["Municipalities", "Youth care", "Safe at Home (Veilig Thuis)", "NGOs"],
+    "cta": "Discuss guidance"
+  },
+  "culturele-bemiddeling": {
+    "title": "Cultural mediation",
+    "intro": "An invisible gap often opens up between organisations and newcomers. Betty steps in when professionals and Eritrean clients aren't reaching each other, and clarifies what's meant on both sides — in language, but also in behaviour, expectations and context.",
+    "topicsTitle": "What Betty does, specifically",
+    "topics": [
+      "Joining conversations with clients and families",
+      "Mediating in complex cases",
+      "Explaining cultural norms and expectations",
+      "Clarifying communication between parties",
+      "Restoring trust after miscommunication",
+      "Supporting collaboration with families and communities"
+    ],
+    "audienceTitle": "Deployed for",
+    "audience": ["Healthcare", "Youth care", "Safe at Home (Veilig Thuis)", "Municipalities"],
+    "cta": "Discuss cultural mediation"
+  },
+  "culturele-vertaling": {
+    "title": "Cultural translation",
+    "intro": "Policy, information campaigns and research only reach Eritrean audiences if the tone and explanation are right. Betty reviews the material, interprets the cultural meaning behind the words, and says what needs to change — including for taboo subjects where a standard text falls short.",
+    "topicsTitle": "What Betty does, specifically",
+    "topics": [
+      "Cultural interpretation of communication and policy",
+      "Advice on information materials and projects",
+      "Tailored relationship and sex education for young people",
+      "Advice on addressing taboo subjects",
+      "Support for research and interviews",
+      "Thinking along on policy, implementation and research"
+    ],
+    "audienceTitle": "Supports",
+    "audience": ["Municipalities", "Education", "NGOs", "Healthcare", "Research & policy"],
+    "cta": "Discuss cultural translation"
+  },
+  "workshops-voorlichting": {
+    "title": "Workshops & training",
+    "intro": "Betty trains teams that work with Eritrean communities. She combines cultural interpretation with 26 years of practice, so a team knows afterwards what it can do differently in a real case.",
+    "topicsTitle": "Possible topics",
+    "topics": [
+      "The Eritrean community in the Netherlands and the migration context",
+      "Working with Eritrean status holders",
+      "Communication, trust and collaboration",
+      "Culture, upbringing, gender roles and family context",
+      "Faith, mental health and dealing with trauma",
+      "Self-reliance, participation and integration"
+    ],
+    "audienceTitle": "For whom",
+    "audience": ["Municipalities", "Healthcare", "Education", "Youth care"],
+    "cta": "Discuss a workshop"
+  },
+  "custom": {
+    "title": "Tailored collaboration",
+    "intro": "Not every question fits neatly into one of these four services. Betty combines training, advice and guidance where needed, thinks along on individual cases as well as longer trajectories, and tailors the approach to how your organisation works.",
+    "cta": "Discuss your question"
+  },
+  "werkwijze": {
+    "heading": "How I work",
+    "intro": "From first question to follow-up, in four steps.",
+    "steps": [
+      {
+        "title": "Introduction",
+        "desc": "We discuss your question, who the target group is, and where things are currently stuck."
+      },
+      {
+        "title": "Determining the approach",
+        "desc": "Together we choose what fits: guidance, mediation, cultural translation or a workshop, or a combination."
+      },
+      {
+        "title": "Execution",
+        "desc": "Betty carries it out and stays in touch along the way with your team, chain partners or the family."
+      },
+      {
+        "title": "Follow-up",
+        "desc": "We look back at what it delivered and schedule a follow-up meeting if needed."
+      }
+    ]
+  }
+}

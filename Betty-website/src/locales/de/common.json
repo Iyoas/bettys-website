@@ -1,0 +1,45 @@
+{
+  "meta": {
+    "siteTitle": "Betty Teklemariam — interkulturelle Beraterin und Vermittlerin",
+    "siteDescription": "Betty Teklemariam ist interkulturelle Beraterin und Vermittlerin zwischen eritreischen Gemeinschaften und niederländischen Organisationen: Begleitung, kulturelle Vermittlung, kulturelle Übersetzung und Workshops."
+  },
+  "nav": {
+    "home": "Start",
+    "services": "Leistungen",
+    "about": "Über mich",
+    "clients": "Auftraggeber",
+    "contact": "Kontakt",
+    "cta": "Zusammenarbeiten",
+    "menuOpen": "Menü öffnen",
+    "menuClose": "Menü schließen",
+    "brand": "Betty"
+  },
+  "language": {
+    "label": "Sprache",
+    "switchTo": "Zu {{language}} wechseln"
+  },
+  "cta": {
+    "startConversation": "Gespräch beginnen",
+    "heading": "Lass uns zusammenarbeiten",
+    "body": "Bereit, Brücken zu bauen und etwas zu bewirken? Nimm Kontakt auf für ein unverbindliches Kennenlerngespräch.",
+    "secondaryServices": "Leistungen ansehen",
+    "secondaryContact": "Kontakt aufnehmen"
+  },
+  "schema": {
+    "jobTitle": "Interkulturelle Beraterin und Vermittlerin"
+  },
+  "footer": {
+    "brandDescription": "Expertin für gesellschaftliche Inklusion und kulturelle Vermittlung. Gemeinsam bauen wir an einer Gesellschaft, in der jeder zählt.",
+    "navigation": "Navigation",
+    "contact": "Kontakt",
+    "companyDetails": "Unternehmensdaten",
+    "companyName": "Teklemariam",
+    "kvk": "Handelsregister (KvK) 65787676",
+    "city": "Rotterdam",
+    "coverage": "Arbeitsgebiet: ganze Niederlande",
+    "copyright": "© 2026 Betty Teklemariam. Alle Rechte vorbehalten.",
+    "whatsapp": "WhatsApp",
+    "email": "E-Mail",
+    "linkedin": "LinkedIn"
+  }
+}

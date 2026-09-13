@@ -1,0 +1,143 @@
+{
+  "meta": {
+    "title": "Betty Teklemariam — interkulturelle Beraterin und Vermittlerin",
+    "description": "Betty Teklemariam ist interkulturelle Beraterin und Vermittlerin zwischen eritreischen Gemeinschaften und niederländischen Organisationen: Begleitung, kulturelle Vermittlung, kulturelle Übersetzung und Workshops."
+  },
+  "hero": {
+    "eyebrow": "Interkulturelle Beraterin und Mediatorin",
+    "titleLine1": "Brücken bauen",
+    "titleLine2Pre": "zwischen ",
+    "titleHighlight": "Kulturen",
+    "titleLine2Post": " und Gemeinschaften.",
+    "intro": "Ich unterstütze Gemeinden, Forschende und gesellschaftliche Organisationen dabei, besser mit eritreischen Gemeinschaften zusammenzuarbeiten.",
+    "ctaServices": "Leistungen ansehen"
+  },
+  "trustedBy": {
+    "label": "Zusammenarbeit mit"
+  },
+  "features": {
+    "heading": "Warum kulturelle Vermittlung?",
+    "intro": "Zwischen Institutionen und Neuankömmlingen entsteht oft eine unsichtbare Kluft. Ich helfe, diese zu überbrücken.",
+    "items": [
+      {
+        "title": "Kulturelle Unterschiede",
+        "desc": "Verständnis für tief verwurzelte Normen und Werte, die das Miteinander prägen."
+      },
+      {
+        "title": "Sprachbarrieren",
+        "desc": "Sprachliche Unterschiede überbrücken, um Missverständnisse zu vermeiden."
+      },
+      {
+        "title": "Misstrauen",
+        "desc": "Eine sichere Basis für offene Kommunikation und Vertrauen schaffen."
+      }
+    ]
+  },
+  "services": {
+    "heading": "Meine Leistungen",
+    "intro": "Praktische Unterstützung für Organisationen, die effektiv mit eritreischen Gemeinschaften zusammenarbeiten möchten.",
+    "viewService": "Leistung ansehen",
+    "items": [
+      {
+        "title": "Begleitung",
+        "desc": "Persönliche Unterstützung beim Umgang mit komplexen kulturellen Situationen und bei der gesellschaftlichen Integration."
+      },
+      {
+        "title": "Kulturelle Vermittlung",
+        "desc": "Überbrückung von Unterschieden in Kommunikation und Erwartungen zwischen verschiedenen Gruppen und Institutionen."
+      },
+      {
+        "title": "Dolmetschen & Übersetzen",
+        "desc": "Unterstützung bei Gesprächen und Kommunikation, mündlich wie schriftlich, mit Blick auf Sprache und kulturellen Kontext."
+      },
+      {
+        "title": "Workshops & Aufklärung",
+        "desc": "Interaktive Sitzungen zu Bewusstseinsbildung, Inklusion und dem wirksamen Umgang mit kultureller Vielfalt."
+      }
+    ]
+  },
+  "about": {
+    "heading": "Über mich",
+    "intro": "Bet-El Teklemariam, interkulturelle Beraterin, Mediatorin, Trainerin und Sozialpädagogin.",
+    "bodyText": "In jungen Jahren bin ich aus Eritrea geflohen. Ich weiß aus eigener Erfahrung, wie viel es ausmacht, wenn einen jemand versteht in einer Umgebung, die neu für einen ist. Diese Erfahrung verbinde ich mit über 26 Jahren Arbeit in Begleitung, Jugendhilfe, Psychiatrie und im sozialen Bereich.",
+    "speaks": "Spricht",
+    "languages": ["Niederländisch", "Tigrinya", "Deutsch", "Englisch"],
+    "readMore": "Mehr über Betty lesen",
+    "yearsBadgeNumber": "26+",
+    "yearsBadgeLabel": "Jahre Erfahrung",
+    "qualities": [
+      {
+        "title": "Menschenorientiert",
+        "desc": "Ruhe bringen in Gespräche, in denen Vertrauen und Kontext entscheidend sind."
+      },
+      {
+        "title": "Praktisch",
+        "desc": "Mit Fachkräften mitdenken, was in der Praxis direkt weiterhilft."
+      },
+      {
+        "title": "Kultursensibel",
+        "desc": "Sprache, familiäre Verhältnisse und Herkunft in jeden Rat einbeziehen."
+      }
+    ]
+  },
+  "clients": {
+    "heading": "Aktuelle Auftraggeber",
+    "intro": "Organisationen, mit denen ich an besserer Kommunikation und Zusammenarbeit mit eritreischen Gemeinschaften gearbeitet habe.",
+    "viewCase": "Fallbeispiel ansehen",
+    "viewAll": "Alle Auftraggeber ansehen",
+    "items": [
+      {
+        "name": "Niederländisches Institut für Sozialforschung (SCP)",
+        "tag": "Forschung",
+        "desc": "Kulturelle Einordnung im Rahmen von Forschung zu Integration und Teilhabe eritreischer Gemeinschaften."
+      },
+      {
+        "name": "VOZ, Flüchtlingsunterkunft Ommoord-Zevenkamp",
+        "tag": "Begleitung",
+        "desc": "Dolmetscherin und selbstständige Betreuerin bei der Aufnahme eritreischer Neuankömmlinge, über Sprechstunden und Hausbesuche."
+      }
+    ]
+  },
+  "testimonials": {
+    "heading": "Was Auftraggeber sagen",
+    "intro": "Erfahrungen von Organisationen, die mit Betty zusammengearbeitet haben",
+    "items": [
+      {
+        "text": "Bet-El ist eine integre und sehr zuverlässige Fachkraft, die als kulturelle Vermittlerin eine wichtige Rolle einnimmt. Sie hält Absprachen konsequent ein, ist flexibel und liefert oft mehr als erwartet.",
+        "name": "Monique Haveman",
+        "sub": "Mix Support, Beraterin Pflege und Qualität"
+      },
+      {
+        "text": "Betty ist unglaublich zuverlässig. Man spürt, dass sie ihre Arbeit mit Liebe und Hingabe macht. Wie keine andere hat sie ein Gespür für die Hindernisse, mit denen Geflüchtete konfrontiert sind.",
+        "name": "Lost in Europe",
+        "sub": "Investigativjournalist"
+      },
+      {
+        "text": "Eine natürliche und transparente Zusammenarbeit, ohne dass dies der Professionalität etwas abtut.",
+        "name": "Nidos",
+        "sub": "Jugendschutzfachkraft"
+      }
+    ]
+  },
+  "contactForm": {
+    "heading": "Erzähl mir kurz, worum es geht",
+    "intro": "Für Begleitung, kulturelle Vermittlung, kulturelle Übersetzung oder einen Workshop – oder einfach, um deine Frage zu klären.",
+    "directContact": "Lieber direkter Kontakt",
+    "email": "E-Mail",
+    "phone": "+31 6 39 24 41 84",
+    "linkedin": "LinkedIn",
+    "whatsapp": "WhatsApp",
+    "confirmation": "Danke für deine Nachricht. Du hörst innerhalb von 1–2 Werktagen von mir.",
+    "fields": {
+      "name": "Name",
+      "namePlaceholder": "Dein Name",
+      "organization": "Organisation",
+      "organizationPlaceholder": "Name deiner Organisation",
+      "emailLabel": "E-Mail",
+      "emailPlaceholder": "du@email.de",
+      "message": "Nachricht",
+      "messagePlaceholder": "Womit kann Betty dir helfen?"
+    },
+    "submit": "Nachricht senden"
+  }
+}

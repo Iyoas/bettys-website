@@ -1,0 +1,143 @@
+{
+  "meta": {
+    "title": "Betty Teklemariam — intercultureel adviseur en bemiddelaar",
+    "description": "Betty Teklemariam is intercultureel adviseur en bemiddelaar tussen Eritrese gemeenschappen en Nederlandse organisaties: begeleiding, culturele bemiddeling, culturele vertaling en workshops."
+  },
+  "hero": {
+    "eyebrow": "Intercultureel adviseur en mediator",
+    "titleLine1": "Bruggen bouwen",
+    "titleLine2Pre": "tussen ",
+    "titleHighlight": "culturen",
+    "titleLine2Post": " en gemeenschappen.",
+    "intro": "Ik help gemeenten, onderzoekers en maatschappelijke organisaties beter samen te werken met Eritrese gemeenschappen.",
+    "ctaServices": "Bekijk diensten"
+  },
+  "trustedBy": {
+    "label": "Samenwerkingen met"
+  },
+  "features": {
+    "heading": "Waarom Culturele Bemiddeling?",
+    "intro": "Er bestaat vaak een onzichtbare kloof tussen instanties en nieuwkomers. Ik help deze te overbruggen.",
+    "items": [
+      {
+        "title": "Culturele verschillen",
+        "desc": "Begrip van diepgewortelde normen en waarden die interacties beïnvloeden."
+      },
+      {
+        "title": "Taalbarrières",
+        "desc": "Het overbruggen van taalverschillen om miscommunicatie te voorkomen."
+      },
+      {
+        "title": "Wantrouwen",
+        "desc": "Het opbouwen van een veilige basis voor open communicatie en vertrouwen."
+      }
+    ]
+  },
+  "services": {
+    "heading": "Mijn Diensten",
+    "intro": "Praktische ondersteuning voor organisaties die effectief willen samenwerken met Eritrese gemeenschappen.",
+    "viewService": "Bekijk dienst",
+    "items": [
+      {
+        "title": "Begeleiding",
+        "desc": "Persoonlijke ondersteuning bij het navigeren door complexe culturele landschappen en maatschappelijke integratie."
+      },
+      {
+        "title": "Culturele Bemiddeling",
+        "desc": "Het overbruggen van verschillen in communicatie en verwachtingen tussen diverse groepen en instanties."
+      },
+      {
+        "title": "Tolken & Vertalen",
+        "desc": "Ondersteuning bij gesprekken en communicatie, zowel mondeling als schriftelijk, met oog voor taal én culturele context."
+      },
+      {
+        "title": "Workshops & Voorlichting",
+        "desc": "Interactieve sessies gericht op bewustwording, inclusie en het effectief omgaan met culturele diversiteit."
+      }
+    ]
+  },
+  "about": {
+    "heading": "Over mij",
+    "intro": "Bet-El Teklemariam, intercultureel adviseur, mediator, trainer en sociaal pedagoog.",
+    "bodyText": "Op jonge leeftijd vluchtte ik uit Eritrea. Ik weet uit ervaring hoeveel het scheelt als iemand je begrijpt in een omgeving die nieuw voor je is. Die ervaring combineer ik met ruim 26 jaar werk in begeleiding, jeugdzorg, psychiatrie en het sociaal domein.",
+    "speaks": "Spreekt",
+    "languages": ["Nederlands", "Tigrinya", "Duits", "Engels"],
+    "readMore": "Lees meer over Betty",
+    "yearsBadgeNumber": "26+",
+    "yearsBadgeLabel": "jaar ervaring",
+    "qualities": [
+      {
+        "title": "Mensgericht",
+        "desc": "Rust brengen in gesprekken waarin vertrouwen en context zwaar wegen."
+      },
+      {
+        "title": "Praktisch",
+        "desc": "Meedenken met professionals over wat direct helpt in de praktijk."
+      },
+      {
+        "title": "Cultuursensitief",
+        "desc": "Taal, familieverhoudingen en achtergrond meewegen in elk advies."
+      }
+    ]
+  },
+  "clients": {
+    "heading": "Recente opdrachtgevers",
+    "intro": "Organisaties waarmee ik heb samengewerkt aan betere communicatie en samenwerking met Eritrese gemeenschappen.",
+    "viewCase": "Bekijk case",
+    "viewAll": "Bekijk alle opdrachtgevers",
+    "items": [
+      {
+        "name": "Sociaal en Cultureel Planbureau",
+        "tag": "Onderzoek",
+        "desc": "Culturele duiding binnen onderzoek naar integratie en participatie van Eritrese gemeenschappen."
+      },
+      {
+        "name": "VOZ, Vluchtelingenopvang Ommoord-Zevenkamp",
+        "tag": "Begeleiding",
+        "desc": "Tolk en zelfstandig hulpverleenster bij de opvang van Eritrese nieuwkomers, via spreekuur en huisbezoek."
+      }
+    ]
+  },
+  "testimonials": {
+    "heading": "Wat opdrachtgevers zeggen",
+    "intro": "Ervaringen van organisaties die met Betty hebben samengewerkt",
+    "items": [
+      {
+        "text": "Bet-El is een integere en zeer betrouwbare professional die een belangrijke rol vervult als cultureel verbinder. Ze komt afspraken consequent na, is flexibel en levert vaak meer dan verwacht.",
+        "name": "Monique Haveman",
+        "sub": "Mix Support, Adviseur Zorg en Kwaliteit"
+      },
+      {
+        "text": "Betty is ongelooflijk betrouwbaar. Je voelt dat ze haar werk met liefde en toewijding doet. Als geen ander heeft ze oog voor de obstakels die vluchtelingen tegenkomen.",
+        "name": "Lost in Europe",
+        "sub": "Onderzoeksjournalist"
+      },
+      {
+        "text": "Een natuurlijke en transparante samenwerking, zonder dat dit afbreuk doet aan de professionaliteit.",
+        "name": "Nidos",
+        "sub": "Jeugdbeschermer"
+      }
+    ]
+  },
+  "contactForm": {
+    "heading": "Vertel kort wat er speelt",
+    "intro": "Voor begeleiding, culturele bemiddeling, culturele vertaling of een workshop, of gewoon om je vraag te verkennen.",
+    "directContact": "Liever direct contact",
+    "email": "E-mail",
+    "phone": "+31 6 39 24 41 84",
+    "linkedin": "LinkedIn",
+    "whatsapp": "WhatsApp",
+    "confirmation": "Bedankt voor je bericht. Je hoort binnen 1–2 werkdagen van me.",
+    "fields": {
+      "name": "Naam",
+      "namePlaceholder": "Je naam",
+      "organization": "Organisatie",
+      "organizationPlaceholder": "Naam van je organisatie",
+      "emailLabel": "E-mail",
+      "emailPlaceholder": "je@email.nl",
+      "message": "Bericht",
+      "messagePlaceholder": "Waarmee kan Betty je helpen?"
+    },
+    "submit": "Verstuur bericht"
+  }
+}

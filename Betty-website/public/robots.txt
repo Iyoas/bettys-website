@@ -1,0 +1,4 @@
+# TIJDELIJK: site nog niet live. Vervang dit bestand door de reguliere
+# robots.txt (Allow: /, met sitemap-verwijzing) zodra de site live mag gaan.
+User-agent: *
+Disallow: /

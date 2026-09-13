@@ -25,9 +25,12 @@ import {
   ArrowDown
 } from "lucide-react";
 import { WhatsappLogo as WhatsappLogoIcon } from "@phosphor-icons/react";
+import { useTranslation } from "react-i18next";
 import { WHATSAPP_URL, CTA, HeroPhotoBlobs } from "./Sections";
-import { JsonLd, PROVIDER } from "./JsonLd";
+import { JsonLd, getProvider } from "./JsonLd";
 import { usePageMeta } from "../usePageMeta";
+import { useLangNav } from "../i18n/useLangNav";
+import { buildPath } from "../i18n/routes";
 
 type Topic = { label: string; icon: ReactNode };
 
@@ -62,33 +65,52 @@ const AudienceTags = ({ title, tags, tagClass }: { title: string; tags: string[]
   </div>
 );
 
-type Step = { step: string; title: string; desc: string };
+const TOPIC_ICONS: Record<string, ReactNode[]> = {
+  begeleiding: [
+    <Home size={18} strokeWidth={1.5} />,
+    <MessagesSquare size={18} strokeWidth={1.5} />,
+    <HeartPulse size={18} strokeWidth={1.5} />,
+    <ShieldAlert size={18} strokeWidth={1.5} />,
+    <Compass size={18} strokeWidth={1.5} />,
+    <Route size={18} strokeWidth={1.5} />
+  ],
+  "culturele-bemiddeling": [
+    <MessageCircle size={18} strokeWidth={1.5} />,
+    <Scale size={18} strokeWidth={1.5} />,
+    <BookOpen size={18} strokeWidth={1.5} />,
+    <MessagesSquare size={18} strokeWidth={1.5} />,
+    <HandHeart size={18} strokeWidth={1.5} />,
+    <UsersRound size={18} strokeWidth={1.5} />
+  ],
+  "culturele-vertaling": [
+    <Compass size={18} strokeWidth={1.5} />,
+    <FileText size={18} strokeWidth={1.5} />,
+    <Sprout size={18} strokeWidth={1.5} />,
+    <MessageCircle size={18} strokeWidth={1.5} />,
+    <Search size={18} strokeWidth={1.5} />,
+    <Globe size={18} strokeWidth={1.5} />
+  ],
+  "workshops-voorlichting": [
+    <Users size={18} strokeWidth={1.5} />,
+    <UserCheck size={18} strokeWidth={1.5} />,
+    <MessageCircle size={18} strokeWidth={1.5} />,
+    <UsersRound size={18} strokeWidth={1.5} />,
+    <HeartPulse size={18} strokeWidth={1.5} />,
+    <HandHeart size={18} strokeWidth={1.5} />
+  ]
+};
 
-const WERKWIJZE_STEPS: Step[] = [
-  {
-    step: "1",
-    title: "Kennismaking",
-    desc: "We bespreken je vraag, om welke doelgroep het gaat en waar het nu vastloopt."
-  },
-  {
-    step: "2",
-    title: "Aanpak bepalen",
-    desc: "Samen kiezen we wat past: begeleiding, bemiddeling, culturele vertaling of een workshop, of een combinatie."
-  },
-  {
-    step: "3",
-    title: "Uitvoering",
-    desc: "Betty voert uit en schakelt onderweg met je team, ketenpartners of het gezin."
-  },
-  {
-    step: "4",
-    title: "Terugkoppeling",
-    desc: "We kijken terug op wat het heeft opgeleverd en maken zo nodig een vervolgafspraak."
-  }
-];
+const JUMP_NAV_ICONS: Record<string, ReactNode> = {
+  begeleiding: <HandshakeIcon size={18} strokeWidth={1.5} />,
+  "culturele-bemiddeling": <BridgeIcon size={18} strokeWidth={1.5} />,
+  "culturele-vertaling": <Languages size={18} strokeWidth={1.5} />,
+  "workshops-voorlichting": <PresentationIcon size={18} strokeWidth={1.5} />
+};
+
+type Step = { title: string; desc: string };
 
 /** Werkwijze — horizontale voortgangslijn met klikbare/hoverbare stappen; verticale lijst op mobiel. */
-const WerkwijzeSteps = () => {
+const WerkwijzeSteps = ({ steps }: { steps: Step[] }) => {
   const [activeStep, setActiveStep] = useState(0);
 
   return (
@@ -98,14 +120,14 @@ const WerkwijzeSteps = () => {
         <div className="absolute top-7 h-px bg-neutral-200" style={{ left: "12.5%", right: "12.5%" }} />
         <div
           className="absolute top-7 h-px bg-secondary-300 transition-all duration-500 ease-in-out"
-          style={{ left: "12.5%", width: `${(activeStep / (WERKWIJZE_STEPS.length - 1)) * 75}%` }}
+          style={{ left: "12.5%", width: `${(activeStep / (steps.length - 1)) * 75}%` }}
         />
         <div className="grid grid-cols-4 gap-6 items-stretch">
-          {WERKWIJZE_STEPS.map((item, i) => {
+          {steps.map((item, i) => {
             const isActive = i === activeStep;
             return (
               <button
-                key={item.step}
+                key={i}
                 type="button"
                 onMouseEnter={() => setActiveStep(i)}
                 onFocus={() => setActiveStep(i)}
@@ -120,7 +142,7 @@ const WerkwijzeSteps = () => {
                     }`}
                   >
                     <span className={`text-lg font-bold transition-colors duration-500 ease-in-out ${isActive ? "text-secondary-300" : "text-primary-500"}`}>
-                      {item.step}
+                      {i + 1}
                     </span>
                   </div>
                 </div>
@@ -140,12 +162,12 @@ const WerkwijzeSteps = () => {
 
       {/* Mobiel: verticale stappenlijst */}
       <div className="lg:hidden space-y-0">
-        {WERKWIJZE_STEPS.map((item, i) => {
+        {steps.map((item, i) => {
           const isActive = i === activeStep;
-          const isLast = i === WERKWIJZE_STEPS.length - 1;
+          const isLast = i === steps.length - 1;
           return (
             <button
-              key={item.step}
+              key={i}
               type="button"
               onClick={() => setActiveStep(i)}
               aria-current={isActive ? "step" : undefined}
@@ -158,7 +180,7 @@ const WerkwijzeSteps = () => {
                   }`}
                 >
                   <span className={`text-base font-bold transition-colors duration-500 ease-in-out ${isActive ? "text-secondary-300" : "text-primary-500"}`}>
-                    {item.step}
+                    {i + 1}
                   </span>
                 </div>
                 {!isLast && <div className="w-px flex-1 min-h-[24px] bg-neutral-200 my-2" />}
@@ -179,56 +201,32 @@ const WerkwijzeSteps = () => {
   );
 };
 
-const SERVICE_SCHEMA = {
-  "@context": "https://schema.org",
-  "@graph": [
-    PROVIDER,
-    ...[
-      {
-        name: "Begeleiding",
-        id: "begeleiding",
-        description:
-          "Cultuursensitieve begeleiding van Eritrese cliënten en gezinnen, en ondersteuning van professionals bij opvoed-, gezins- en veiligheidsvraagstukken.",
-        serviceType: "Cultuursensitieve begeleiding"
-      },
-      {
-        name: "Culturele bemiddeling",
-        id: "culturele-bemiddeling",
-        description:
-          "Bemiddeling tussen professionals en Eritrese cliënten: taal, gedrag, verwachtingen en context begrijpelijk maken voor beide kanten.",
-        serviceType: "Culturele bemiddeling"
-      },
-      {
-        name: "Culturele vertaling",
-        id: "culturele-vertaling",
-        description:
-          "Culturele duiding van beleid, communicatie, voorlichting en onderzoek, zodat die aansluiten op Eritrese doelgroepen.",
-        serviceType: "Cultureel advies"
-      },
-      {
-        name: "Workshops & voorlichting",
-        id: "workshops-voorlichting",
-        description:
-          "Workshops en trainingen voor professionals en teams die met Eritrese gemeenschappen werken.",
-        serviceType: "Training en voorlichting"
-      }
-    ].map((s) => ({
-      "@type": "Service",
-      "@id": `https://bettyteklemariam.nl/diensten#${s.id}`,
-      name: s.name,
-      description: s.description,
-      serviceType: s.serviceType,
-      areaServed: "NL",
-      provider: { "@id": PROVIDER["@id"] }
-    }))
-  ]
-};
+export const ServicesPage = () => {
+  const { t } = useTranslation("services");
+  const { t: tc } = useTranslation("common");
+  const { lang, goTo } = useLangNav();
+  usePageMeta(t("meta.title"), t("meta.description"), lang, "services");
 
-export const ServicesPage = ({ onNavigate }: { onNavigate: (page: "home" | "services" | "about" | "clients" | "contact", id?: string) => void }) => {
-  usePageMeta(
-    "Diensten van Betty Teklemariam, cultureel adviseur",
-    "Begeleiding, culturele bemiddeling, culturele vertaling en training rond de Eritrese gemeenschap. Voor gemeenten, zorg, jeugdzorg, onderwijs en NGO's."
-  );
+  const serviceIds = ["begeleiding", "culturele-bemiddeling", "culturele-vertaling", "workshops-voorlichting"] as const;
+  const provider = getProvider(tc);
+
+  const SERVICE_SCHEMA = {
+    "@context": "https://schema.org",
+    "@graph": [
+      provider,
+      ...serviceIds.map((id) => ({
+        "@type": "Service",
+        "@id": `https://bettyteklemariam.nl${buildPath(lang, "services")}#${id}`,
+        name: t(`schema.${id}.name`),
+        description: t(`schema.${id}.description`),
+        serviceType: t(`schema.${id}.serviceType`),
+        areaServed: "NL",
+        provider: { "@id": provider["@id"] }
+      }))
+    ]
+  };
+
+  const werkwijzeSteps = t("werkwijze.steps", { returnObjects: true }) as Step[];
 
   return (
     <div className="bg-white">
@@ -240,13 +238,13 @@ export const ServicesPage = ({ onNavigate }: { onNavigate: (page: "home" | "serv
           <div className="flex flex-col lg:flex-row lg:items-center gap-12 lg:gap-16">
             <div className="flex-1 space-y-6">
               <p className="font-display text-xs font-bold text-primary-500 uppercase tracking-[0.18em]">
-                Intercultureel adviseur en mediator
+                {t("hero.eyebrow")}
               </p>
               <h1 className="text-4xl md:text-5xl lg:text-[46px] font-bold leading-[1.2] lg:leading-[69px] text-primary-500">
-                Wat ik voor je organisatie doe
+                {t("hero.title")}
               </h1>
               <p className="text-lg text-neutral-700 max-w-[512px] leading-[30px]">
-                Ik bied begeleiding, culturele bemiddeling, culturele vertaling en workshops voor iedereen die met Eritrese gemeenschappen werkt of leeft.
+                {t("hero.intro")}
               </p>
 
               <div className="flex flex-wrap gap-4 pt-4">
@@ -256,14 +254,14 @@ export const ServicesPage = ({ onNavigate }: { onNavigate: (page: "home" | "serv
                   rel="noopener noreferrer"
                   className="bg-primary-500 text-secondary-300 px-8 py-4 rounded-full font-medium text-lg inline-flex items-center gap-2 hover:scale-105 transition-transform cursor-pointer"
                 >
-                  Start een gesprek
+                  {t("common:cta.startConversation")}
                   <WhatsappLogoIcon size={28} weight="light" />
                 </a>
                 <button
                   onClick={() => document.getElementById("begeleiding")?.scrollIntoView({ behavior: "smooth" })}
                   className="bg-white text-primary-500 px-8 py-4 rounded-full font-medium text-lg inline-flex items-center gap-2 hover:bg-neutral-50 transition-colors cursor-pointer"
                 >
-                  Naar de diensten
+                  {t("hero.ctaJump")}
                   <ArrowDown className="w-5 h-5" />
                 </button>
               </div>
@@ -287,23 +285,18 @@ export const ServicesPage = ({ onNavigate }: { onNavigate: (page: "home" | "serv
       </section>
 
       {/* Jump-nav — spring direct naar een dienst. Alleen mobiel: op desktop is de pagina kort genoeg om te scrollen. */}
-      <nav aria-label="Diensten" className="lg:hidden py-8 bg-white border-t border-neutral-100">
+      <nav aria-label={t("jumpNav.label")} className="lg:hidden py-8 bg-white border-t border-neutral-100">
         <div className="container-custom space-y-5">
-          <p className="font-display text-sm font-bold text-primary-500 uppercase tracking-widest">Spring naar een dienst</p>
+          <p className="font-display text-sm font-bold text-primary-500 uppercase tracking-widest">{t("jumpNav.label")}</p>
           <div className="flex flex-wrap gap-3">
-            {[
-              { id: "begeleiding", title: "Begeleiding", icon: <HandshakeIcon size={18} strokeWidth={1.5} /> },
-              { id: "culturele-bemiddeling", title: "Culturele bemiddeling", icon: <BridgeIcon size={18} strokeWidth={1.5} /> },
-              { id: "culturele-vertaling", title: "Culturele vertaling", icon: <Languages size={18} strokeWidth={1.5} /> },
-              { id: "workshops-voorlichting", title: "Workshops & voorlichting", icon: <PresentationIcon size={18} strokeWidth={1.5} /> }
-            ].map((d) => (
+            {serviceIds.map((id) => (
               <button
-                key={d.id}
-                onClick={() => document.getElementById(d.id)?.scrollIntoView({ behavior: "smooth" })}
+                key={id}
+                onClick={() => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" })}
                 className="bg-neutral-50 px-5 py-2.5 rounded-full border border-neutral-100 text-primary-500 font-display font-medium inline-flex items-center gap-2 hover:border-secondary-300 hover:bg-white transition-colors cursor-pointer"
               >
-                {d.icon}
-                {d.title}
+                {JUMP_NAV_ICONS[id]}
+                {t(`${id}.title`)}
               </button>
             ))}
           </div>
@@ -315,39 +308,32 @@ export const ServicesPage = ({ onNavigate }: { onNavigate: (page: "home" | "serv
         <div className="container-custom space-y-8">
           <div className="space-y-4">
             <div className="space-y-4">
-              <h2 className="text-[38px] font-bold text-primary-400 leading-tight">Begeleiding</h2>
+              <h2 className="text-[38px] font-bold text-primary-400 leading-tight">{t("begeleiding.title")}</h2>
               <div className="h-1 w-16 bg-secondary-300 rounded-full" />
             </div>
             <p className="text-lg text-neutral-700 leading-[30px] max-w-3xl">
-              Professionals schakelen Betty in als een traject met een Eritrese cliënt of een gezin vastloopt. Als sociaal pedagoog begeleidt ze het gezin zelf én denkt ze mee met het team dat ermee werkt. Ook bij opvoedvragen, onveiligheid en trauma.
+              {t("begeleiding.intro")}
             </p>
           </div>
 
           <TopicGrid
-            title="Wat Betty concreet doet"
+            title={t("begeleiding.topicsTitle")}
             cardClass="bg-white lg:bg-neutral-50"
-            topics={[
-              { label: "Cultuursensitieve gezins- en opvoedbegeleiding", icon: <Home size={18} strokeWidth={1.5} /> },
-              { label: "Communicatie tussen ouders en jongeren versterken", icon: <MessagesSquare size={18} strokeWidth={1.5} /> },
-              { label: "Ondersteuning bij mentale gezondheid en traumaverwerking", icon: <HeartPulse size={18} strokeWidth={1.5} /> },
-              { label: "Huiselijk geweld, verslaving en grensoverschrijdend gedrag bespreekbaar maken", icon: <ShieldAlert size={18} strokeWidth={1.5} /> },
-              { label: "Meedenken bij complexe casuïstiek", icon: <Compass size={18} strokeWidth={1.5} /> },
-              { label: "Integratie- en participatietrajecten", icon: <Route size={18} strokeWidth={1.5} /> }
-            ]}
+            topics={(t("begeleiding.topics", { returnObjects: true }) as string[]).map((label, i) => ({ label, icon: TOPIC_ICONS.begeleiding[i] }))}
           />
 
           <AudienceTags
-            title="Geschikt voor"
+            title={t("begeleiding.audienceTitle")}
             tagClass="bg-white lg:bg-neutral-50"
-            tags={["Gemeenten", "Jeugdzorg", "Veilig Thuis", "NGO’s"]}
+            tags={t("begeleiding.audience", { returnObjects: true }) as string[]}
           />
 
           <div>
             <button
-              onClick={() => onNavigate("contact")}
+              onClick={() => goTo("contact")}
               className="bg-white lg:bg-neutral-50 px-8 py-4 rounded-full text-primary-500 font-display font-medium text-lg flex items-center gap-2 hover:brightness-95 transition-all cursor-pointer"
             >
-              Bespreek begeleiding
+              {t("begeleiding.cta")}
               <ArrowRight className="w-5 h-5" />
             </button>
           </div>
@@ -359,39 +345,32 @@ export const ServicesPage = ({ onNavigate }: { onNavigate: (page: "home" | "serv
         <div className="container-custom space-y-8">
           <div className="space-y-4">
             <div className="space-y-4">
-              <h2 className="text-[38px] font-bold text-primary-400 leading-tight">Culturele bemiddeling</h2>
+              <h2 className="text-[38px] font-bold text-primary-400 leading-tight">{t("culturele-bemiddeling.title")}</h2>
               <div className="h-1 w-16 bg-secondary-300 rounded-full" />
             </div>
             <p className="text-lg text-neutral-700 leading-[30px] max-w-3xl">
-              Tussen organisaties en nieuwkomers ontstaat vaak een onzichtbare kloof. Betty zit erbij als professionals en Eritrese cliënten elkaar niet bereiken, en maakt duidelijk wat er aan beide kanten wordt bedoeld, in taal, maar ook in gedrag, verwachtingen en context.
+              {t("culturele-bemiddeling.intro")}
             </p>
           </div>
 
           <TopicGrid
-            title="Wat Betty concreet doet"
+            title={t("culturele-bemiddeling.topicsTitle")}
             cardClass="bg-neutral-50 lg:bg-white"
-            topics={[
-              { label: "Aanschuiven bij gesprekken met cliënten en gezinnen", icon: <MessageCircle size={18} strokeWidth={1.5} /> },
-              { label: "Bemiddelen in complexe casussen", icon: <Scale size={18} strokeWidth={1.5} /> },
-              { label: "Culturele normen en verwachtingen uitleggen", icon: <BookOpen size={18} strokeWidth={1.5} /> },
-              { label: "Communicatie tussen partijen verhelderen", icon: <MessagesSquare size={18} strokeWidth={1.5} /> },
-              { label: "Vertrouwen herstellen na miscommunicatie", icon: <HandHeart size={18} strokeWidth={1.5} /> },
-              { label: "Samenwerking met gezinnen en gemeenschappen ondersteunen", icon: <UsersRound size={18} strokeWidth={1.5} /> }
-            ]}
+            topics={(t("culturele-bemiddeling.topics", { returnObjects: true }) as string[]).map((label, i) => ({ label, icon: TOPIC_ICONS["culturele-bemiddeling"][i] }))}
           />
 
           <AudienceTags
-            title="Inzetbaar bij"
+            title={t("culturele-bemiddeling.audienceTitle")}
             tagClass="bg-neutral-50 lg:bg-white"
-            tags={["Zorg", "Jeugdzorg", "Veilig Thuis", "Gemeenten"]}
+            tags={t("culturele-bemiddeling.audience", { returnObjects: true }) as string[]}
           />
 
           <div>
             <button
-              onClick={() => onNavigate("contact")}
+              onClick={() => goTo("contact")}
               className="bg-neutral-50 lg:bg-white px-8 py-4 rounded-full text-primary-500 font-display font-medium text-lg flex items-center gap-2 hover:brightness-95 transition-all cursor-pointer"
             >
-              Bespreek culturele bemiddeling
+              {t("culturele-bemiddeling.cta")}
               <ArrowRight className="w-5 h-5" />
             </button>
           </div>
@@ -403,39 +382,32 @@ export const ServicesPage = ({ onNavigate }: { onNavigate: (page: "home" | "serv
         <div className="container-custom space-y-8">
           <div className="space-y-4">
             <div className="space-y-4">
-              <h2 className="text-[38px] font-bold text-primary-400 leading-tight">Culturele vertaling</h2>
+              <h2 className="text-[38px] font-bold text-primary-400 leading-tight">{t("culturele-vertaling.title")}</h2>
               <div className="h-1 w-16 bg-secondary-300 rounded-full" />
             </div>
             <p className="text-lg text-neutral-700 leading-[30px] max-w-3xl">
-              Beleid, voorlichting en onderzoek bereiken Eritrese doelgroepen alleen als toon en uitleg kloppen. Betty leest mee, duidt de culturele betekenis achter de woorden en zegt wat er anders moet. Ook bij taboe-onderwerpen waar een standaardtekst niet volstaat.
+              {t("culturele-vertaling.intro")}
             </p>
           </div>
 
           <TopicGrid
-            title="Wat Betty concreet doet"
+            title={t("culturele-vertaling.topicsTitle")}
             cardClass="bg-white lg:bg-neutral-50"
-            topics={[
-              { label: "Culturele duiding van communicatie en beleid", icon: <Compass size={18} strokeWidth={1.5} /> },
-              { label: "Advies bij voorlichtingsmateriaal en projecten", icon: <FileText size={18} strokeWidth={1.5} /> },
-              { label: "Relationele en seksuele voorlichting op maat voor jongeren", icon: <Sprout size={18} strokeWidth={1.5} /> },
-              { label: "Advies bij voorlichting over taboe-onderwerpen", icon: <MessageCircle size={18} strokeWidth={1.5} /> },
-              { label: "Ondersteuning bij onderzoek en interviews", icon: <Search size={18} strokeWidth={1.5} /> },
-              { label: "Meedenken in beleid, uitvoering en onderzoek", icon: <Globe size={18} strokeWidth={1.5} /> }
-            ]}
+            topics={(t("culturele-vertaling.topics", { returnObjects: true }) as string[]).map((label, i) => ({ label, icon: TOPIC_ICONS["culturele-vertaling"][i] }))}
           />
 
           <AudienceTags
-            title="Ondersteunt bij"
+            title={t("culturele-vertaling.audienceTitle")}
             tagClass="bg-white lg:bg-neutral-50"
-            tags={["Gemeenten", "Onderwijs", "NGO’s", "Zorg", "Onderzoek & beleid"]}
+            tags={t("culturele-vertaling.audience", { returnObjects: true }) as string[]}
           />
 
           <div>
             <button
-              onClick={() => onNavigate("contact")}
+              onClick={() => goTo("contact")}
               className="bg-white lg:bg-neutral-50 px-8 py-4 rounded-full text-primary-500 font-display font-medium text-lg flex items-center gap-2 hover:brightness-95 transition-all cursor-pointer"
             >
-              Bespreek culturele vertaling
+              {t("culturele-vertaling.cta")}
               <ArrowRight className="w-5 h-5" />
             </button>
           </div>
@@ -447,39 +419,32 @@ export const ServicesPage = ({ onNavigate }: { onNavigate: (page: "home" | "serv
         <div className="container-custom space-y-8">
           <div className="space-y-4">
             <div className="space-y-4">
-              <h2 className="text-[38px] font-bold text-primary-400 leading-tight">Workshops &amp; voorlichting</h2>
+              <h2 className="text-[38px] font-bold text-primary-400 leading-tight">{t("workshops-voorlichting.title")}</h2>
               <div className="h-1 w-16 bg-secondary-300 rounded-full" />
             </div>
             <p className="text-lg text-neutral-700 leading-[30px] max-w-3xl">
-              Betty traint teams die met Eritrese gemeenschappen werken. Ze combineert culturele duiding met 26 jaar praktijk, zodat een team na afloop weet wat het in een concrete casus anders kan doen.
+              {t("workshops-voorlichting.intro")}
             </p>
           </div>
 
           <TopicGrid
-            title="Mogelijke onderwerpen"
+            title={t("workshops-voorlichting.topicsTitle")}
             cardClass="bg-neutral-50"
-            topics={[
-              { label: "De Eritrese gemeenschap in Nederland en de migratiecontext", icon: <Users size={18} strokeWidth={1.5} /> },
-              { label: "Werken met Eritrese statushouders", icon: <UserCheck size={18} strokeWidth={1.5} /> },
-              { label: "Communicatie, vertrouwen en samenwerking", icon: <MessageCircle size={18} strokeWidth={1.5} /> },
-              { label: "Cultuur, opvoeding, genderrollen en familiecontext", icon: <UsersRound size={18} strokeWidth={1.5} /> },
-              { label: "Geloof, mentale gezondheid en omgaan met trauma", icon: <HeartPulse size={18} strokeWidth={1.5} /> },
-              { label: "Zelfredzaamheid, participatie en integratie", icon: <HandHeart size={18} strokeWidth={1.5} /> }
-            ]}
+            topics={(t("workshops-voorlichting.topics", { returnObjects: true }) as string[]).map((label, i) => ({ label, icon: TOPIC_ICONS["workshops-voorlichting"][i] }))}
           />
 
           <AudienceTags
-            title="Voor wie"
+            title={t("workshops-voorlichting.audienceTitle")}
             tagClass="bg-neutral-50"
-            tags={["Gemeenten", "Zorg", "Onderwijs", "Jeugdzorg"]}
+            tags={t("workshops-voorlichting.audience", { returnObjects: true }) as string[]}
           />
 
           <div>
             <button
-              onClick={() => onNavigate("contact")}
+              onClick={() => goTo("contact")}
               className="bg-neutral-50 px-8 py-4 rounded-full text-primary-500 font-display font-medium text-lg flex items-center gap-2 hover:brightness-95 transition-all cursor-pointer"
             >
-              Bespreek een workshop
+              {t("workshops-voorlichting.cta")}
               <ArrowRight className="w-5 h-5" />
             </button>
           </div>
@@ -490,18 +455,18 @@ export const ServicesPage = ({ onNavigate }: { onNavigate: (page: "home" | "serv
       <section className="py-16 md:py-20 bg-neutral-50 lg:bg-white">
         <div className="container-custom space-y-8">
           <div className="space-y-4">
-            <h2 className="text-[38px] font-bold text-primary-400 leading-tight">Samenwerking op maat</h2>
+            <h2 className="text-[38px] font-bold text-primary-400 leading-tight">{t("custom.title")}</h2>
             <div className="h-1 w-16 bg-secondary-300 rounded-full" />
           </div>
           <p className="text-lg text-neutral-700 leading-[30px] max-w-3xl">
-            Niet elke vraag past in één van deze vier diensten. Betty combineert training, advies en begeleiding waar dat nodig is, denkt mee bij losse casussen en bij langere trajecten, en stemt de aanpak af op hoe jouw organisatie werkt.
+            {t("custom.intro")}
           </p>
           <div>
             <button
-              onClick={() => onNavigate("contact")}
+              onClick={() => goTo("contact")}
               className="bg-white lg:bg-neutral-50 px-8 py-4 rounded-full text-primary-500 font-display font-medium text-lg flex items-center gap-2 hover:brightness-95 transition-all cursor-pointer"
             >
-              Bespreek jouw vraag
+              {t("custom.cta")}
               <ArrowRight className="w-5 h-5" />
             </button>
           </div>
@@ -511,16 +476,16 @@ export const ServicesPage = ({ onNavigate }: { onNavigate: (page: "home" | "serv
       {/* Werkwijze */}
       <section id="werkwijze" className="scroll-mt-28 py-16 md:py-20 bg-white lg:bg-neutral-50">
         <div className="container-custom space-y-4 mb-16">
-          <h2 className="text-[38px] font-bold text-primary-400 leading-tight">Werkwijze</h2>
+          <h2 className="text-[38px] font-bold text-primary-400 leading-tight">{t("werkwijze.heading")}</h2>
           <p className="text-lg text-neutral-700 max-w-2xl leading-relaxed">
-            Van eerste vraag tot terugkoppeling in vier stappen.
+            {t("werkwijze.intro")}
           </p>
         </div>
 
-        <WerkwijzeSteps />
+        <WerkwijzeSteps steps={werkwijzeSteps} />
       </section>
 
-      <CTA onNavigate={onNavigate} secondary="contact" />
+      <CTA secondary="contact" />
     </div>
   );
 };

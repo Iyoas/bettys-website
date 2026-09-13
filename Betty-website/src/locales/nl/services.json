@@ -1,0 +1,128 @@
+{
+  "meta": {
+    "title": "Diensten van Betty Teklemariam, cultureel adviseur",
+    "description": "Begeleiding, culturele bemiddeling, culturele vertaling en training rond de Eritrese gemeenschap. Voor gemeenten, zorg, jeugdzorg, onderwijs en NGO's."
+  },
+  "hero": {
+    "eyebrow": "Intercultureel adviseur en mediator",
+    "title": "Wat ik voor je organisatie doe",
+    "intro": "Ik bied begeleiding, culturele bemiddeling, culturele vertaling en workshops voor iedereen die met Eritrese gemeenschappen werkt of leeft.",
+    "ctaJump": "Naar de diensten"
+  },
+  "jumpNav": {
+    "label": "Spring naar een dienst"
+  },
+  "schema": {
+    "begeleiding": {
+      "name": "Begeleiding",
+      "description": "Cultuursensitieve begeleiding van Eritrese cliënten en gezinnen, en ondersteuning van professionals bij opvoed-, gezins- en veiligheidsvraagstukken.",
+      "serviceType": "Cultuursensitieve begeleiding"
+    },
+    "culturele-bemiddeling": {
+      "name": "Culturele bemiddeling",
+      "description": "Bemiddeling tussen professionals en Eritrese cliënten: taal, gedrag, verwachtingen en context begrijpelijk maken voor beide kanten.",
+      "serviceType": "Culturele bemiddeling"
+    },
+    "culturele-vertaling": {
+      "name": "Culturele vertaling",
+      "description": "Culturele duiding van beleid, communicatie, voorlichting en onderzoek, zodat die aansluiten op Eritrese doelgroepen.",
+      "serviceType": "Cultureel advies"
+    },
+    "workshops-voorlichting": {
+      "name": "Workshops & voorlichting",
+      "description": "Workshops en trainingen voor professionals en teams die met Eritrese gemeenschappen werken.",
+      "serviceType": "Training en voorlichting"
+    }
+  },
+  "begeleiding": {
+    "title": "Begeleiding",
+    "intro": "Professionals schakelen Betty in als een traject met een Eritrese cliënt of een gezin vastloopt. Als sociaal pedagoog begeleidt ze het gezin zelf én denkt ze mee met het team dat ermee werkt. Ook bij opvoedvragen, onveiligheid en trauma.",
+    "topicsTitle": "Wat Betty concreet doet",
+    "topics": [
+      "Cultuursensitieve gezins- en opvoedbegeleiding",
+      "Communicatie tussen ouders en jongeren versterken",
+      "Ondersteuning bij mentale gezondheid en traumaverwerking",
+      "Huiselijk geweld, verslaving en grensoverschrijdend gedrag bespreekbaar maken",
+      "Meedenken bij complexe casuïstiek",
+      "Integratie- en participatietrajecten"
+    ],
+    "audienceTitle": "Geschikt voor",
+    "audience": ["Gemeenten", "Jeugdzorg", "Veilig Thuis", "NGO’s"],
+    "cta": "Bespreek begeleiding"
+  },
+  "culturele-bemiddeling": {
+    "title": "Culturele bemiddeling",
+    "intro": "Tussen organisaties en nieuwkomers ontstaat vaak een onzichtbare kloof. Betty zit erbij als professionals en Eritrese cliënten elkaar niet bereiken, en maakt duidelijk wat er aan beide kanten wordt bedoeld, in taal, maar ook in gedrag, verwachtingen en context.",
+    "topicsTitle": "Wat Betty concreet doet",
+    "topics": [
+      "Aanschuiven bij gesprekken met cliënten en gezinnen",
+      "Bemiddelen in complexe casussen",
+      "Culturele normen en verwachtingen uitleggen",
+      "Communicatie tussen partijen verhelderen",
+      "Vertrouwen herstellen na miscommunicatie",
+      "Samenwerking met gezinnen en gemeenschappen ondersteunen"
+    ],
+    "audienceTitle": "Inzetbaar bij",
+    "audience": ["Zorg", "Jeugdzorg", "Veilig Thuis", "Gemeenten"],
+    "cta": "Bespreek culturele bemiddeling"
+  },
+  "culturele-vertaling": {
+    "title": "Culturele vertaling",
+    "intro": "Beleid, voorlichting en onderzoek bereiken Eritrese doelgroepen alleen als toon en uitleg kloppen. Betty leest mee, duidt de culturele betekenis achter de woorden en zegt wat er anders moet. Ook bij taboe-onderwerpen waar een standaardtekst niet volstaat.",
+    "topicsTitle": "Wat Betty concreet doet",
+    "topics": [
+      "Culturele duiding van communicatie en beleid",
+      "Advies bij voorlichtingsmateriaal en projecten",
+      "Relationele en seksuele voorlichting op maat voor jongeren",
+      "Advies bij voorlichting over taboe-onderwerpen",
+      "Ondersteuning bij onderzoek en interviews",
+      "Meedenken in beleid, uitvoering en onderzoek"
+    ],
+    "audienceTitle": "Ondersteunt bij",
+    "audience": ["Gemeenten", "Onderwijs", "NGO’s", "Zorg", "Onderzoek & beleid"],
+    "cta": "Bespreek culturele vertaling"
+  },
+  "workshops-voorlichting": {
+    "title": "Workshops & voorlichting",
+    "intro": "Betty traint teams die met Eritrese gemeenschappen werken. Ze combineert culturele duiding met 26 jaar praktijk, zodat een team na afloop weet wat het in een concrete casus anders kan doen.",
+    "topicsTitle": "Mogelijke onderwerpen",
+    "topics": [
+      "De Eritrese gemeenschap in Nederland en de migratiecontext",
+      "Werken met Eritrese statushouders",
+      "Communicatie, vertrouwen en samenwerking",
+      "Cultuur, opvoeding, genderrollen en familiecontext",
+      "Geloof, mentale gezondheid en omgaan met trauma",
+      "Zelfredzaamheid, participatie en integratie"
+    ],
+    "audienceTitle": "Voor wie",
+    "audience": ["Gemeenten", "Zorg", "Onderwijs", "Jeugdzorg"],
+    "cta": "Bespreek een workshop"
+  },
+  "custom": {
+    "title": "Samenwerking op maat",
+    "intro": "Niet elke vraag past in één van deze vier diensten. Betty combineert training, advies en begeleiding waar dat nodig is, denkt mee bij losse casussen en bij langere trajecten, en stemt de aanpak af op hoe jouw organisatie werkt.",
+    "cta": "Bespreek jouw vraag"
+  },
+  "werkwijze": {
+    "heading": "Werkwijze",
+    "intro": "Van eerste vraag tot terugkoppeling in vier stappen.",
+    "steps": [
+      {
+        "title": "Kennismaking",
+        "desc": "We bespreken je vraag, om welke doelgroep het gaat en waar het nu vastloopt."
+      },
+      {
+        "title": "Aanpak bepalen",
+        "desc": "Samen kiezen we wat past: begeleiding, bemiddeling, culturele vertaling of een workshop, of een combinatie."
+      },
+      {
+        "title": "Uitvoering",
+        "desc": "Betty voert uit en schakelt onderweg met je team, ketenpartners of het gezin."
+      },
+      {
+        "title": "Terugkoppeling",
+        "desc": "We kijken terug op wat het heeft opgeleverd en maken zo nodig een vervolgafspraak."
+      }
+    ]
+  }
+}

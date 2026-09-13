@@ -2,8 +2,12 @@ import { motion } from "motion/react";
 import { ArrowRight, Heart, Mail, Phone, Linkedin, Globe, Languages, ShieldCheck, Menu, X, Quote, Lightbulb, Handshake as HandshakeIcon, Waypoints as BridgeIcon, Presentation as PresentationIcon } from "lucide-react";
 import { WhatsappLogo as WhatsappLogoIcon } from "@phosphor-icons/react";
 import { useState, useEffect, useRef, type FormEvent } from "react";
+import { useTranslation } from "react-i18next";
 import { Marquee } from "./ui/Marquee";
 import { BlurFade } from "./ui/BlurFade";
+import { LanguageSwitcher } from "./LanguageSwitcher";
+import { useLangNav } from "../i18n/useLangNav";
+import type { PageKey } from "../i18n/routes";
 
 // Betty's WhatsApp (gebruikt voor alle "Start een gesprek"-knoppen)
 export const WHATSAPP_URL = "https://wa.me/31639244184";
@@ -33,7 +37,9 @@ export const HeroPhotoBlobs = () => (
   </>
 );
 
-export const Navbar = ({ onNavigate, currentPage }: { onNavigate: (page: "home" | "services" | "about" | "clients" | "contact", id?: string) => void, currentPage: string }) => {
+export const Navbar = () => {
+  const { t } = useTranslation("common");
+  const { lang, goTo } = useLangNav();
   const [logoError, setLogoError] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -51,16 +57,28 @@ export const Navbar = ({ onNavigate, currentPage }: { onNavigate: (page: "home" 
   const navBg = "bg-neutral-50";
   const barBg = "bg-white";
 
-  const navItems: { label: string; page: "home" | "services" | "about" | "clients" | "contact" }[] = [
-    { label: "Home", page: "home" },
-    { label: "Diensten", page: "services" },
-    { label: "Over mij", page: "about" },
-    { label: "Opdrachtgevers", page: "clients" },
-    { label: "Contact", page: "contact" }
+  const currentPage: PageKey =
+    typeof window !== "undefined"
+      ? (() => {
+          const p = window.location.pathname;
+          if (p.match(/\/(diensten|services|leistungen)\/?$/)) return "services";
+          if (p.match(/\/(over-mij|about|ueber-mich)\/?$/)) return "about";
+          if (p.match(/\/(opdrachtgevers|clients|auftraggeber)\/?$/)) return "clients";
+          if (p.match(/\/(contact|kontakt)\/?$/)) return "contact";
+          return "home";
+        })()
+      : "home";
+
+  const navItems: { label: string; page: PageKey }[] = [
+    { label: t("nav.home"), page: "home" },
+    { label: t("nav.services"), page: "services" },
+    { label: t("nav.about"), page: "about" },
+    { label: t("nav.clients"), page: "clients" },
+    { label: t("nav.contact"), page: "contact" }
   ];
 
-  const go = (page: "home" | "services" | "about" | "clients" | "contact") => {
-    onNavigate(page);
+  const go = (page: PageKey) => {
+    goTo(page);
     setMenuOpen(false);
   };
 
@@ -85,7 +103,7 @@ export const Navbar = ({ onNavigate, currentPage }: { onNavigate: (page: "home" 
                   <Heart className="w-5 h-5 text-primary-500 fill-secondary-300" />
                 </div>
               )}
-              <span className="font-display font-semibold text-lg text-primary-500">Betty</span>
+              <span className="font-display font-semibold text-lg text-primary-500">{t("nav.brand")}</span>
             </button>
 
             <div className="hidden md:flex items-center gap-8">
@@ -111,18 +129,21 @@ export const Navbar = ({ onNavigate, currentPage }: { onNavigate: (page: "home" 
               })}
             </div>
 
-            <button
-              onClick={() => go("contact")}
-              className="hidden md:block bg-primary-500 text-secondary-300 px-6 py-2.5 rounded-full font-semibold hover:brightness-95 transition-all cursor-pointer"
-            >
-              Samenwerken
-            </button>
+            <div className="hidden md:flex items-center gap-3">
+              <LanguageSwitcher currentPage={currentPage} />
+              <button
+                onClick={() => go("contact")}
+                className="bg-primary-500 text-secondary-300 px-6 py-2.5 rounded-full font-semibold hover:brightness-95 transition-all cursor-pointer"
+              >
+                {t("nav.cta")}
+              </button>
+            </div>
 
             {/* Hamburger — alleen mobiel */}
             <button
               onClick={() => setMenuOpen((o) => !o)}
               className="md:hidden w-11 h-11 -mr-1 flex items-center justify-center rounded-full text-primary-500 hover:bg-neutral-100 transition-colors cursor-pointer"
-              aria-label={menuOpen ? "Menu sluiten" : "Menu openen"}
+              aria-label={menuOpen ? t("nav.menuClose") : t("nav.menuOpen")}
               aria-expanded={menuOpen}
             >
               {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -157,8 +178,12 @@ export const Navbar = ({ onNavigate, currentPage }: { onNavigate: (page: "home" 
                 onClick={() => go("contact")}
                 className="mt-2 bg-primary-500 text-secondary-300 px-6 py-3 rounded-full font-semibold hover:brightness-95 transition-all cursor-pointer"
               >
-                Samenwerken
+                {t("nav.cta")}
               </button>
+              <div className="mt-3 pt-3 border-t border-neutral-100 flex items-center justify-between px-1">
+                <span className="text-sm text-neutral-500">{t("language.label")}</span>
+                <LanguageSwitcher currentPage={currentPage} variant="mobile" />
+              </div>
             </motion.div>
           )}
         </div>
@@ -167,22 +192,24 @@ export const Navbar = ({ onNavigate, currentPage }: { onNavigate: (page: "home" 
   );
 };
 
-export const Hero = ({ onNavigate }: { onNavigate: (page: "home" | "services" | "about" | "clients" | "contact", id?: string) => void }) => {
+export const Hero = () => {
+  const { t } = useTranslation("home");
+  const { goTo } = useLangNav();
   return (
     <section className="bg-neutral-50 py-20 overflow-hidden">
       <div className="container-custom">
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-20">
           <div className="flex-1 space-y-6">
             <p className="font-display text-xs font-bold text-primary-500 uppercase tracking-[0.18em]">
-              Intercultureel adviseur en mediator
+              {t("hero.eyebrow")}
             </p>
             <h1 className="text-4xl md:text-5xl lg:text-[46px] font-bold leading-[1.2] lg:leading-[69px] text-primary-500">
-              Bruggen bouwen<br />tussen <span className="text-secondary-400">culturen</span> en gemeenschappen.
+              {t("hero.titleLine1")}<br />{t("hero.titleLine2Pre")}<span className="text-secondary-400">{t("hero.titleHighlight")}</span>{t("hero.titleLine2Post")}
             </h1>
             <p className="text-lg text-neutral-700 max-w-[512px] leading-[30px]">
-              Ik help gemeenten, onderzoekers en maatschappelijke organisaties beter samen te werken met Eritrese gemeenschappen.
+              {t("hero.intro")}
             </p>
-            
+
             <div className="flex flex-wrap gap-4 pt-4">
               <a
                 href={WHATSAPP_URL}
@@ -190,18 +217,18 @@ export const Hero = ({ onNavigate }: { onNavigate: (page: "home" | "services" | 
                 rel="noopener noreferrer"
                 className="bg-primary-500 text-secondary-300 px-8 py-4 rounded-full font-medium text-lg inline-flex items-center gap-2 hover:scale-105 transition-transform cursor-pointer"
               >
-                Start een gesprek
+                {t("common:cta.startConversation")}
                 <WhatsappLogoIcon size={28} weight="light" />
               </a>
               <button
-                onClick={() => onNavigate("services")}
+                onClick={() => goTo("services")}
                 className="bg-white text-primary-500 px-8 py-4 rounded-full font-medium text-lg hover:bg-neutral-50 transition-colors cursor-pointer"
               >
-                Bekijk diensten
+                {t("hero.ctaServices")}
               </button>
             </div>
           </div>
-          
+
           <div className="flex-1 w-full lg:pt-2">
             <div className="relative max-w-[540px] lg:ml-auto">
               <HeroPhotoBlobs />
@@ -222,6 +249,7 @@ export const Hero = ({ onNavigate }: { onNavigate: (page: "home" | "services" | 
 };
 
 export const TrustedBy = () => {
+  const { t } = useTranslation("home");
   const partners = [
     { name: "COA", src: "/logos/coa.svg", hClass: "h-9 sm:h-10" },
     { name: "Nidos", src: "/logos/nidos.png", hClass: "h-6 sm:h-7" },
@@ -237,7 +265,7 @@ export const TrustedBy = () => {
         <div className="w-full flex items-center gap-6">
           <div className="flex-1 h-[1px] bg-gradient-to-r from-transparent to-primary-500/25" />
           <p className="text-xs font-bold text-primary-500 font-display uppercase tracking-[0.2em] whitespace-nowrap">
-            Samenwerkingen met
+            {t("trustedBy.label")}
           </p>
           <div className="flex-1 h-[1px] bg-gradient-to-l from-transparent to-primary-500/25" />
         </div>
@@ -267,38 +295,28 @@ export const TrustedBy = () => {
 };
 
 export const Features = () => {
-  const features = [
-    {
-      title: "Culturele verschillen",
-      desc: "Begrip van diepgewortelde normen en waarden die interacties beïnvloeden.",
-      icon: <Globe size={28} className="text-secondary-300" />
-    },
-    {
-      title: "Taalbarrières",
-      desc: "Het overbruggen van taalverschillen om miscommunicatie te voorkomen.",
-      icon: <Languages size={28} className="text-secondary-300" />
-    },
-    {
-      title: "Wantrouwen",
-      desc: "Het opbouwen van een veilige basis voor open communicatie en vertrouwen.",
-      icon: <ShieldCheck size={28} className="text-secondary-300" />
-    }
+  const { t } = useTranslation("home");
+  const icons = [
+    <Globe size={28} className="text-secondary-300" />,
+    <Languages size={28} className="text-secondary-300" />,
+    <ShieldCheck size={28} className="text-secondary-300" />
   ];
+  const items = t("features.items", { returnObjects: true }) as { title: string; desc: string }[];
 
   return (
     <section className="py-28 bg-white">
       <div className="container-custom text-center space-y-4 mb-16">
-        <h2 className="text-[38px] font-bold text-primary-400">Waarom Culturele Bemiddeling?</h2>
+        <h2 className="text-[38px] font-bold text-primary-400">{t("features.heading")}</h2>
         <p className="text-lg text-neutral-700 max-w-2xl mx-auto">
-          Er bestaat vaak een onzichtbare kloof tussen instanties en nieuwkomers. Ik help deze te overbruggen.
+          {t("features.intro")}
         </p>
       </div>
-      
+
       <div className="container-custom grid md:grid-cols-3 gap-8">
-        {features.map((f, i) => (
+        {items.map((f, i) => (
           <div key={i} className="bg-neutral-50 p-8 rounded-[32px] shadow-[0px_2px_4px_rgba(27,28,29,0.04)] space-y-6">
             <div className="w-12 h-12 bg-primary-500 rounded-full flex items-center justify-center">
-              {f.icon}
+              {icons[i]}
             </div>
             <div className="space-y-4">
               <h3 className="text-2xl font-semibold text-primary-500">{f.title}</h3>
@@ -311,56 +329,43 @@ export const Features = () => {
   );
 };
 
-export const Services = ({ onNavigate }: { onNavigate: (page: "home" | "services" | "about" | "clients" | "contact", id?: string) => void }) => {
-  const services = [
-    {
-      title: "Begeleiding",
-      desc: "Persoonlijke ondersteuning bij het navigeren door complexe culturele landschappen en maatschappelijke integratie.",
-      icon: <HandshakeIcon size={32} className="text-secondary-300" />
-    },
-    {
-      title: "Culturele Bemiddeling",
-      desc: "Het overbruggen van verschillen in communicatie en verwachtingen tussen diverse groepen en instanties.",
-      icon: <BridgeIcon size={32} className="text-secondary-300" />
-    },
-    {
-      title: "Tolken & Vertalen",
-      desc: "Ondersteuning bij gesprekken en communicatie, zowel mondeling als schriftelijk, met oog voor taal én culturele context.",
-      icon: <Languages size={32} className="text-secondary-300" />
-    },
-    {
-      title: "Workshops & Voorlichting",
-      desc: "Interactieve sessies gericht op bewustwording, inclusie en het effectief omgaan met culturele diversiteit.",
-      icon: <PresentationIcon size={32} className="text-secondary-300" />
-    }
+export const Services = () => {
+  const { t } = useTranslation("home");
+  const { goTo } = useLangNav();
+  const icons = [
+    <HandshakeIcon size={32} className="text-secondary-300" />,
+    <BridgeIcon size={32} className="text-secondary-300" />,
+    <Languages size={32} className="text-secondary-300" />,
+    <PresentationIcon size={32} className="text-secondary-300" />
   ];
+  const items = t("services.items", { returnObjects: true }) as { title: string; desc: string }[];
 
   return (
     <section id="diensten" className="py-28 bg-neutral-50">
       <div className="container-custom space-y-4 mb-16">
-        <h2 className="text-[38px] font-bold text-primary-400">Mijn Diensten</h2>
+        <h2 className="text-[38px] font-bold text-primary-400">{t("services.heading")}</h2>
         <p className="text-lg text-neutral-700 max-w-2xl">
-          Praktische ondersteuning voor organisaties die effectief willen samenwerken met Eritrese gemeenschappen.
+          {t("services.intro")}
         </p>
       </div>
-      
+
       <div className="container-custom grid md:grid-cols-2 gap-8">
-        {services.map((s, i) => (
+        {items.map((s, i) => (
           <div key={i} className="bg-white p-8 rounded-[32px] shadow-[0px_0px_4px_rgba(27,28,29,0.04)] flex flex-col justify-between gap-8">
             <div className="space-y-8">
               <div className="w-16 h-16 bg-primary-500 rounded-full flex items-center justify-center">
-                {s.icon}
+                {icons[i]}
               </div>
               <div className="space-y-4">
                 <h3 className="text-[26px] font-bold text-primary-500">{s.title}</h3>
                 <p className="text-lg text-neutral-800 leading-[32px] max-w-sm">{s.desc}</p>
               </div>
             </div>
-            <button 
-              onClick={() => onNavigate("services")}
+            <button
+              onClick={() => goTo("services")}
               className="self-start bg-neutral-50 px-8 py-4 rounded-full text-primary-500 font-display font-medium text-lg flex items-center gap-2 hover:brightness-95 transition-all cursor-pointer"
             >
-              Bekijk dienst
+              {t("services.viewService")}
               <ArrowRight className="w-4 h-4" />
             </button>
           </div>
@@ -370,31 +375,23 @@ export const Services = ({ onNavigate }: { onNavigate: (page: "home" | "services
   );
 };
 
-export const About = ({ onNavigate }: { onNavigate: (page: "home" | "services" | "about" | "clients" | "contact", id?: string) => void }) => {
-  const qualities = [
-    {
-      title: "Mensgericht",
-      desc: "Rust brengen in gesprekken waarin vertrouwen en context zwaar wegen.",
-      icon: <Heart size={24} className="text-secondary-300" />,
-    },
-    {
-      title: "Praktisch",
-      desc: "Meedenken met professionals over wat direct helpt in de praktijk.",
-      icon: <Lightbulb size={24} className="text-secondary-300" />,
-    },
-    {
-      title: "Cultuursensitief",
-      desc: "Taal, familieverhoudingen en achtergrond meewegen in elk advies.",
-      icon: <Globe size={24} className="text-secondary-300" />,
-    },
+export const About = () => {
+  const { t } = useTranslation("home");
+  const { goTo } = useLangNav();
+  const icons = [
+    <Heart size={24} className="text-secondary-300" />,
+    <Lightbulb size={24} className="text-secondary-300" />,
+    <Globe size={24} className="text-secondary-300" />
   ];
+  const qualities = t("about.qualities", { returnObjects: true }) as { title: string; desc: string }[];
+  const languagesList = t("about.languages", { returnObjects: true }) as string[];
 
   return (
     <section id="over-mij" className="py-28 bg-white">
       <div className="container-custom space-y-4 mb-16">
-        <h2 className="text-[38px] font-bold text-primary-400">Over mij</h2>
+        <h2 className="text-[38px] font-bold text-primary-400">{t("about.heading")}</h2>
         <p className="text-lg text-neutral-700 max-w-2xl">
-          Bet-El Teklemariam, intercultureel adviseur, mediator, trainer en sociaal pedagoog.
+          {t("about.intro")}
         </p>
       </div>
 
@@ -407,20 +404,20 @@ export const About = ({ onNavigate }: { onNavigate: (page: "home" | "services" |
             loading="lazy"
           />
           <div className="absolute right-6 bottom-6 bg-primary-500 text-secondary-300 rounded-[24px] px-6 py-4 shadow-lg">
-            <p className="text-3xl font-bold leading-none">26+</p>
-            <p className="text-xs font-medium uppercase tracking-wide mt-1">jaar ervaring</p>
+            <p className="text-3xl font-bold leading-none">{t("about.yearsBadgeNumber")}</p>
+            <p className="text-xs font-medium uppercase tracking-wide mt-1">{t("about.yearsBadgeLabel")}</p>
           </div>
         </div>
 
         <div className="space-y-8">
           <p className="text-lg text-neutral-800 leading-[32px]">
-            Op jonge leeftijd vluchtte ik uit Eritrea. Ik weet uit ervaring hoeveel het scheelt als iemand je begrijpt in een omgeving die nieuw voor je is. Die ervaring combineer ik met ruim 26 jaar werk in begeleiding, jeugdzorg, psychiatrie en het sociaal domein.
+            {t("about.bodyText")}
           </p>
 
           <div className="flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-neutral-100 pt-6">
-            <p className="font-display text-xs font-bold text-primary-500 uppercase tracking-[0.18em]">Spreekt</p>
+            <p className="font-display text-xs font-bold text-primary-500 uppercase tracking-[0.18em]">{t("about.speaks")}</p>
             <div className="flex flex-wrap gap-2">
-              {["Nederlands", "Tigrinya", "Duits", "Engels"].map((taal) => (
+              {languagesList.map((taal) => (
                 <span key={taal} className="rounded-full bg-primary-50 px-4 py-1.5 text-sm font-medium text-primary-500">
                   {taal}
                 </span>
@@ -429,23 +426,23 @@ export const About = ({ onNavigate }: { onNavigate: (page: "home" | "services" |
           </div>
 
           <button
-            onClick={() => onNavigate("about")}
+            onClick={() => goTo("about")}
             className="w-fit bg-neutral-50 text-primary-500 px-8 py-4 rounded-full font-display font-medium text-lg inline-flex items-center gap-2 hover:brightness-95 transition-all cursor-pointer"
           >
-            Lees meer over Betty
+            {t("about.readMore")}
             <ArrowRight className="w-4 h-4" />
           </button>
         </div>
       </div>
 
       <div className="container-custom grid md:grid-cols-3 gap-8 mt-16">
-        {qualities.map((q) => (
+        {qualities.map((q, i) => (
           <div
             key={q.title}
             className="bg-neutral-50 p-8 rounded-[32px] shadow-[0px_2px_4px_rgba(27,28,29,0.04)] space-y-6 transition duration-200 hover:-translate-y-1"
           >
             <div className="w-12 h-12 bg-primary-500 rounded-full flex items-center justify-center">
-              {q.icon}
+              {icons[i]}
             </div>
             <div className="space-y-4">
               <h3 className="text-2xl font-semibold text-primary-500">{q.title}</h3>
@@ -458,34 +455,22 @@ export const About = ({ onNavigate }: { onNavigate: (page: "home" | "services" |
   );
 };
 
-export const Clients = ({ onNavigate }: { onNavigate: (page: "home" | "services" | "about" | "clients" | "contact", id?: string) => void }) => {
-  // Alleen opdrachtgevers met een uitgeschreven, geverifieerde case op de
-  // Opdrachtgevers-pagina (docs/betty-profiel.md §10 + de VOZ-referentiebrief).
-  // Voeg hier geen organisatie toe zonder bijbehorende case — de knop linkt erheen.
-  const clients = [
-    {
-      name: "Sociaal en Cultureel Planbureau",
-      tag: "Onderzoek",
-      desc: "Culturele duiding binnen onderzoek naar integratie en participatie van Eritrese gemeenschappen."
-    },
-    {
-      name: "VOZ, Vluchtelingenopvang Ommoord-Zevenkamp",
-      tag: "Begeleiding",
-      desc: "Tolk en zelfstandig hulpverleenster bij de opvang van Eritrese nieuwkomers, via spreekuur en huisbezoek."
-    }
-  ];
+export const Clients = () => {
+  const { t } = useTranslation("home");
+  const { goTo } = useLangNav();
+  const items = t("clients.items", { returnObjects: true }) as { name: string; tag: string; desc: string }[];
 
   return (
     <section id="opdrachtgevers" className="py-28 bg-neutral-50">
       <div className="container-custom space-y-4 mb-16">
-        <h2 className="text-[38px] font-bold text-primary-400">Recente opdrachtgevers</h2>
+        <h2 className="text-[38px] font-bold text-primary-400">{t("clients.heading")}</h2>
         <p className="text-lg text-neutral-700 max-w-2xl">
-          Organisaties waarmee ik heb samengewerkt aan betere communicatie en samenwerking met Eritrese gemeenschappen.
+          {t("clients.intro")}
         </p>
       </div>
 
       <div className="container-custom grid md:grid-cols-2 gap-6">
-        {clients.map((c) => (
+        {items.map((c) => (
           <div
             key={c.name}
             className="flex flex-col bg-white p-6 rounded-[32px] shadow-[0px_2px_4px_rgba(27,28,29,0.04)] transition duration-200 hover:-translate-y-1"
@@ -501,10 +486,10 @@ export const Clients = ({ onNavigate }: { onNavigate: (page: "home" | "services"
             </div>
             <div className="mt-auto pt-8">
               <button
-                onClick={() => onNavigate("clients", "case-detail")}
+                onClick={() => goTo("clients", "case-detail")}
                 className="bg-neutral-50 px-8 py-4 rounded-full text-primary-500 font-display font-medium text-lg inline-flex items-center gap-2 hover:brightness-95 transition-all cursor-pointer"
               >
-                Bekijk case
+                {t("clients.viewCase")}
                 <ArrowRight className="w-4 h-4" />
               </button>
             </div>
@@ -514,10 +499,10 @@ export const Clients = ({ onNavigate }: { onNavigate: (page: "home" | "services"
 
       <div className="container-custom mt-12">
         <button
-          onClick={() => onNavigate("clients")}
+          onClick={() => goTo("clients")}
           className="w-fit bg-white text-primary-500 px-8 py-4 rounded-full font-display font-medium text-lg inline-flex items-center gap-2 hover:brightness-95 transition-all cursor-pointer"
         >
-          Bekijk alle opdrachtgevers
+          {t("clients.viewAll")}
           <ArrowRight className="w-4 h-4" />
         </button>
       </div>
@@ -526,46 +511,30 @@ export const Clients = ({ onNavigate }: { onNavigate: (page: "home" | "services"
 };
 
 export const Testimonials = () => {
-  // Geverifieerde testimonials uit docs/betty-profiel.md (§9)
-  const testimonials = [
-    {
-      text: "Bet-El is een integere en zeer betrouwbare professional die een belangrijke rol vervult als cultureel verbinder. Ze komt afspraken consequent na, is flexibel en levert vaak meer dan verwacht.",
-      name: "Monique Haveman",
-      sub: "Mix Support, Adviseur Zorg en Kwaliteit"
-    },
-    {
-      text: "Betty is ongelooflijk betrouwbaar. Je voelt dat ze haar werk met liefde en toewijding doet. Als geen ander heeft ze oog voor de obstakels die vluchtelingen tegenkomen.",
-      name: "Lost in Europe",
-      sub: "Onderzoeksjournalist"
-    },
-    {
-      text: "Een natuurlijke en transparante samenwerking, zonder dat dit afbreuk doet aan de professionaliteit.",
-      name: "Nidos",
-      sub: "Jeugdbeschermer"
-    }
-  ];
+  const { t } = useTranslation("home");
+  const items = t("testimonials.items", { returnObjects: true }) as { text: string; name: string; sub?: string }[];
 
   return (
     <section className="py-28 bg-white">
       <div className="container-custom text-center space-y-2 mb-16">
-        <h2 className="text-[38px] font-bold text-primary-400">Wat opdrachtgevers zeggen</h2>
-        <p className="text-lg text-neutral-700">Ervaringen van organisaties die met Betty hebben samengewerkt</p>
+        <h2 className="text-[38px] font-bold text-primary-400">{t("testimonials.heading")}</h2>
+        <p className="text-lg text-neutral-700">{t("testimonials.intro")}</p>
       </div>
 
       <div className="container-custom">
         <div className="grid md:grid-cols-3 gap-8">
-          {testimonials.map((t, i) => (
+          {items.map((t2, i) => (
             <div key={i} className="bg-neutral-50 p-8 rounded-[32px] shadow-[0px_2px_4px_rgba(27,28,29,0.04)] flex flex-col justify-between gap-8 text-center">
               <div className="space-y-4">
                 <Quote className="w-7 h-7 text-neutral-400 mx-auto" aria-hidden="true" />
                 <p className="text-lg text-neutral-700 italic leading-[36px]">
-                  “{t.text}”
+                  &ldquo;{t2.text}&rdquo;
                 </p>
               </div>
 
               <div className="space-y-1">
-                <p className="text-lg font-bold text-primary-500">{t.name}</p>
-                {t.sub && <p className="text-neutral-500 text-sm">{t.sub}</p>}
+                <p className="text-lg font-bold text-primary-500">{t2.name}</p>
+                {t2.sub && <p className="text-neutral-500 text-sm">{t2.sub}</p>}
               </div>
             </div>
           ))}
@@ -579,7 +548,9 @@ export const Testimonials = () => {
  * Afsluitend CTA-blok. `secondary` bepaalt de tweede knop; op de Diensten-pagina zou
  * "Bekijk diensten" naar zichzelf verwijzen, dus die geeft "contact" mee.
  */
-export const CTA = ({ onNavigate, secondary = "services" }: { onNavigate?: (page: "home" | "services" | "about" | "clients" | "contact", id?: string) => void, secondary?: "services" | "contact" }) => {
+export const CTA = ({ secondary = "services" }: { secondary?: "services" | "contact" }) => {
+  const { t } = useTranslation("common");
+  const { goTo } = useLangNav();
   return (
     <section id="contact" className="py-28 bg-white">
       <div className="container-custom">
@@ -587,17 +558,17 @@ export const CTA = ({ onNavigate, secondary = "services" }: { onNavigate?: (page
           {/* Background Accents */}
           <div className="absolute -top-24 -left-24 w-64 h-64 bg-secondary-300/10 rounded-full blur-3xl" />
           <div className="absolute -bottom-24 -right-24 w-64 h-64 bg-secondary-300/10 rounded-full blur-3xl" />
-          
+
           <div className="relative z-10 flex flex-col items-center gap-6 max-w-3xl">
             <div className="space-y-4">
               <h2 className="text-3xl md:text-4xl lg:text-[40px] font-bold text-secondary-300 leading-tight">
-                Laten we samenwerken
+                {t("cta.heading")}
               </h2>
               <p className="text-lg text-white/90 max-w-2xl mx-auto leading-relaxed">
-                Klaar om bruggen te slaan en impact te maken? Neem contact op voor een vrijblijvend kennismakingsgesprek.
+                {t("cta.body")}
               </p>
             </div>
-            
+
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4 w-full sm:w-auto">
               <a
                 href={WHATSAPP_URL}
@@ -605,14 +576,14 @@ export const CTA = ({ onNavigate, secondary = "services" }: { onNavigate?: (page
                 rel="noopener noreferrer"
                 className="w-full sm:w-auto bg-secondary-300 text-primary-500 px-8 py-4 rounded-[40px] font-semibold text-lg inline-flex items-center justify-center gap-2 hover:scale-105 transition-transform cursor-pointer"
               >
-                Start een gesprek
+                {t("cta.startConversation")}
                 <WhatsappLogoIcon size={28} weight="light" />
               </a>
               <button
-                onClick={() => onNavigate?.(secondary)}
+                onClick={() => goTo(secondary)}
                 className="w-full sm:w-auto px-8 py-4 rounded-full border border-secondary-300 text-secondary-300 font-medium text-lg hover:bg-white/5 transition-colors cursor-pointer"
               >
-                {secondary === "services" ? "Bekijk diensten" : "Neem contact op"}
+                {secondary === "services" ? t("cta.secondaryServices") : t("cta.secondaryContact")}
               </button>
             </div>
           </div>
@@ -623,6 +594,7 @@ export const CTA = ({ onNavigate, secondary = "services" }: { onNavigate?: (page
 };
 
 export const ContactForm = ({ variant = "grey" }: { variant?: "white" | "grey" } = {}) => {
+  const { t } = useTranslation("home");
   const [sent, setSent] = useState(false);
   const statusRef = useRef<HTMLParagraphElement>(null);
 
@@ -655,7 +627,7 @@ export const ContactForm = ({ variant = "grey" }: { variant?: "white" | "grey" }
                       Nu bevestigt het formulier alleen visueel; er wordt niets verstuurd. */}
                   {sent && (
                     <p ref={statusRef} id="form-status" role="status" className="rounded-2xl bg-primary-50 px-6 py-4 text-primary-500">
-                      Bedankt voor je bericht. Je hoort binnen 1–2 werkdagen van me.
+                      {t("contactForm.confirmation")}
                     </p>
                   )}
                   {/* Honeypot — verborgen voor mensen, zichtbaar voor bots. */}
@@ -669,7 +641,7 @@ export const ContactForm = ({ variant = "grey" }: { variant?: "white" | "grey" }
                     defaultValue=""
                   />
                   <div className="space-y-2">
-                    <label htmlFor="name" className="block text-sm font-medium text-neutral-700 ml-1">Naam</label>
+                    <label htmlFor="name" className="block text-sm font-medium text-neutral-700 ml-1">{t("contactForm.fields.name")}</label>
                     <input
                       type="text"
                       id="name"
@@ -677,22 +649,22 @@ export const ContactForm = ({ variant = "grey" }: { variant?: "white" | "grey" }
                       required
                       autoComplete="name"
                       className={`w-full ${variant === "white" ? "bg-white" : "bg-neutral-50"} px-6 py-4 rounded-2xl border-none focus:ring-2 focus:ring-primary-100 transition-all outline-none text-neutral-1000`}
-                      placeholder="Je naam"
+                      placeholder={t("contactForm.fields.namePlaceholder")}
                     />
                   </div>
                   <div className="space-y-2">
-                    <label htmlFor="org" className="block text-sm font-medium text-neutral-700 ml-1">Organisatie</label>
+                    <label htmlFor="org" className="block text-sm font-medium text-neutral-700 ml-1">{t("contactForm.fields.organization")}</label>
                     <input
                       type="text"
                       id="org"
                       name="organization"
                       autoComplete="organization"
                       className={`w-full ${variant === "white" ? "bg-white" : "bg-neutral-50"} px-6 py-4 rounded-2xl border-none focus:ring-2 focus:ring-primary-100 transition-all outline-none text-neutral-1000`}
-                      placeholder="Naam van je organisatie"
+                      placeholder={t("contactForm.fields.organizationPlaceholder")}
                     />
                   </div>
                   <div className="space-y-2">
-                    <label htmlFor="email" className="block text-sm font-medium text-neutral-700 ml-1">E-mail</label>
+                    <label htmlFor="email" className="block text-sm font-medium text-neutral-700 ml-1">{t("contactForm.fields.emailLabel")}</label>
                     <input
                       type="email"
                       id="email"
@@ -700,18 +672,18 @@ export const ContactForm = ({ variant = "grey" }: { variant?: "white" | "grey" }
                       required
                       autoComplete="email"
                       className={`w-full ${variant === "white" ? "bg-white" : "bg-neutral-50"} px-6 py-4 rounded-2xl border-none focus:ring-2 focus:ring-primary-100 transition-all outline-none text-neutral-1000`}
-                      placeholder="je@email.nl"
+                      placeholder={t("contactForm.fields.emailPlaceholder")}
                     />
                   </div>
                   <div className="space-y-2">
-                    <label htmlFor="message" className="block text-sm font-medium text-neutral-700 ml-1">Bericht</label>
+                    <label htmlFor="message" className="block text-sm font-medium text-neutral-700 ml-1">{t("contactForm.fields.message")}</label>
                     <textarea
                       id="message"
                       name="message"
                       required
                       rows={5}
                       className={`w-full ${variant === "white" ? "bg-white" : "bg-neutral-50"} px-6 py-4 rounded-2xl border-none focus:ring-2 focus:ring-primary-100 transition-all outline-none text-neutral-1000 resize-none`}
-                      placeholder="Waarmee kan Betty je helpen?"
+                      placeholder={t("contactForm.fields.messagePlaceholder")}
                     ></textarea>
                   </div>
                   <button
@@ -719,7 +691,7 @@ export const ContactForm = ({ variant = "grey" }: { variant?: "white" | "grey" }
                     aria-describedby={sent ? "form-status" : undefined}
                     className="w-full bg-primary-500 text-secondary-300 py-5 rounded-full font-semibold text-lg hover:brightness-95 transition-all cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary-500"
                   >
-                    Verstuur bericht
+                    {t("contactForm.submit")}
                   </button>
                 </form>
               </div>
@@ -728,31 +700,31 @@ export const ContactForm = ({ variant = "grey" }: { variant?: "white" | "grey" }
             {/* Right Column: Context and Support Info */}
             <div className="flex-1 space-y-10 lg:pt-8">
               <div className="space-y-6">
-                <h2 className="text-[38px] font-bold text-primary-400 leading-tight">Vertel kort wat er speelt</h2>
+                <h2 className="text-[38px] font-bold text-primary-400 leading-tight">{t("contactForm.heading")}</h2>
                 <p className="text-lg text-neutral-700 leading-relaxed max-w-2xl">
-                  Voor begeleiding, culturele bemiddeling, culturele vertaling of een workshop, of gewoon om je vraag te verkennen.
+                  {t("contactForm.intro")}
                 </p>
               </div>
 
               <div className="space-y-8 pt-4 border-t border-neutral-100">
                 <div className="space-y-4">
-                  <h3 className="font-display font-bold text-primary-500 uppercase tracking-widest text-sm">Liever direct contact</h3>
+                  <h3 className="font-display font-bold text-primary-500 uppercase tracking-widest text-sm">{t("contactForm.directContact")}</h3>
                   <div className="space-y-4">
                     <a href="mailto:info@bettyteklemariam.nl" className="flex items-center gap-3 text-neutral-700 hover:text-primary-500 transition-colors text-lg rounded-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary-500">
                       <Mail className="w-5 h-5 text-primary-400 shrink-0" />
-                      E-mail
+                      {t("contactForm.email")}
                     </a>
                     <a href="tel:+31639244184" className="flex items-center gap-3 text-neutral-700 hover:text-primary-500 transition-colors text-lg rounded-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary-500">
                       <Phone className="w-5 h-5 text-primary-400 shrink-0" />
-                      +31 6 39 24 41 84
+                      {t("contactForm.phone")}
                     </a>
                     <a href="https://www.linkedin.com/in/bet-el-teklemariam-b1896b165/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-neutral-700 hover:text-primary-500 transition-colors text-lg rounded-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary-500">
                       <Linkedin className="w-5 h-5 text-primary-400 shrink-0" />
-                      LinkedIn
+                      {t("contactForm.linkedin")}
                     </a>
                     <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-neutral-700 hover:text-primary-500 transition-colors text-lg rounded-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-primary-500">
                       <WhatsappLogoIcon size={24} weight="light" className="text-primary-400 shrink-0" />
-                      WhatsApp
+                      {t("contactForm.whatsapp")}
                     </a>
                   </div>
                 </div>
@@ -765,22 +737,37 @@ export const ContactForm = ({ variant = "grey" }: { variant?: "white" | "grey" }
   );
 };
 
-export const Footer = ({ onNavigate, variant = "white" }: { onNavigate: (page: "home" | "services" | "about" | "clients" | "contact", id?: string) => void, variant?: "white" | "grey" }) => {
+export const Footer = ({ variant = "white" }: { variant?: "white" | "grey" }) => {
+  const { t } = useTranslation("common");
+  const { goTo } = useLangNav();
   const [logoError, setLogoError] = useState(false);
+
+  const navLinks: { label: string; page: PageKey }[] = [
+    { label: t("nav.home"), page: "home" },
+    { label: t("nav.services"), page: "services" },
+    { label: t("nav.about"), page: "about" },
+    { label: t("nav.contact"), page: "contact" }
+  ];
+
+  const contactLinks = [
+    { label: t("footer.whatsapp"), href: WHATSAPP_URL },
+    { label: t("footer.email"), href: "mailto:info@bettyteklemariam.nl" },
+    { label: t("footer.linkedin"), href: "https://www.linkedin.com/in/bet-el-teklemariam-b1896b165/" }
+  ];
 
   return (
     <footer className={`${variant === "grey" ? "bg-neutral-50" : "bg-white"} pt-20 pb-10 transition-colors duration-300`}>
       <div className="container-custom space-y-16">
         <div className="flex flex-col lg:flex-row justify-between gap-12 lg:gap-12">
           <div className="max-w-[320px] space-y-6">
-            <button 
-              onClick={() => onNavigate("home")}
+            <button
+              onClick={() => goTo("home")}
               className="flex items-center gap-2 cursor-pointer"
             >
               {!logoError ? (
-                <img 
-                  src="/images/logo-betty.svg" 
-                  alt="" 
+                <img
+                  src="/images/logo-betty.svg"
+                  alt=""
                   className="w-10 h-10 object-contain"
                   onError={() => setLogoError(true)}
                 />
@@ -789,43 +776,34 @@ export const Footer = ({ onNavigate, variant = "white" }: { onNavigate: (page: "
                   <Heart className="w-6 h-6 text-primary-500 fill-secondary-300" />
                 </div>
               )}
-              <span className="font-display font-semibold text-lg text-primary-500">Betty</span>
+              <span className="font-display font-semibold text-lg text-primary-500">{t("nav.brand")}</span>
             </button>
             <p className="text-neutral-800 leading-[32px]">
-              Expert in maatschappelijke inclusie en culturele bemiddeling. Samen bouwen we aan een samenleving waarin iedereen telt.
+              {t("footer.brandDescription")}
             </p>
           </div>
-          
+
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-12 lg:gap-12">
             <div className="space-y-6 min-w-[140px]">
-              <h4 className="font-display font-semibold text-lg">Navigatie</h4>
+              <h4 className="font-display font-semibold text-lg">{t("footer.navigation")}</h4>
               <ul className="space-y-2">
-                {["Home", "Diensten", "Over mij", "Contact"].map((item) => (
-                  <li key={item}>
-                    <button 
-                      onClick={() => {
-                        if (item === "Diensten") onNavigate("services");
-                        else if (item === "Over mij") onNavigate("about");
-                        else if (item === "Contact") onNavigate("contact");
-                        else onNavigate("home");
-                      }}
+                {navLinks.map((item) => (
+                  <li key={item.page}>
+                    <button
+                      onClick={() => goTo(item.page)}
                       className="text-neutral-800 hover:text-primary-500 transition-colors leading-[32px] cursor-pointer"
                     >
-                      {item}
+                      {item.label}
                     </button>
                   </li>
                 ))}
               </ul>
             </div>
-            
+
             <div className="space-y-6 min-w-[140px]">
-              <h4 className="font-display font-semibold text-lg">Contact</h4>
+              <h4 className="font-display font-semibold text-lg">{t("footer.contact")}</h4>
               <ul className="space-y-2">
-                {[
-                  { label: "Whatsapp", href: "https://wa.me/31639244184" },
-                  { label: "Email", href: "mailto:info@bettyteklemariam.nl" },
-                  { label: "Linkedin", href: "https://www.linkedin.com/in/bet-el-teklemariam-b1896b165/" }
-                ].map((item) => (
+                {contactLinks.map((item) => (
                   <li key={item.label}>
                     <a href={item.href} target="_blank" rel="noopener noreferrer" className="text-neutral-800 hover:text-primary-500 transition-colors leading-[32px]">{item.label}</a>
                   </li>
@@ -834,22 +812,22 @@ export const Footer = ({ onNavigate, variant = "white" }: { onNavigate: (page: "
             </div>
 
             <div className="space-y-6 min-w-[140px]">
-              <h4 className="font-display font-semibold text-lg">Bedrijfsgegevens</h4>
+              <h4 className="font-display font-semibold text-lg">{t("footer.companyDetails")}</h4>
               {/* TODO: bedrijfsnaam verifiëren tegen de KvK-inschrijving —
                   "Teklemariam" (profiel §1) of "Betty Teklemariam" als handelsnaam.
                   TODO: BTW-nummer toevoegen als Betty het wil tonen; niet verplicht. */}
               <ul className="space-y-2 text-neutral-800 leading-[32px]">
-                <li>Teklemariam</li>
-                <li>KvK 65787676</li>
-                <li>Rotterdam</li>
-                <li>Werkgebied: heel Nederland</li>
+                <li>{t("footer.companyName")}</li>
+                <li>{t("footer.kvk")}</li>
+                <li>{t("footer.city")}</li>
+                <li>{t("footer.coverage")}</li>
               </ul>
             </div>
           </div>
         </div>
-        
+
         <div className="border-t border-neutral-100 pt-10 text-center">
-          <p className="text-neutral-500 text-sm">© 2026 Betty Teklemariam. Alle rechten voorbehouden.</p>
+          <p className="text-neutral-500 text-sm">{t("footer.copyright")}</p>
         </div>
       </div>
     </footer>

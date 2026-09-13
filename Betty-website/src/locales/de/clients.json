@@ -1,0 +1,111 @@
+{
+  "meta": {
+    "title": "Auftraggeber & Fallbeispiele von Betty Teklemariam",
+    "description": "Organisationen, für die Betty Teklemariam arbeitet, vom COA, Nidos und dem SCP bis zu Gemeinden und der Jugendhilfe, mit Fallbeispielen rund um die eritreische Gemeinschaft."
+  },
+  "hero": {
+    "eyebrow": "Interkulturelle Beraterin und Mediatorin",
+    "title": "Für wen ich arbeite",
+    "intro": "Ich unterstütze Gemeinden, Pflegeeinrichtungen, die Jugendhilfe und Forschungsinstitute, wenn ein Standardansatz nicht ausreicht und kulturelle Einordnung nötig ist.",
+    "ctaCases": "Fallbeispiele ansehen"
+  },
+  "audiences": {
+    "heading": "Mit welchen Organisationen ich arbeite",
+    "intro": "Überall dort, wo Fachkräfte mit eritreischen Klientinnen, Klienten und Gemeinschaften zu tun haben.",
+    "items": [
+      {
+        "title": "Gemeinden & Behörden",
+        "desc": "Beratung und Begleitung rund um Integration, Teilhabe und Fragen im sozialen Bereich."
+      },
+      {
+        "title": "Pflege & Hilfeleistung",
+        "desc": "Unterstützung bei der Begleitung eritreischer Klientinnen, Klienten und Familien, auch bei Trauma und psychischer Gesundheit."
+      },
+      {
+        "title": "Jugendhilfe & Veilig Thuis",
+        "desc": "Kulturelle Einordnung bei Erziehungsfragen, Unsicherheit in Familien und komplexen Fällen."
+      },
+      {
+        "title": "Bildung",
+        "desc": "Aufklärung und Schulung für Schulen und Lehrkräfte, die mit eritreischen Jugendlichen und ihren Eltern arbeiten."
+      },
+      {
+        "title": "NGOs & gesellschaftliche Organisationen",
+        "desc": "Begleitung und Beratung innerhalb von Projekten zu Aufnahme, Teilhabe und Selbstständigkeit."
+      },
+      {
+        "title": "Forschungsinstitute",
+        "desc": "Kulturelle Einordnung bei Forschung zu eritreischen Gemeinschaften, von der Fragestellung bis zur Interpretation."
+      }
+    ]
+  },
+  "cases": {
+    "heading": "Zusammenarbeit in der Praxis",
+    "intro": "Zwei Fallbeispiele, ausführlich beschrieben: wie die Ausgangslage war, was ich getan habe und was es gebracht hat.",
+    "collaborationWith": "Zusammenarbeit mit",
+    "situationLabel": "Ausgangslage",
+    "approachLabel": "Vorgehen",
+    "resultLabel": "Ergebnis",
+    "items": {
+      "SCP": {
+        "client": "Niederländisches Institut für Sozialforschung (SCP)",
+        "situation": "In der Forschung zu Integration und Teilhabe bestand Bedarf an vertieftem Einblick in die Erfahrungen und Perspektiven eritreischer Gemeinschaften. Die bestehenden Forschungsansätze und Kommunikationsmethoden passten nicht immer zur Zielgruppe.",
+        "approach": "Ich ordnete den kulturellen Kontext und die dazugehörigen Kommunikationsmuster ein. Ich brachte Perspektiven aus der eritreischen Gemeinschaft ein, half bei der Formulierung kulturell passender Forschungsfragen und verbesserte die Verbindung zwischen Forschenden und Zielgruppe.",
+        "result": "Differenziertere, kontextsensible Erkenntnisse. Die Kommunikation mit der Zielgruppe wurde effektiver, mit mehr gegenseitigem Verständnis und zuverlässigeren Informationen."
+      },
+      "VOZ": {
+        "client": "VOZ, Flüchtlingsunterkunft Ommoord-Zevenkamp",
+        "situation": "VOZ nahm neu untergebrachte Geflüchtete in Ommoord-Zevenkamp auf, darunter viele eritreische Neuankömmlinge. Das Team hatte keine Tigrinya-sprechenden Kolleginnen oder Kollegen und konnte deshalb schwer einschätzen, was die Bewohnerinnen und Bewohner brauchten.",
+        "approach": "Ich meldete mich im Juni 2015 aus eigener Initiative bei VOZ. Ich half eritreischen Geflüchteten bei Integrations- und Teilhabeaktivitäten, über die wöchentliche Sprechstunde und darüber hinaus durch Hausbesuche und telefonischen Kontakt. Ich arbeitete als Dolmetscherin für niederländischsprachige Kolleginnen und Kollegen sowie als selbstständige Betreuerin und brachte in den Teambesprechungen praktische Lösungen ein.",
+        "result": "Das VOZ-Team erhielt das Wissen und die Fähigkeiten, um eritreische Neuankömmlinge beim Aufbau eines Lebens in den Niederlanden zu begleiten."
+      }
+    },
+    "photoCaption": "Ein Treffen mit Teilnehmenden, bei dem Aufklärung und offener Austausch zusammenkommen."
+  },
+  "roster": {
+    "heading": "Organisationen, mit denen ich zusammengearbeitet habe",
+    "intro": "Von Gemeinden und Pflegeeinrichtungen bis zu Forschungsinstituten und gesellschaftlichen Organisationen.",
+    "items": [
+      "COA (Zentrale Aufnahmestelle für Asylbewerber)",
+      "Nidos",
+      "VluchtelingenWerk Nederland (Niederländischer Flüchtlingsrat)",
+      "Open Embassy",
+      "Kinderschutzbehörde (Overijssel)",
+      "Staatsanwaltschaft",
+      "Verwey-Jonker-Institut",
+      "Niederländisches Institut für Sozialforschung (SCP)",
+      "ARQ Centrum '45",
+      "Het JIT",
+      "VOZ",
+      "GGD (Gesundheitsamt)",
+      "Parnassia Groep",
+      "Verschiedene Gemeinden"
+    ]
+  },
+  "testimonials": {
+    "heading": "Was Auftraggeber sagen",
+    "intro": "Erfahrungen von Organisationen und Fachkräften, die mit Betty zusammengearbeitet haben.",
+    "items": [
+      {
+        "quote": "Ich erlebe Bet-El als eine integre und sehr zuverlässige Fachkraft, die als kulturelle Vermittlerin und Dolmetscherin/Übersetzerin eine wichtige Rolle spielt. In der Zusammenarbeit ist sie angenehm im Umgang, offen für unterschiedliche Perspektiven und denkt stets konstruktiv mit. Sie hält Absprachen konsequent ein, ist flexibel in ihrer Herangehensweise und liefert oft mehr als erwartet. Ihr Engagement und ihre Sorgfalt machen sie zu einer wertvollen Partnerin.",
+        "name": "Monique Haveman",
+        "sub": ""
+      },
+      {
+        "quote": "Betty ist unglaublich zuverlässig. Man spürt, dass sie ihre Arbeit mit Liebe und Hingabe macht. Wie keine andere hat sie ein Gespür für die Hindernisse, mit denen Geflüchtete konfrontiert sind.",
+        "name": "Lost in Europe",
+        "sub": ""
+      },
+      {
+        "quote": "Bet-El bemerkt vieles und teilt es leicht mit anderen. Sie ist sorgfältig mit Absprachen, und ihr Engagement für Geflüchtete ist groß.",
+        "name": "VOZ",
+        "sub": "Flüchtlingsunterkunft Ommoord-Zevenkamp"
+      },
+      {
+        "quote": "",
+        "name": "Team Geldrop",
+        "sub": "COA"
+      }
+    ]
+  }
+}

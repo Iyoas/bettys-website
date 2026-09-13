@@ -1,0 +1,143 @@
+{
+  "meta": {
+    "title": "Betty Teklemariam — intercultural advisor and mediator",
+    "description": "Betty Teklemariam is an intercultural advisor and mediator between Eritrean communities and Dutch organisations: guidance, cultural mediation, cultural translation and workshops."
+  },
+  "hero": {
+    "eyebrow": "Intercultural advisor and mediator",
+    "titleLine1": "Building bridges",
+    "titleLine2Pre": "between ",
+    "titleHighlight": "cultures",
+    "titleLine2Post": " and communities.",
+    "intro": "I help municipalities, researchers and community organisations work more effectively with Eritrean communities.",
+    "ctaServices": "View services"
+  },
+  "trustedBy": {
+    "label": "Working with"
+  },
+  "features": {
+    "heading": "Why Cultural Mediation?",
+    "intro": "There's often an invisible gap between institutions and newcomers. I help bridge it.",
+    "items": [
+      {
+        "title": "Cultural differences",
+        "desc": "Understanding of deep-rooted norms and values that shape interactions."
+      },
+      {
+        "title": "Language barriers",
+        "desc": "Bridging language differences to prevent miscommunication."
+      },
+      {
+        "title": "Mistrust",
+        "desc": "Building a safe foundation for open communication and trust."
+      }
+    ]
+  },
+  "services": {
+    "heading": "My Services",
+    "intro": "Practical support for organisations that want to work effectively with Eritrean communities.",
+    "viewService": "View service",
+    "items": [
+      {
+        "title": "Guidance",
+        "desc": "Personal support in navigating complex cultural landscapes and social integration."
+      },
+      {
+        "title": "Cultural Mediation",
+        "desc": "Bridging differences in communication and expectations between diverse groups and institutions."
+      },
+      {
+        "title": "Interpreting & Translation",
+        "desc": "Support for conversations and communication, spoken and written, with an eye for both language and cultural context."
+      },
+      {
+        "title": "Workshops & Training",
+        "desc": "Interactive sessions focused on awareness, inclusion and effectively engaging with cultural diversity."
+      }
+    ]
+  },
+  "about": {
+    "heading": "About me",
+    "intro": "Bet-El Teklemariam, intercultural advisor, mediator, trainer and social pedagogue.",
+    "bodyText": "I fled Eritrea at a young age. I know from experience how much it means when someone understands you in a place that's new to you. I combine that experience with more than 26 years of work in guidance, youth care, psychiatry and the social domain.",
+    "speaks": "Speaks",
+    "languages": ["Dutch", "Tigrinya", "German", "English"],
+    "readMore": "Read more about Betty",
+    "yearsBadgeNumber": "26+",
+    "yearsBadgeLabel": "years of experience",
+    "qualities": [
+      {
+        "title": "People-focused",
+        "desc": "Bringing calm to conversations where trust and context matter most."
+      },
+      {
+        "title": "Practical",
+        "desc": "Thinking along with professionals about what helps directly in practice."
+      },
+      {
+        "title": "Culturally sensitive",
+        "desc": "Weighing language, family relationships and background into every piece of advice."
+      }
+    ]
+  },
+  "clients": {
+    "heading": "Recent clients",
+    "intro": "Organisations I've worked with on better communication and collaboration with Eritrean communities.",
+    "viewCase": "View case",
+    "viewAll": "View all clients",
+    "items": [
+      {
+        "name": "The Netherlands Institute for Social Research (SCP)",
+        "tag": "Research",
+        "desc": "Cultural interpretation within research into the integration and participation of Eritrean communities."
+      },
+      {
+        "name": "VOZ, Refugee Reception Ommoord-Zevenkamp",
+        "tag": "Guidance",
+        "desc": "Interpreter and independent support worker in the reception of Eritrean newcomers, through walk-in hours and home visits."
+      }
+    ]
+  },
+  "testimonials": {
+    "heading": "What clients say",
+    "intro": "Experiences from organisations that have worked with Betty",
+    "items": [
+      {
+        "text": "Bet-El is an honest and highly reliable professional who plays an important role as a cultural connector. She consistently keeps her commitments, is flexible and often delivers more than expected.",
+        "name": "Monique Haveman",
+        "sub": "Mix Support, Care and Quality Advisor"
+      },
+      {
+        "text": "Betty is incredibly reliable. You can feel that she does her work with love and dedication. Like no one else, she has an eye for the obstacles refugees face.",
+        "name": "Lost in Europe",
+        "sub": "Investigative journalist"
+      },
+      {
+        "text": "A natural and transparent collaboration, without it ever coming at the expense of professionalism.",
+        "name": "Nidos",
+        "sub": "Youth protection officer"
+      }
+    ]
+  },
+  "contactForm": {
+    "heading": "Tell me briefly what's going on",
+    "intro": "For guidance, cultural mediation, cultural translation or a workshop, or simply to explore your question.",
+    "directContact": "Prefer direct contact",
+    "email": "Email",
+    "phone": "+31 6 39 24 41 84",
+    "linkedin": "LinkedIn",
+    "whatsapp": "WhatsApp",
+    "confirmation": "Thank you for your message. You'll hear from me within 1–2 working days.",
+    "fields": {
+      "name": "Name",
+      "namePlaceholder": "Your name",
+      "organization": "Organisation",
+      "organizationPlaceholder": "Name of your organisation",
+      "emailLabel": "Email",
+      "emailPlaceholder": "you@email.com",
+      "message": "Message",
+      "messagePlaceholder": "How can Betty help you?"
+    },
+    "submit": "Send message"
+  }
+}

@@ -1,0 +1,95 @@
+{
+  "meta": {
+    "title": "About Betty Teklemariam, intercultural advisor and mediator",
+    "description": "Betty Teklemariam is an intercultural advisor and cultural mediator. Social pedagogue, born in Asmara, working with the Eritrean community in the Netherlands since 2000."
+  },
+  "schema": {
+    "description": "Intercultural advisor and mediator between Eritrean communities and Dutch organisations. Social pedagogue, working in the Netherlands since 2000.",
+    "birthPlace": "Asmara, Eritrea",
+    "alumniOf": "Social Pedagogy (Germany)",
+    "knowsAbout": [
+      "Intercultural mediation",
+      "Eritrean community in the Netherlands",
+      "Culturally sensitive family guidance",
+      "Social-pedagogical support"
+    ]
+  },
+  "hero": {
+    "eyebrow": "Intercultural advisor and mediator",
+    "title": "About Betty Teklemariam",
+    "intro": "I've worked with Eritrean communities since 2000 and know both sides of the conversation: as a social pedagogue and from my own experience.",
+    "ctaStory": "Read my story"
+  },
+  "story": {
+    "heading": "My story",
+    "paragraphs": [
+      "I was born in Asmara, Eritrea. At a young age I had to flee, and I ended up in a completely new environment. I experienced first-hand how important support and understanding are to feeling safe and heard. That became the foundation of my work.",
+      "In Germany I studied Social Pedagogy and then worked for years in youth care and psychiatry, supporting migrants with complex psychosocial issues. In 2000 I came to the Netherlands.",
+      "Since then I've worked with Eritrean and Ethiopian refugees and status holders, and with the professionals around them. Connection, trust and tailored support are the three things I steer by in every case."
+    ],
+    "mottoLabel": "My motto",
+    "motto": "Prevention is better than cure.",
+    "mottoAttribution": "Betty Teklemariam"
+  },
+  "timeline": {
+    "heading": "From Asmara to the Netherlands",
+    "intro": "The route that shaped my work, from my own experience as a newcomer to intercultural advisor and mediator.",
+    "items": [
+      {
+        "year": "Early 1980s",
+        "title": "Fleeing Eritrea",
+        "desc": "I was born in Asmara. At a young age I had to flee, and I ended up in Germany."
+      },
+      {
+        "year": "1990 – 2000",
+        "title": "Germany: education and first years in the field",
+        "desc": "I studied Social Pedagogy and then worked for years in youth care and psychiatry, with migrants and complex psychosocial issues."
+      },
+      {
+        "year": "2000",
+        "title": "Moving to the Netherlands",
+        "desc": "Since 2000 I've worked in the Netherlands with Eritrean and Ethiopian refugees and status holders."
+      },
+      {
+        "year": "2016 – present",
+        "title": "Intercultural advisor and mediator",
+        "desc": "I train, guide and advise organisations that work with Eritrean clients and communities."
+      }
+    ]
+  },
+  "expertise": {
+    "heading": "What Betty brings",
+    "intro": "Three kinds of knowledge that come together in every case.",
+    "items": [
+      {
+        "title": "Cultural knowledge",
+        "desc": "Norms, communication patterns, gender roles and family context within the Eritrean and Ethiopian community."
+      },
+      {
+        "title": "Pedagogical & social knowledge",
+        "desc": "Social pedagogue with a background in youth care and psychiatry. Experience with trauma, parenting issues and unsafe situations within families."
+      },
+      {
+        "title": "Practical experience",
+        "desc": "Since 2000 I've guided families, women and children, and advised organisations, especially where standard approaches fall short."
+      }
+    ]
+  },
+  "education": {
+    "heading": "Education & certificates",
+    "items": [
+      "BSc Social Pedagogy (Germany)",
+      "Certified cultural mediator",
+      "Mindspring trainer"
+    ]
+  },
+  "languagesBlock": {
+    "heading": "Languages",
+    "items": ["Dutch", "Tigrinya", "German", "English"],
+    "note": "I work in Dutch, Tigrinya, German and English, and understand the cultural context behind each language."
+  },
+  "mission": {
+    "quote": "My mission is to build bridges between people, cultures and organisations. I believe that lasting support starts with trust, mutual understanding and a culturally sensitive approach that does justice to the background and the possibilities of every individual and family.",
+    "attribution": "Betty Teklemariam"
+  }
+}
