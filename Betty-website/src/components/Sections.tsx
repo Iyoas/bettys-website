@@ -67,7 +67,7 @@ export const Navbar = ({ onNavigate, currentPage }: { onNavigate: (page: "home" 
   return (
     <nav className={`sticky top-0 z-50 pt-8 pb-4 ${isScrolled ? "bg-transparent" : navBg} transition-colors duration-300`}>
       <div className="container-custom">
-        <div className={`${barBg} rounded-[32px] px-6 md:px-8 py-4 shadow-[0px_0px_4px_rgba(27,28,29,0.04)] transition-colors duration-300`}>
+        <div className={`relative ${barBg} rounded-[32px] px-6 md:px-8 py-4 shadow-[0px_0px_4px_rgba(27,28,29,0.04)] transition-colors duration-300`}>
           <div className="flex items-center justify-between">
             <button
               onClick={() => go("home")}
@@ -129,12 +129,13 @@ export const Navbar = ({ onNavigate, currentPage }: { onNavigate: (page: "home" 
             </button>
           </div>
 
-          {/* Mobiel uitklapmenu */}
+          {/* Mobiel uitklapmenu — absolute zodat het over de content heen zweeft
+              in plaats van de pagina eronder omlaag te duwen */}
           {menuOpen && (
             <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              className="md:hidden overflow-hidden mt-3 pt-3 border-t border-neutral-100 flex flex-col gap-1"
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              className={`md:hidden absolute left-0 right-0 top-full mt-2 ${barBg} rounded-[32px] px-6 py-4 shadow-[0px_8px_24px_rgba(27,28,29,0.12)] flex flex-col gap-1 z-50`}
             >
               {navItems.map((item) => {
                 const isActive = currentPage === item.page;
@@ -245,7 +246,7 @@ export const TrustedBy = () => {
           <div className="pointer-events-none absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-white to-transparent z-10" />
           <div className="pointer-events-none absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-white to-transparent z-10" />
 
-          <Marquee pauseOnHover className="p-0">
+          <Marquee pauseOnHover draggable className="p-0">
             {partners.map((partner) => (
               <div
                 key={partner.name}
@@ -400,8 +401,8 @@ export const About = ({ onNavigate }: { onNavigate: (page: "home" | "services" |
       <div className="container-custom grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
         <div className="relative">
           <img
-            src="/images/betty-portret.jpg"
-            alt="Bet-El Teklemariam"
+            src="/images/betty-about-workshop.png"
+            alt="Bet-El Teklemariam tijdens een workshop met een groep vrouwen"
             className="w-full h-auto rounded-[32px] object-cover aspect-[4/3]"
             loading="lazy"
           />
