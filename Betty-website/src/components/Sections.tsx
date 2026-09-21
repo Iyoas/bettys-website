@@ -203,7 +203,7 @@ export const Hero = () => {
             <p className="font-display text-xs font-bold text-primary-500 uppercase tracking-[0.18em]">
               {t("hero.eyebrow")}
             </p>
-            <h1 className="text-4xl md:text-5xl lg:text-[46px] font-bold leading-[1.2] lg:leading-[69px] text-primary-500">
+            <h1 className="text-4xl md:text-5xl lg:text-[40px] font-bold leading-[1.2] lg:leading-[60px] text-primary-500">
               {t("hero.titleLine1")}<br />{t("hero.titleLine2Pre")}<span className="text-secondary-400">{t("hero.titleHighlight")}</span>{t("hero.titleLine2Post")}
             </h1>
             <p className="text-lg text-neutral-700 max-w-[512px] leading-[30px]">
